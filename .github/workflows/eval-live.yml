@@ -1,0 +1,27 @@
+name: Eval Live
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  eval-live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --frozen
+      - name: Run live positioning evals
+        env:
+          LIVE_EVAL: "1"
+          DEEPEVAL_TELEMETRY_OPT_OUT: "1"
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: uv run pytest evals/test_positioning_live.py -q
+      - name: Upload live eval results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-results-live
+          path: eval-results-live.json
