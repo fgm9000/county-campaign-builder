@@ -11,8 +11,8 @@
 | 0 — Kickoff (PRD, ADRs, plano) | 19/11 | ✅ | 2026-11-19 | — | Portões 1, 2 e 3 aprovados |
 | 1 — Esqueleto reaproveitado e spikes | 19/11 a 20/11 | ✅ | 2026-11-19 | `67e66e4` | Adiantada 1 dia |
 | 2 — ETL dos condados | 20/11 | ✅ | 2026-11-20 | `6cba2cc` | No prazo |
-| 3 — Contratos e domínio | 20/11 a 21/11 | ✅ | 2026-11-20 | aguardando commit | Adiantada 1 dia (67 testes, 100% de cobertura) |
-| 4 — IA e grafo com fan-out | 21/11 a 22/11 | ⏳ | | | Checkpoint de corte |
+| 3 — Contratos e domínio | 20/11 a 21/11 | ✅ | 2026-11-20 | `ec485a6` | Adiantada 1 dia (67 testes, 100% de cobertura) |
+| 4 — IA e grafo com fan-out | 21/11 a 22/11 | 🔄 | | | Checkpoint de corte |
 | 5 — API e evals | 23/11 | ⏳ | | | |
 | 6 — Página e playbook | 24/11 | ⏳ | | | |
 | 7 — Esteira, container e deploy | 25/11 | ⏳ | | | |
@@ -60,12 +60,12 @@
 - [x] Commit
 
 ### Fase 4 — IA e grafo com fan-out
-- [ ] `prompt.py` (os prompts que o playbook reutiliza)
-- [ ] `llm.py` (Haiku e Sonnet com saída estruturada; modelo falso por cenário)
-- [ ] `graph.py` (subgrafo por condado, `Send`, `compare_counties`, regeneração única, degradação)
-- [ ] 3 cenários falsos com uma armadilha numérica plantada
-- [ ] Execução real com custo e tempo medidos
-- [ ] Decisão de corte registrada
+- [x] `prompt.py` (os prompts que o playbook reutiliza)
+- [x] `llm.py` (Haiku e Sonnet com saída estruturada; modelo falso por cenário)
+- [x] `graph.py` (subgrafo por condado, `Send`, `compare_counties`, regeneração única, degradação)
+- [x] 3 cenários falsos com uma armadilha numérica plantada (Dallas com 120 vs 102 capturado em `corrections`)
+- [x] Decisão de corte registrada (projeto adiantado em 2 dias; nenhum corte necessário)
+- [ ] Execução real com custo e tempo medidos (aguardando ANTHROPIC_API_KEY ou validação ao vivo na Fase 5)
 - [ ] Commit
 
 ### Fase 5 — API e evals
