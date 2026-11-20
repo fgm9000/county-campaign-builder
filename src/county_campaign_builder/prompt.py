@@ -149,7 +149,9 @@ def build_ads_and_lp_prompt(
         "   - headline: clear, locally relevant primary headline.\n"
         "   - subheadline: concise supporting statement.\n"
         "   - cta_text: action-oriented call-to-action button text.\n"
-        "   - bullet_points: 3 to 4 concise benefit or local-context bullet points.\n"
+        "   - bullet_points: 3 to 4 homeowner benefit bullet points (as-is purchase, zero\n"
+        "     commissions, flexible closing, local specialist). Do NOT paste raw census or\n"
+        "     demographic percentages here; keep bullets homeowner-facing.\n"
         "   - consent_disclosure: TCPA written-consent statement placed by the form that\n"
         '     MUST include all three required phrases (case-insensitive): "automated",\n'
         '     "not a condition", and "stop" (for example: consent to receive automated\n'

@@ -168,7 +168,9 @@ Structured Output Requirements:
    - headline: clear, locally relevant primary headline.
    - subheadline: concise supporting statement.
    - cta_text: action-oriented call-to-action button text.
-   - bullet_points: 3 to 4 concise benefit or local-context bullet points.
+   - bullet_points: 3 to 4 homeowner benefit bullet points (as-is purchase, zero
+     commissions, flexible closing, local specialist). Do NOT paste raw census or
+     demographic percentages here; keep bullets homeowner-facing.
    - consent_disclosure: TCPA written-consent statement placed by the form that
      MUST include all three required phrases (case-insensitive): "automated",
      "not a condition", and "stop" (for example: consent to receive automated

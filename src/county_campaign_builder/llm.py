@@ -507,13 +507,12 @@ class FakeModelClient:
             )
             cta_text = "Get My Property Review"
 
-        fact_bullets = [fact.claim for fact in verified_facts[:2]]
-        default_bullets = [
-            f"Tailored local intake for homeowners across {county_name}.",
-            "Transparent evaluation with clear next steps before you commit.",
-            "Direct communication with a dedicated local specialist.",
+        bullet_points = [
+            "Sell 100% as-is — no repairs, cleaning, or staging required.",
+            "Zero agent commissions, hidden fees, or closing cost surprises.",
+            "Flexible closing timeline on your schedule (as fast as 7–14 days).",
+            f"Direct cash offer review with a dedicated {county_name} specialist.",
         ]
-        bullet_points = [*fact_bullets, *default_bullets][:4]
 
         consent_disclosure = (
             f"By submitting this form, you agree to receive automated marketing calls and "
