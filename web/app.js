@@ -156,6 +156,16 @@ const I18N = {
     optOutBadge: "Opt-out: {keyword}",
     optOutMissingBadge: "Missing opt-out",
     reviewTitle: "Human Review Checklist",
+    reviewAlertTitle: "{n} Item(s) Flagged for Human Sign-Off Before Launch",
+    reviewAlertDesc:
+      "The automated compliance engine detected unverified promises or offer terms that require human operator approval. Review the highlighted yellow items below:",
+    sectionFlaggedBadge: "⚠️ {n} flagged for review",
+    inlineReviewBadge: "⚠️ Human Sign-Off Required",
+    needsReviewPill: "Needs Sign-Off",
+    headlineWord: "Headline",
+    descriptionWord: "Description",
+    lpHeadlineWord: "Landing Page Headline",
+    lpSubheadlineWord: "Landing Page Subheadline",
     reviewFlaggedCount: "{n} item(s) flagged",
     reviewCleanBadge: "0 claim triggers fired",
     reviewEmptyMsg:
@@ -331,6 +341,16 @@ const I18N = {
     optOutBadge: "Opt-out: {keyword}",
     optOutMissingBadge: "Opt-out ausente",
     reviewTitle: "Checklist de Revisão Humana",
+    reviewAlertTitle: "{n} Item(ns) Marcado(s) para Aprovação Humana Antes de Publicar",
+    reviewAlertDesc:
+      "O mecanismo de conformidade detectou promessas ou condições de oferta que exigem confirmação do operador humano. Confira os itens destacados em amarelo abaixo:",
+    sectionFlaggedBadge: "⚠️ {n} marcado(s) para revisão",
+    inlineReviewBadge: "⚠️ Aprovação Humana Obrigatória",
+    needsReviewPill: "Requer Aprovação",
+    headlineWord: "Título",
+    descriptionWord: "Descrição",
+    lpHeadlineWord: "Título da Landing Page",
+    lpSubheadlineWord: "Subtítulo da Landing Page",
     reviewFlaggedCount: "{n} item(ns) marcado(s)",
     reviewCleanBadge: "0 gatilhos de promessa disparados",
     reviewEmptyMsg:
@@ -945,10 +965,67 @@ function renderQuestionsSection(campaign) {
   return section;
 }
 
+function renderInlineReviewCallout(reviewItem) {
+  const box = el("div", "human-review-callout");
+  const top = el("div", "human-review-callout-top");
+  top.appendChild(el("span", "badge badge-yellow", t("inlineReviewBadge")));
+  top.appendChild(el("span", "badge badge-mono badge-neutral", `${t("ruleLabel")} ${reviewItem.rule_id}`));
+  box.appendChild(top);
+  box.appendChild(el("p", "human-review-callout-text", reviewItem.reason));
+  return box;
+}
+
+function formatReviewItemName(name) {
+  if (name.startsWith("headline_")) {
+    return `${t("headlineWord")} ${name.split("_")[1]}`;
+  }
+  if (name.startsWith("description_")) {
+    return `${t("descriptionWord")} ${name.split("_")[1]}`;
+  }
+  if (name === "lp_subheadline") return t("lpSubheadlineWord");
+  if (name === "lp_headline") return t("lpHeadlineWord");
+  if (name.startsWith("sms_")) {
+    return `SMS ${name.split("_")[1]}`;
+  }
+  if (name.startsWith("email_")) {
+    return `Email ${name.split("_")[1]}`;
+  }
+  return name;
+}
+
+function renderReviewAlertBanner(campaign) {
+  const items = Array.isArray(campaign.needs_human_review) ? campaign.needs_human_review : [];
+  if (items.length === 0) return null;
+
+  const banner = el("div", "review-alert-banner");
+  banner.appendChild(el("div", "review-alert-icon", "⚠️"));
+
+  const content = el("div", "review-alert-content");
+  content.appendChild(el("h4", "review-alert-title", t("reviewAlertTitle", { n: items.length })));
+  content.appendChild(el("p", "review-alert-desc", t("reviewAlertDesc")));
+
+  const tags = el("div", "review-alert-tags");
+  for (const item of items) {
+    const formattedItem = formatReviewItemName(item.item);
+    tags.appendChild(el("span", "badge badge-yellow", `${formattedItem}: ${item.rule_id}`));
+  }
+  content.appendChild(tags);
+  banner.appendChild(content);
+
+  return banner;
+}
+
 function renderAdsSection(campaign) {
   const section = el("section", "pkg-section");
   const head = el("div", "pkg-section-head");
   head.appendChild(el("h4", "pkg-section-title", t("adsTitle")));
+
+  const adReviewItems = (campaign.needs_human_review || []).filter(
+    (r) => r.item.startsWith("headline_") || r.item.startsWith("description_")
+  );
+  if (adReviewItems.length > 0) {
+    head.appendChild(el("span", "badge badge-yellow", t("sectionFlaggedBadge", { n: adReviewItems.length })));
+  }
   section.appendChild(head);
 
   const adCopy = campaign.assets?.ad_copy || { headlines: [], descriptions: [] };
@@ -957,8 +1034,13 @@ function renderAdsSection(campaign) {
   // Headlines column
   const hCol = el("div");
   hCol.appendChild(el("h5", "ads-col-title", t("headlinesHeading")));
-  for (const item of adCopy.headlines || []) {
-    const row = el("div", "copy-row");
+  (adCopy.headlines || []).forEach((item, idx) => {
+    const itemName = `headline_${idx + 1}`;
+    const itemReviews = (campaign.needs_human_review || []).filter((r) => r.item === itemName);
+    const isFlagged = itemReviews.length > 0;
+
+    const wrapper = el("div", isFlagged ? "copy-row-wrap copy-row-wrap-flagged" : "copy-row-wrap");
+    const row = el("div", isFlagged ? "copy-row copy-row-flagged" : "copy-row");
     row.appendChild(el("span", "copy-row-text", item.text || ""));
     const pills = el("div", "copy-row-pills");
     const len = (item.text || "").length;
@@ -970,19 +1052,33 @@ function renderAdsSection(campaign) {
         `${len}/${LIMITS.headline} ${t("charsUnit")}`
       )
     );
-    pills.appendChild(
-      el("span", statusBadgeClass(item.status), tNested("assetStatuses", item.status, item.status))
-    );
+    if (isFlagged) {
+      pills.appendChild(el("span", "badge badge-yellow", t("needsReviewPill")));
+    } else {
+      pills.appendChild(
+        el("span", statusBadgeClass(item.status), tNested("assetStatuses", item.status, item.status))
+      );
+    }
     row.appendChild(pills);
-    hCol.appendChild(row);
-  }
+    wrapper.appendChild(row);
+
+    for (const rev of itemReviews) {
+      wrapper.appendChild(renderInlineReviewCallout(rev));
+    }
+    hCol.appendChild(wrapper);
+  });
   split.appendChild(hCol);
 
   // Descriptions column
   const dCol = el("div");
   dCol.appendChild(el("h5", "ads-col-title", t("descriptionsHeading")));
-  for (const item of adCopy.descriptions || []) {
-    const row = el("div", "copy-row");
+  (adCopy.descriptions || []).forEach((item, idx) => {
+    const itemName = `description_${idx + 1}`;
+    const itemReviews = (campaign.needs_human_review || []).filter((r) => r.item === itemName);
+    const isFlagged = itemReviews.length > 0;
+
+    const wrapper = el("div", isFlagged ? "copy-row-wrap copy-row-wrap-flagged" : "copy-row-wrap");
+    const row = el("div", isFlagged ? "copy-row copy-row-flagged" : "copy-row");
     row.appendChild(el("span", "copy-row-text", item.text || ""));
     const pills = el("div", "copy-row-pills");
     const len = (item.text || "").length;
@@ -994,12 +1090,21 @@ function renderAdsSection(campaign) {
         `${len}/${LIMITS.description} ${t("charsUnit")}`
       )
     );
-    pills.appendChild(
-      el("span", statusBadgeClass(item.status), tNested("assetStatuses", item.status, item.status))
-    );
+    if (isFlagged) {
+      pills.appendChild(el("span", "badge badge-yellow", t("needsReviewPill")));
+    } else {
+      pills.appendChild(
+        el("span", statusBadgeClass(item.status), tNested("assetStatuses", item.status, item.status))
+      );
+    }
     row.appendChild(pills);
-    dCol.appendChild(row);
-  }
+    wrapper.appendChild(row);
+
+    for (const rev of itemReviews) {
+      wrapper.appendChild(renderInlineReviewCallout(rev));
+    }
+    dCol.appendChild(wrapper);
+  });
   split.appendChild(dCol);
 
   section.appendChild(split);
@@ -1011,7 +1116,13 @@ function renderLandingPageSection(campaign) {
   const lp = campaign.assets?.landing_page;
   const head = el("div", "pkg-section-head");
   head.appendChild(el("h4", "pkg-section-title", t("landingTitle")));
-  if (lp?.status) {
+
+  const lpReviewItems = (campaign.needs_human_review || []).filter(
+    (r) => r.item.startsWith("lp_") || r.item === "landing_page"
+  );
+  if (lpReviewItems.length > 0) {
+    head.appendChild(el("span", "badge badge-yellow", t("sectionFlaggedBadge", { n: lpReviewItems.length })));
+  } else if (lp?.status) {
     head.appendChild(
       el("span", statusBadgeClass(lp.status), tNested("assetStatuses", lp.status, lp.status))
     );
@@ -1021,30 +1132,62 @@ function renderLandingPageSection(campaign) {
   if (!lp) return section;
 
   const preview = el("div", "lp-preview");
-  preview.appendChild(el("h5", "lp-headline", lp.headline || ""));
-  preview.appendChild(el("p", "lp-subheadline", lp.subheadline || ""));
+
+  // Headline
+  const hReviews = (campaign.needs_human_review || []).filter((r) => r.item === "lp_headline");
+  const hWrap = el("div", "lp-field-block");
+  hWrap.appendChild(el("h5", "lp-headline", lp.headline || ""));
+  for (const rev of hReviews) {
+    hWrap.appendChild(renderInlineReviewCallout(rev));
+  }
+  preview.appendChild(hWrap);
+
+  // Subheadline
+  const subReviews = (campaign.needs_human_review || []).filter((r) => r.item === "lp_subheadline");
+  const subWrap = el("div", "lp-field-block");
+  subWrap.appendChild(el("p", "lp-subheadline", lp.subheadline || ""));
+  for (const rev of subReviews) {
+    subWrap.appendChild(renderInlineReviewCallout(rev));
+  }
+  preview.appendChild(subWrap);
 
   if (lp.cta_text) {
-    preview.appendChild(el("div", "lp-cta-preview", `${t("ctaPreviewLabel")} ${lp.cta_text}`));
+    const ctaReviews = (campaign.needs_human_review || []).filter((r) => r.item === "lp_cta_text");
+    const ctaWrap = el("div", "lp-field-block");
+    ctaWrap.appendChild(el("div", "lp-cta-preview", `${t("ctaPreviewLabel")} ${lp.cta_text}`));
+    for (const rev of ctaReviews) {
+      ctaWrap.appendChild(renderInlineReviewCallout(rev));
+    }
+    preview.appendChild(ctaWrap);
   }
 
   if (Array.isArray(lp.bullet_points) && lp.bullet_points.length > 0) {
     const ul = el("ul", "lp-bullets");
-    for (const bp of lp.bullet_points) {
+    lp.bullet_points.forEach((bp, idx) => {
+      const bReviews = (campaign.needs_human_review || []).filter((r) => r.item === `lp_bullet_${idx + 1}`);
       const li = el("li", "lp-bullet-item");
       li.appendChild(el("span", "lp-bullet-icon", "✓"));
       li.appendChild(el("span", "lp-bullet-text", bp));
       ul.appendChild(li);
-    }
+      for (const rev of bReviews) {
+        ul.appendChild(renderInlineReviewCallout(rev));
+      }
+    });
     preview.appendChild(ul);
   }
 
   if (lp.consent_disclosure) {
+    const consentReviews = (campaign.needs_human_review || []).filter(
+      (r) => r.item === "lp_consent_disclosure"
+    );
     const tcpa = el("div", "tcpa-box");
     const badgeRow = el("div", "badge-row");
     badgeRow.appendChild(el("span", "badge badge-blue", t("tcpaBadge")));
     tcpa.appendChild(badgeRow);
     tcpa.appendChild(el("p", "tcpa-text", lp.consent_disclosure));
+    for (const rev of consentReviews) {
+      tcpa.appendChild(renderInlineReviewCallout(rev));
+    }
     preview.appendChild(tcpa);
   }
 
@@ -1067,6 +1210,13 @@ function renderFollowUpSection(campaign) {
   const section = el("section", "pkg-section");
   const head = el("div", "pkg-section-head");
   head.appendChild(el("h4", "pkg-section-title", t("followupTitle")));
+
+  const followupReviews = (campaign.needs_human_review || []).filter(
+    (r) => r.item.startsWith("sms_") || r.item.startsWith("email_")
+  );
+  if (followupReviews.length > 0) {
+    head.appendChild(el("span", "badge badge-yellow", t("sectionFlaggedBadge", { n: followupReviews.length })));
+  }
   section.appendChild(head);
 
   const expectedBrand = BRAND_BY_VERTICAL[campaign.vertical] || "Example Home Buyers";
@@ -1079,11 +1229,18 @@ function renderFollowUpSection(campaign) {
 
   const smsGrid = el("div", "item-grid item-grid-2");
   for (const sms of smsList) {
-    const card = el("article", "sub-card");
+    const itemName = `sms_${sms.message_index}`;
+    const itemReviews = (campaign.needs_human_review || []).filter((r) => r.item === itemName);
+    const isFlagged = itemReviews.length > 0;
+
+    const card = el("article", isFlagged ? "sub-card sub-card-corrected" : "sub-card");
     const top = el("div", "sub-card-top");
     top.appendChild(el("span", "badge badge-mono badge-neutral", t("smsLabel", { n: sms.message_index })));
 
     const pills = el("div", "badge-row");
+    if (isFlagged) {
+      pills.appendChild(el("span", "badge badge-yellow", t("needsReviewPill")));
+    }
     const charCount = Number.isFinite(sms.char_count) ? sms.char_count : (sms.text || "").length;
     const lenOk = charCount <= LIMITS.sms;
     pills.appendChild(
@@ -1115,6 +1272,10 @@ function renderFollowUpSection(campaign) {
     top.appendChild(pills);
     card.appendChild(top);
     card.appendChild(el("p", "sub-card-text", sms.text || ""));
+
+    for (const rev of itemReviews) {
+      card.appendChild(renderInlineReviewCallout(rev));
+    }
     smsGrid.appendChild(card);
   }
   section.appendChild(smsGrid);
@@ -1126,12 +1287,20 @@ function renderFollowUpSection(campaign) {
 
   const emailGrid = el("div", "item-grid item-grid-2");
   for (const em of emailList) {
-    const card = el("article", "sub-card");
+    const itemName = `email_${em.email_index}`;
+    const itemReviews = (campaign.needs_human_review || []).filter((r) => r.item === itemName);
+    const isFlagged = itemReviews.length > 0;
+
+    const card = el("article", isFlagged ? "sub-card sub-card-corrected" : "sub-card");
     const top = el("div", "sub-card-top");
     top.appendChild(el("span", "badge badge-mono badge-neutral", t("emailLabel", { n: em.email_index })));
-    top.appendChild(
-      el("span", statusBadgeClass(em.status), tNested("assetStatuses", em.status, em.status))
-    );
+    if (isFlagged) {
+      top.appendChild(el("span", "badge badge-yellow", t("needsReviewPill")));
+    } else {
+      top.appendChild(
+        el("span", statusBadgeClass(em.status), tNested("assetStatuses", em.status, em.status))
+      );
+    }
     card.appendChild(top);
 
     const subj = el("p", "sub-card-text");
@@ -1140,6 +1309,10 @@ function renderFollowUpSection(campaign) {
     card.appendChild(subj);
 
     card.appendChild(el("p", "email-body", em.body || ""));
+
+    for (const rev of itemReviews) {
+      card.appendChild(renderInlineReviewCallout(rev));
+    }
     emailGrid.appendChild(card);
   }
   section.appendChild(emailGrid);
@@ -1188,6 +1361,11 @@ function renderHumanReviewSection(campaign) {
 function renderCampaignPackage(container, campaign, inputAssumptions, sectionFilter = "all") {
   clearNode(container);
   if (!campaign) return;
+
+  if (sectionFilter === "all") {
+    const banner = renderReviewAlertBanner(campaign);
+    if (banner) container.appendChild(banner);
+  }
 
   const builders = {
     economics: () => renderUnitEconomicsSection(campaign, inputAssumptions),
