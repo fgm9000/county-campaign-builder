@@ -1293,15 +1293,36 @@ body {
   font-family: var(--font-mono);
 }
 
+.bullet-tooltip-links-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 3px;
+  padding-top: 5px;
+  border-top: 1px dashed #334155;
+}
+
 .bullet-tooltip-link {
   color: #93c5fd;
   text-decoration: underline;
   font-weight: 600;
-  margin-top: 2px;
+  font-size: 0.74rem;
 }
 
 .bullet-tooltip-link:hover {
   color: #bfdbfe;
+}
+
+.bullet-tooltip-link-gov {
+  font-size: 0.68rem;
+  color: #94a3b8;
+  text-decoration: none;
+  opacity: 0.9;
+}
+
+.bullet-tooltip-link-gov:hover {
+  color: #e2e8f0;
+  text-decoration: underline;
 }
 
 .fact-why-box {
@@ -1328,7 +1349,11 @@ body {
 }
 
 .fact-why-link-row {
-  margin-top: 2px;
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
 }
 
 .fact-dataset-link {
@@ -1340,6 +1365,17 @@ body {
 
 .fact-dataset-link:hover {
   text-decoration: underline;
+}
+
+.fact-dataset-link-secondary {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  text-decoration: underline;
+  opacity: 0.85;
+}
+
+.fact-dataset-link-secondary:hover {
+  color: var(--text);
 }
 
 .tcpa-box {

@@ -667,7 +667,10 @@ const METRIC_INSIGHTS = {
     namePt: "U.S. Census Bureau ACS (Tabela B25081)",
     shortNameEn: "Census B25081",
     shortNamePt: "Censo B25081",
-    url: "https://data.census.gov/table?q=B25081",
+    url: "https://censusreporter.org/tables/B25081/",
+    govUrl: "https://data.census.gov/table/B25081",
+    linkLabelEn: "Open interactive table (Census Reporter) ↗",
+    linkLabelPt: "Abrir tabela interativa (Census Reporter) ↗",
     whyEn:
       "Homeowners without a bank mortgage have 100% equity with zero lender payoff requirements. This gives them full flexibility to accept an as-is cash offer with quick 7–14 day closing.",
     whyPt:
@@ -678,7 +681,10 @@ const METRIC_INSIGHTS = {
     namePt: "U.S. Census Bureau ACS (Tabela B25038)",
     shortNameEn: "Census B25038",
     shortNamePt: "Censo B25038",
-    url: "https://data.census.gov/table?q=B25038",
+    url: "https://censusreporter.org/tables/B25038/",
+    govUrl: "https://data.census.gov/table/B25038",
+    linkLabelEn: "Open interactive table (Census Reporter) ↗",
+    linkLabelPt: "Abrir tabela interativa (Census Reporter) ↗",
     whyEn:
       "Homeowners of 20+ years frequently carry deferred maintenance, aging roofs/systems, or life transitions (probate/retirement). An as-is sale eliminates $30k–$80k in retail remodeling costs.",
     whyPt:
@@ -689,7 +695,10 @@ const METRIC_INSIGHTS = {
     namePt: "U.S. Census Bureau ACS (Tabela B25035)",
     shortNameEn: "Census B25035",
     shortNamePt: "Censo B25035",
-    url: "https://data.census.gov/table?q=B25035",
+    url: "https://censusreporter.org/tables/B25035/",
+    govUrl: "https://data.census.gov/table/B25035",
+    linkLabelEn: "Open interactive table (Census Reporter) ↗",
+    linkLabelPt: "Abrir tabela interativa (Census Reporter) ↗",
     whyEn:
       "Older housing stock correlates with aging electrical, plumbing, and structural components that fail buyer mortgage inspections, strongly favoring cash buyers who waive repairs.",
     whyPt:
@@ -700,7 +709,10 @@ const METRIC_INSIGHTS = {
     namePt: "U.S. Census Bureau ACS (Tabela B25002)",
     shortNameEn: "Census B25002",
     shortNamePt: "Censo B25002",
-    url: "https://data.census.gov/table?q=B25002",
+    url: "https://censusreporter.org/tables/B25002/",
+    govUrl: "https://data.census.gov/table/B25002",
+    linkLabelEn: "Open interactive table (Census Reporter) ↗",
+    linkLabelPt: "Abrir tabela interativa (Census Reporter) ↗",
     whyEn:
       "Unoccupied properties generate zero income while accumulating property taxes, insurance, and deterioration, creating urgency for motivated sellers to liquidate quickly.",
     whyPt:
@@ -711,7 +723,10 @@ const METRIC_INSIGHTS = {
     namePt: "Base de Tempestades da NOAA (2020–2024)",
     shortNameEn: "NOAA Storm Events",
     shortNamePt: "NOAA Tempestades",
-    url: "https://www.ncdc.noaa.gov/stormevents/",
+    url: "https://www.ncei.noaa.gov/access/storm-events-database/",
+    govUrl: null,
+    linkLabelEn: "Open official NOAA Storm Events database ↗",
+    linkLabelPt: "Abrir base oficial NOAA de Tempestades ↗",
     whyEn:
       "Severe hail (>= 1.0 inch) damages roofs and siding. Homeowners facing insurance deductibles or out-of-pocket restoration costs often prefer an immediate as-is cash sale.",
     whyPt:
@@ -722,7 +737,10 @@ const METRIC_INSIGHTS = {
     namePt: "Base de Tempestades da NOAA (2020–2024)",
     shortNameEn: "NOAA High Wind",
     shortNamePt: "NOAA Vendavais",
-    url: "https://www.ncdc.noaa.gov/stormevents/",
+    url: "https://www.ncei.noaa.gov/access/storm-events-database/",
+    govUrl: null,
+    linkLabelEn: "Open official NOAA Storm Events database ↗",
+    linkLabelPt: "Abrir base oficial NOAA de Tempestades ↗",
     whyEn:
       "Gale-force winds cause structural damage and fallen trees, leading owners to seek fast cash liquidation over lengthy insurance restoration delays.",
     whyPt:
@@ -733,7 +751,10 @@ const METRIC_INSIGHTS = {
     namePt: "Base Meteorológica NOAA & NWS",
     shortNameEn: "NOAA Coastal",
     shortNamePt: "NOAA Costeira",
-    url: "https://www.ncdc.noaa.gov/stormevents/",
+    url: "https://www.ncei.noaa.gov/access/storm-events-database/",
+    govUrl: null,
+    linkLabelEn: "Open official NOAA Storm Events database ↗",
+    linkLabelPt: "Abrir base oficial NOAA de Tempestades ↗",
     whyEn:
       "Tropical storm and hurricane exposure creates flood and wind risks, prompting owners in coastal counties to capitalize on equity via quick off-market sales.",
     whyPt:
@@ -830,10 +851,20 @@ function renderFactsSection(campaign) {
       a.href = insight.url;
       a.target = "_blank";
       a.rel = "noopener noreferrer";
-      a.textContent = isPt
-        ? `Consultar base oficial (${insight.namePt}) ↗`
-        : `Open official dataset (${insight.nameEn}) ↗`;
+      a.textContent = isPt ? insight.linkLabelPt : insight.linkLabelEn;
       linkRow.appendChild(a);
+
+      if (insight.govUrl) {
+        const govA = document.createElement("a");
+        govA.className = "fact-dataset-link fact-dataset-link-secondary";
+        govA.href = insight.govUrl;
+        govA.target = "_blank";
+        govA.rel = "noopener noreferrer";
+        govA.textContent = isPt
+          ? "Portal oficial data.census.gov ↗"
+          : "Official data.census.gov portal ↗";
+        linkRow.appendChild(govA);
+      }
       whyBox.appendChild(linkRow);
 
       card.appendChild(whyBox);
@@ -1040,15 +1071,29 @@ function renderLandingPageSection(campaign) {
           : `Official value: ${matchedFact.value} · County: ${campaign.county_name}`;
         tooltip.appendChild(ttMeta);
 
+        const ttLinks = el("div", "bullet-tooltip-links-row");
+
         const ttLink = document.createElement("a");
         ttLink.className = "bullet-tooltip-link";
         ttLink.href = insight.url;
         ttLink.target = "_blank";
         ttLink.rel = "noopener noreferrer";
-        ttLink.textContent = isPt
-          ? "Abrir tabela oficial no portal do governo ↗"
-          : "Open official government dataset ↗";
-        tooltip.appendChild(ttLink);
+        ttLink.textContent = isPt ? insight.linkLabelPt : insight.linkLabelEn;
+        ttLinks.appendChild(ttLink);
+
+        if (insight.govUrl) {
+          const ttGov = document.createElement("a");
+          ttGov.className = "bullet-tooltip-link bullet-tooltip-link-gov";
+          ttGov.href = insight.govUrl;
+          ttGov.target = "_blank";
+          ttGov.rel = "noopener noreferrer";
+          ttGov.textContent = isPt
+            ? "Portal oficial data.census.gov (Governo dos EUA) ↗"
+            : "Official data.census.gov portal (US Gov) ↗";
+          ttLinks.appendChild(ttGov);
+        }
+
+        tooltip.appendChild(ttLinks);
 
         anchor.appendChild(tooltip);
         li.appendChild(anchor);
