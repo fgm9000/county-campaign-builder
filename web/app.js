@@ -118,7 +118,8 @@ const I18N = {
     metricCplWorst: "Worst-Case CPL",
     metricMaxCpc: "Max Viable CPC",
     assumptionsLine: "Operator inputs: CPC {cpcMin}–{cpcMax} · Landing CVR {cvrMin}–{cvrMax}",
-    factsTitle: "Verified Facts",
+    factsTitle: "County Intelligence & Audited Facts (B2B Strategy)",
+    factsSubtitle: "Official U.S. Census Bureau & NOAA demographic/climate data used by media buyers and acquisition teams to evaluate equity, repair risks, and calibrate local ad spend.",
     sourceLabel: "Source:",
     fieldLabel: "Field:",
     valueLabel: "Verified value:",
@@ -129,7 +130,7 @@ const I18N = {
     headlinesHeading: "Headlines (max 30 chars)",
     descriptionsHeading: "Descriptions (max 90 chars)",
     charsUnit: "chars",
-    landingTitle: "Landing Page Top",
+    landingTitle: "Landing Page Preview (Homeowner Above-the-Fold)",
     ctaPreviewLabel: "CTA Button:",
     tcpaBadge: "TCPA Consent Disclosure",
     followupTitle: "Follow-Up Sequences",
@@ -280,7 +281,8 @@ const I18N = {
     metricCplWorst: "Pior CPL",
     metricMaxCpc: "CPC Máx. Viável",
     assumptionsLine: "Premissas do operador: CPC {cpcMin}–{cpcMax} · CVR da LP {cvrMin}–{cvrMax}",
-    factsTitle: "Fatos Verificados",
+    factsTitle: "Dossiê de Mercado & Fatos Auditados (Estratégia B2B)",
+    factsSubtitle: "Métricas oficiais do Censo dos EUA e NOAA utilizadas pela equipe de aquisição imobiliária para analisar o mercado do condado e calibrar lances de leilão.",
     sourceLabel: "Fonte:",
     fieldLabel: "Campo:",
     valueLabel: "Valor verificado:",
@@ -291,7 +293,7 @@ const I18N = {
     headlinesHeading: "Títulos (máx. 30 caracteres)",
     descriptionsHeading: "Descrições (máx. 90 caracteres)",
     charsUnit: "caract.",
-    landingTitle: "Topo da Landing Page",
+    landingTitle: "Prévia da Landing Page (Visão do Proprietário)",
     ctaPreviewLabel: "Botão CTA:",
     tcpaBadge: "Declaração de Consentimento TCPA",
     followupTitle: "Sequências de Follow-Up",
@@ -762,41 +764,6 @@ const METRIC_INSIGHTS = {
   },
 };
 
-function findFactForBullet(bp, facts) {
-  if (!Array.isArray(facts)) return null;
-  const lower = String(bp || "").toLowerCase();
-  for (const fact of facts) {
-    const valStr = String(fact.value);
-    if (lower.includes(valStr)) {
-      return fact;
-    }
-  }
-  for (const fact of facts) {
-    if (
-      fact.field === "owner_long_tenure_pct" &&
-      (lower.includes("moved in") || lower.includes("before 2000") || lower.includes("20+ year"))
-    ) {
-      return fact;
-    }
-    if (
-      fact.field === "free_and_clear_pct" &&
-      (lower.includes("free and clear") || lower.includes("free & clear") || lower.includes("no mortgage"))
-    ) {
-      return fact;
-    }
-    if (fact.field === "hail_reports_1in" && lower.includes("hail")) {
-      return fact;
-    }
-    if (fact.field === "median_year_built" && (lower.includes("built") || lower.includes("age"))) {
-      return fact;
-    }
-    if (fact.field === "vacancy_pct" && lower.includes("vacan")) {
-      return fact;
-    }
-  }
-  return null;
-}
-
 function renderFactsSection(campaign) {
   const section = el("section", "pkg-section");
   const head = el("div", "pkg-section-head");
@@ -804,6 +771,7 @@ function renderFactsSection(campaign) {
   const facts = Array.isArray(campaign.facts) ? campaign.facts : [];
   head.appendChild(el("span", "badge badge-neutral", `${facts.length}`));
   section.appendChild(head);
+  section.appendChild(el("p", "pkg-section-subtitle", t("factsSubtitle")));
 
   const correctionsByField = new Map();
   if (Array.isArray(campaign.corrections)) {
@@ -1008,96 +976,8 @@ function renderLandingPageSection(campaign) {
     const ul = el("ul", "lp-bullets");
     for (const bp of lp.bullet_points) {
       const li = el("li", "lp-bullet-item");
-      const textSpan = el("span", "lp-bullet-text", bp);
-      li.appendChild(textSpan);
-
-      const matchedFact = findFactForBullet(bp, campaign.facts);
-      if (matchedFact && METRIC_INSIGHTS[matchedFact.field]) {
-        const insight = METRIC_INSIGHTS[matchedFact.field];
-        const isPt = state.lang === "pt";
-        const anchor = el("span", "bullet-tooltip-anchor");
-
-        const pill = document.createElement("button");
-        pill.type = "button";
-        pill.className = "bullet-source-pill";
-        pill.title = isPt
-          ? "Clique para fixar/abrir detalhes da fonte oficial"
-          : "Click to pin/view official dataset details";
-        pill.setAttribute(
-          "aria-label",
-          isPt
-            ? `Ver detalhes da fonte oficial ${insight.shortNamePt}`
-            : `View official source details for ${insight.shortNameEn}`
-        );
-        pill.innerHTML = `<span>📊</span> <span>${isPt ? insight.shortNamePt : insight.shortNameEn}</span> <span class="pill-info-icon">ℹ️</span>`;
-        pill.addEventListener("click", (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          const wasOpen = anchor.classList.contains("is-open");
-          document.querySelectorAll(".bullet-tooltip-anchor.is-open").forEach((el) => {
-            el.classList.remove("is-open");
-          });
-          if (!wasOpen) {
-            anchor.classList.add("is-open");
-          }
-        });
-        anchor.appendChild(pill);
-
-        const tooltip = el("span", "bullet-tooltip");
-        tooltip.addEventListener("click", (e) => {
-          e.stopPropagation();
-        });
-        const ttHead = el("span", "bullet-tooltip-header");
-        ttHead.appendChild(el("strong", "", isPt ? insight.namePt : insight.nameEn));
-        ttHead.appendChild(el("span", "badge badge-green", isPt ? "✅ Verificado" : "✅ Verified"));
-        tooltip.appendChild(ttHead);
-
-        const ttBody = el("span", "bullet-tooltip-body");
-        ttBody.appendChild(
-          el(
-            "strong",
-            "bullet-tooltip-why-title",
-            isPt ? "💡 Por que este número importa:" : "💡 Why this metric matters:"
-          )
-        );
-        ttBody.appendChild(
-          el("span", "bullet-tooltip-why-text", isPt ? insight.whyPt : insight.whyEn)
-        );
-        tooltip.appendChild(ttBody);
-
-        const ttMeta = el("span", "bullet-tooltip-meta");
-        ttMeta.textContent = isPt
-          ? `Dado oficial: ${matchedFact.value} · Condado: ${campaign.county_name}`
-          : `Official value: ${matchedFact.value} · County: ${campaign.county_name}`;
-        tooltip.appendChild(ttMeta);
-
-        const ttLinks = el("div", "bullet-tooltip-links-row");
-
-        const ttLink = document.createElement("a");
-        ttLink.className = "bullet-tooltip-link";
-        ttLink.href = insight.url;
-        ttLink.target = "_blank";
-        ttLink.rel = "noopener noreferrer";
-        ttLink.textContent = isPt ? insight.linkLabelPt : insight.linkLabelEn;
-        ttLinks.appendChild(ttLink);
-
-        if (insight.govUrl) {
-          const ttGov = document.createElement("a");
-          ttGov.className = "bullet-tooltip-link bullet-tooltip-link-gov";
-          ttGov.href = insight.govUrl;
-          ttGov.target = "_blank";
-          ttGov.rel = "noopener noreferrer";
-          ttGov.textContent = isPt
-            ? "Portal oficial data.census.gov (Governo dos EUA) ↗"
-            : "Official data.census.gov portal (US Gov) ↗";
-          ttLinks.appendChild(ttGov);
-        }
-
-        tooltip.appendChild(ttLinks);
-
-        anchor.appendChild(tooltip);
-        li.appendChild(anchor);
-      }
+      li.appendChild(el("span", "lp-bullet-icon", "✓"));
+      li.appendChild(el("span", "lp-bullet-text", bp));
       ul.appendChild(li);
     }
     preview.appendChild(ul);
