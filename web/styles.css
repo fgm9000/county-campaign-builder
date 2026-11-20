@@ -260,6 +260,129 @@ body {
   gap: 24px;
 }
 
+/* Executive Concept & Architecture Hero */
+.demo-hero {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%);
+  color: #ffffff;
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  box-shadow: 0 10px 25px -5px rgba(30, 27, 75, 0.25), 0 8px 10px -6px rgba(30, 27, 75, 0.2);
+  border: 1px solid rgba(199, 210, 254, 0.2);
+}
+
+.demo-hero-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.demo-hero-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.hero-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.hero-badge-primary {
+  background: rgba(238, 242, 255, 0.2);
+  color: #e0e7ff;
+  border: 1px solid rgba(224, 231, 255, 0.35);
+}
+
+.hero-badge-secondary {
+  background: rgba(56, 189, 248, 0.15);
+  color: #bae6fd;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  font-family: var(--font-mono);
+}
+
+.demo-hero-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.demo-hero-lead {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #e0e7ff;
+  margin: 0;
+  max-width: 1000px;
+}
+
+.demo-hero-lead strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.demo-hero-pillars {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 6px;
+}
+
+@media (min-width: 640px) {
+  .demo-hero-pillars {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .demo-hero-pillars {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.pillar-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.pillar-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.pillar-icon {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.pillar-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+.pillar-text {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #cbd5e1;
+  margin: 0;
+}
+
 /* Above the Fold: 30-Second Rule */
 .above-fold-grid {
   display: grid;

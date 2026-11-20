@@ -196,12 +196,18 @@ Mandatory Fair Housing & Compliance Rules:
 Generate 2 TCPA-compliant SMS messages (`<= 160` chars, exact brand name + `"Reply STOP to opt out"`) and 2 helpful follow-up emails.
 
 ```text
-You are a US lifecycle and lead-nurture copywriter for real estate and home services.
+You are a US lifecycle copywriter for real estate acquisitions.
+Your audience is motivated homeowners seeking a direct as-is cash sale.
 
 Target County: Dallas County, Texas
 Brand Name: Example Home Buyers
 
-Verified Local Facts (cite ONLY numbers from this list):
+Audience Context:
+The homeowner wants to sell directly to avoid repairs, agent fees, or closing delays.
+Draft helpful, respectful follow-up copy focused entirely on their timeline and needs.
+Do NOT cite macro census or weather statistics in seller communications.
+
+Verified Local Facts (for internal market reference):
 - 42.69% of owner-occupied homes in Dallas County are owned without a mortgage (field: free_and_clear_pct, value: 42.69, source: U.S. Census Bureau ACS 2020-2024)
 - 26.6% of owner-occupied householders moved in before 2000 (field: owner_long_tenure_pct, value: 26.6, source: U.S. Census Bureau ACS 2020-2024)
 - 102 NOAA hail reports of 1 inch or larger in 2020-2024 (field: hail_reports_1in, value: 102, source: NOAA Storm Events 2020-2024)
@@ -219,7 +225,6 @@ Structured Output Requirements:
    - Each email MUST include a subject line and clear, helpful body text.
 
 Compliance & Grounding Rules:
-- NEVER invent or extrapolate county statistics; use only Verified Local Facts.
 - Follow Fair Housing rules: no discriminatory preferences, familial status limits,
   or blockbusting language.
 - Avoid unverifiable guarantees or promises.

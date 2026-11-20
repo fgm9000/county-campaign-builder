@@ -43,6 +43,18 @@ const I18N = {
     linkExcel: "Download Excel Model (auction-math.xlsx)",
     linkPlaybook: "Non-Code Playbook (README.md)",
     linkRepo: "GitHub Repo ↗",
+    heroBadgeArchitecture: "Production AI Engine Architecture",
+    heroBadgeStack: "LangGraph + Parquet + Census ACS + NOAA",
+    heroTitle: "Why Pure LLMs Fail in Paid Acquisition — And How Code Makes Them Production-Ready",
+    heroLead: "In high-stakes paid advertising, pure LLMs hallucinate financial metrics, blow past ad character limits, and violate regulatory disclosures. This demo showcases a deterministic, audit-first orchestration system: Code owns the math, data integrity, and compliance; AI owns copy creativity and audience persuasion.",
+    pillar1Title: "Anti-Hallucination Firewall",
+    pillar1Text: "Zero tolerance for invented numbers. LLM claims are cross-checked against local Parquet Census ACS tables. Mismatches are automatically reconciled and logged to an audit trail.",
+    pillar2Title: "Deterministic Auction Math",
+    pillar2Text: "Unit economics (target CPL, max CPC threshold, traffic-light go/no-go verdicts) are 100% computed in Python with float precision — never delegated to a probabilistic model.",
+    pillar3Title: "Audience-Tailored Copywriting",
+    pillar3Text: "Strict separation between B2B intelligence (market tenure, equity) and B2C creative. Landing pages and SMS speak 100% to motivated home sellers (as-is sale, zero fees, 7-14 day close).",
+    pillar4Title: "Deterministic Compliance",
+    pillar4Text: "Deterministic regex engine enforces Fair Housing Act rules, TCPA SMS disclosures, Google Ads character counts (30/90), and qualification question logic with 100% test coverage.",
     thirtySecondHeading: "30-Second Overview: Auction Math and Fact Verification",
     auctionEyebrow: "Deterministic Code Math (Never LLM)",
     auctionTitle: "Multi-County Auction Math",
@@ -206,6 +218,18 @@ const I18N = {
     linkExcel: "Baixar Planilha Excel (auction-math.xlsx)",
     linkPlaybook: "Playbook Sem Código (README.md)",
     linkRepo: "Repositório GitHub ↗",
+    heroBadgeArchitecture: "Arquitetura de Motor de IA em Produção",
+    heroBadgeStack: "LangGraph + Parquet + Censo ACS + NOAA",
+    heroTitle: "Por que LLMs Puros Falham em Tráfego Pago — E Como Código os Torna Confiáveis",
+    heroLead: "Em tráfego pago de alto risco, LLMs puros inventam métricas financeiras, estouram limites de caracteres de anúncios e violam leis de compliance. Esta demo apresenta uma arquitetura determinística de auditoria contínua: Código domina a matemática, integridade de dados e conformidade; IA domina a criatividade e persuasão das mensagens.",
+    pillar1Title: "Firewall Anti-Alucinação",
+    pillar1Text: "Tolerância zero a números inventados. Afirmações do LLM são auditadas contra tabelas Parquet oficiais do Censo ACS. Divergências são retificadas automaticamente com trilha de auditoria.",
+    pillar2Title: "Matemática de Leilão Determinística",
+    pillar2Text: "Unit economics (CPL alvo, teto de CPC, semáforo go/no-go) são calculados 100% em Python com precisão de ponto flutuante — nunca delegados a modelos probabilísticos.",
+    pillar3Title: "Copywriting Focado no Público Certo",
+    pillar3Text: "Separação estrita entre inteligência de mercado B2B e peças B2C. Landing pages e SMS falam 100% com proprietários que querem vender (sem reformas, zero taxas, fechamento em 7-14 dias).",
+    pillar4Title: "Conformidade Regulatória por Código",
+    pillar4Text: "Mecanismo regex determinístico garante conformidade com Fair Housing Act, TCPA para SMS, limites de caracteres do Google Ads (30/90) e qualificação com 100% de cobertura de testes.",
     thirtySecondHeading: "Visão em 30 Segundos: Conta do Leilão e Verificação de Fatos",
     auctionEyebrow: "Matemática Determinística em Código (Nunca LLM)",
     auctionTitle: "Conta do Leilão Multi-Condado",
@@ -585,15 +609,33 @@ function renderCorrectionCallout() {
     ? targetCampaign.facts.find((f) => f.field === targetCorrection.field)
     : null;
 
+  const isCurrency = targetCorrection.field === "median_home_value_usd";
+  const llmDisplay = isCurrency
+    ? `$${Number(targetCorrection.llm_value).toLocaleString("en-US")}`
+    : String(targetCorrection.llm_value);
+  const srcDisplay = isCurrency
+    ? `$${Number(targetCorrection.source_value).toLocaleString("en-US")}`
+    : String(targetCorrection.source_value);
+
+  const defaultSource = isCurrency
+    ? "U.S. Census Bureau ACS (Table B25077)"
+    : "NOAA Storm Events 2020-2024";
+
   $("correctionCounty").textContent = `${targetCampaign.county_name} (FIPS ${targetCampaign.county_fips})`;
   $("correctionHeadline").textContent =
     state.lang === "pt"
-      ? `LLM gerou ${targetCorrection.llm_value} relatos de granizo → Fonte oficial NOAA é ${targetCorrection.source_value}: corrigido e auditado`
-      : `LLM generated ${targetCorrection.llm_value} hail reports → NOAA official source is ${targetCorrection.source_value}: corrected and audited`;
-  $("correctionLlmVal").textContent = String(targetCorrection.llm_value);
-  $("correctionFieldLabel").textContent = targetCorrection.field;
-  $("correctionSourceVal").textContent = String(targetCorrection.source_value);
-  $("correctionSourceName").textContent = matchingFact?.source || "NOAA Storm Events 2020-2024";
+      ? (isCurrency
+          ? `LLM gerou valor mediano de ${llmDisplay} → Fonte oficial do Census é ${srcDisplay}: corrigido e auditado`
+          : `LLM gerou ${targetCorrection.llm_value} para ${targetCorrection.field} → Fonte oficial é ${targetCorrection.source_value}: corrigido e auditado`)
+      : (isCurrency
+          ? `LLM generated ${llmDisplay} median home value → Census official source is ${srcDisplay}: corrected and audited`
+          : `LLM generated ${targetCorrection.llm_value} for ${targetCorrection.field} → Official source is ${targetCorrection.source_value}: corrected and audited`);
+  $("correctionLlmVal").textContent = llmDisplay;
+  $("correctionFieldLabel").textContent = isCurrency
+    ? (state.lang === "pt" ? "Valor Mediano (Censo B25077)" : "Median Home Value (Census B25077)")
+    : targetCorrection.field;
+  $("correctionSourceVal").textContent = srcDisplay;
+  $("correctionSourceName").textContent = matchingFact?.source || defaultSource;
   $("correctionReason").textContent = targetCorrection.reason || "";
 }
 
@@ -664,6 +706,20 @@ function renderUnitEconomicsSection(campaign, inputAssumptions) {
 }
 
 const METRIC_INSIGHTS = {
+  median_home_value_usd: {
+    nameEn: "U.S. Census Bureau ACS (Table B25077)",
+    namePt: "U.S. Census Bureau ACS (Tabela B25077)",
+    shortNameEn: "Census B25077",
+    shortNamePt: "Censo B25077",
+    url: "https://censusreporter.org/tables/B25077/",
+    govUrl: "https://data.census.gov/table/B25077",
+    linkLabelEn: "Open interactive table (Census Reporter) ↗",
+    linkLabelPt: "Abrir tabela interativa (Census Reporter) ↗",
+    whyEn:
+      "Median property valuation provides the baseline anchor for discount margins, wholesaling spreads, and maximum allowable acquisition offers in each county.",
+    whyPt:
+      "A mediana de valor venal serve como âncora financeira para cálculo de margens de desconto, spreads de repasse e teto máximo de oferta de compra à vista no condado.",
+  },
   free_and_clear_pct: {
     nameEn: "U.S. Census Bureau ACS (Table B25081)",
     namePt: "U.S. Census Bureau ACS (Tabela B25081)",
