@@ -986,18 +986,36 @@ function renderLandingPageSection(campaign) {
         const isPt = state.lang === "pt";
         const anchor = el("span", "bullet-tooltip-anchor");
 
-        const pill = document.createElement("a");
+        const pill = document.createElement("button");
+        pill.type = "button";
         pill.className = "bullet-source-pill";
-        pill.href = insight.url;
-        pill.target = "_blank";
-        pill.rel = "noopener noreferrer";
         pill.title = isPt
-          ? "Clique para abrir a base oficial no portal do governo"
-          : "Click to view official government dataset";
+          ? "Clique para fixar/abrir detalhes da fonte oficial"
+          : "Click to pin/view official dataset details";
+        pill.setAttribute(
+          "aria-label",
+          isPt
+            ? `Ver detalhes da fonte oficial ${insight.shortNamePt}`
+            : `View official source details for ${insight.shortNameEn}`
+        );
         pill.innerHTML = `<span>📊</span> <span>${isPt ? insight.shortNamePt : insight.shortNameEn}</span> <span class="pill-info-icon">ℹ️</span>`;
+        pill.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const wasOpen = anchor.classList.contains("is-open");
+          document.querySelectorAll(".bullet-tooltip-anchor.is-open").forEach((el) => {
+            el.classList.remove("is-open");
+          });
+          if (!wasOpen) {
+            anchor.classList.add("is-open");
+          }
+        });
         anchor.appendChild(pill);
 
         const tooltip = el("span", "bullet-tooltip");
+        tooltip.addEventListener("click", (e) => {
+          e.stopPropagation();
+        });
         const ttHead = el("span", "bullet-tooltip-header");
         ttHead.appendChild(el("strong", "", isPt ? insight.namePt : insight.nameEn));
         ttHead.appendChild(el("span", "badge badge-green", isPt ? "✅ Verificado" : "✅ Verified"));
@@ -1801,6 +1819,20 @@ function bindEvents() {
 
   $("fallbackExamplesBtn").addEventListener("click", () => {
     selectMainTab("tabCounty48113", false);
+  });
+
+  document.addEventListener("click", () => {
+    document.querySelectorAll(".bullet-tooltip-anchor.is-open").forEach((el) => {
+      el.classList.remove("is-open");
+    });
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      document.querySelectorAll(".bullet-tooltip-anchor.is-open").forEach((el) => {
+        el.classList.remove("is-open");
+      });
+    }
   });
 }
 
