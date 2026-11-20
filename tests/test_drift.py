@@ -83,15 +83,17 @@ def test_examples_dallas_has_numeric_correction_trap() -> None:
     dallas = next(c for c in campaigns if c.county_fips == DALLAS_FIPS)
 
     assert dallas.status == "success"
-    hail_corrections = [corr for corr in dallas.corrections if corr.field == "hail_reports_1in"]
-    assert len(hail_corrections) == 1
-    assert hail_corrections[0].llm_value == 120
-    assert hail_corrections[0].source_value == 102
+    median_corrections = [
+        corr for corr in dallas.corrections if corr.field == "median_home_value_usd"
+    ]
+    assert len(median_corrections) == 1
+    assert median_corrections[0].llm_value == 350000
+    assert median_corrections[0].source_value == 303000
 
-    hail_facts = [fact for fact in dallas.facts if fact.field == "hail_reports_1in"]
-    assert len(hail_facts) == 1
-    assert hail_facts[0].status == "corrected"
-    assert hail_facts[0].value == 102
+    median_facts = [fact for fact in dallas.facts if fact.field == "median_home_value_usd"]
+    assert len(median_facts) == 1
+    assert median_facts[0].status == "corrected"
+    assert median_facts[0].value == 303000
 
 
 def test_examples_json_matches_regenerated_payload_with_zero_drift() -> None:

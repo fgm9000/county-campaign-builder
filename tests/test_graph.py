@@ -30,7 +30,7 @@ from county_campaign_builder.graph import (
 from county_campaign_builder.llm import (
     COOK_FIPS,
     DALLAS_FIPS,
-    DALLAS_TRAP_HAIL_VALUE,
+    DALLAS_TRAP_MEDIAN_HOME_VALUE,
     PINELLAS_FIPS,
     AdsAndLandingPageOutput,
     AnthropicModelClient,
@@ -221,16 +221,16 @@ def test_run_campaign_dallas_catches_planted_trap_and_computes_economics() -> No
     assert campaign.county_fips == DALLAS_FIPS
     assert campaign.county_name == "Dallas County, Texas"
 
-    # Dallas planted trap (120 against authoritative 102) must be caught and corrected.
+    # Dallas planted trap ($350,000 against authoritative $303,000) must be caught and corrected.
     assert len(campaign.corrections) == 1
     correction = campaign.corrections[0]
-    assert correction.field == "hail_reports_1in"
-    assert correction.llm_value == DALLAS_TRAP_HAIL_VALUE
-    assert correction.source_value == 102
+    assert correction.field == "median_home_value_usd"
+    assert correction.llm_value == DALLAS_TRAP_MEDIAN_HOME_VALUE
+    assert correction.source_value == 303000
 
-    hail_fact = next(f for f in campaign.facts if f.field == "hail_reports_1in")
-    assert hail_fact.status == "corrected"
-    assert hail_fact.value == 102
+    median_fact = next(f for f in campaign.facts if f.field == "median_home_value_usd")
+    assert median_fact.status == "corrected"
+    assert median_fact.value == 303000
     assert all(f.status in {"verified", "corrected"} for f in campaign.facts)
 
     assert campaign.unit_economics.verdict == "green"

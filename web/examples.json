@@ -52,23 +52,23 @@
         "error_message": null,
         "facts": [
           {
-            "claim": "120 hail reports of 1 inch or larger in 2020-2024",
-            "field": "hail_reports_1in",
-            "value": 102,
-            "source": "NOAA Storm Events 2020-2024",
-            "status": "corrected"
-          },
-          {
-            "claim": "26.6% of owner-occupied households moved in before 2000",
-            "field": "owner_long_tenure_pct",
-            "value": 26.6,
+            "claim": "Median home value is $350,000 in Dallas County, Texas",
+            "field": "median_home_value_usd",
+            "value": 303000,
             "source": "U.S. Census Bureau ACS 2020-2024",
-            "status": "verified"
+            "status": "corrected"
           },
           {
             "claim": "42.69% of owner-occupied homes are owned free and clear",
             "field": "free_and_clear_pct",
             "value": 42.69,
+            "source": "U.S. Census Bureau ACS 2020-2024",
+            "status": "verified"
+          },
+          {
+            "claim": "26.6% of owner-occupied households moved in before 2000",
+            "field": "owner_long_tenure_pct",
+            "value": 26.6,
             "source": "U.S. Census Bureau ACS 2020-2024",
             "status": "verified"
           },
@@ -82,10 +82,10 @@
         ],
         "corrections": [
           {
-            "field": "hail_reports_1in",
-            "llm_value": 120,
-            "source_value": 102,
-            "reason": "Corrected from 120 to source value 102."
+            "field": "median_home_value_usd",
+            "llm_value": 350000,
+            "source_value": 303000,
+            "reason": "Corrected from 350000 to source value 303000."
           }
         ],
         "unit_economics": {
@@ -189,14 +189,14 @@
               "status": "approved",
               "rejection_reason": null,
               "message_index": 1,
-              "text": "Example Home Buyers: Thanks for contacting us about your Dallas home. When can we connect? Reply STOP to opt out.",
-              "char_count": 113
+              "text": "Example Home Buyers: Hi! We received your request for an as-is cash offer in Dallas. When can we chat? Reply STOP to opt out.",
+              "char_count": 125
             },
             {
               "status": "approved",
               "rejection_reason": null,
               "message_index": 2,
-              "text": "Example Home Buyers: Following up on your Dallas inquiry. Share a good time for a brief call. Reply STOP to opt out.",
+              "text": "Example Home Buyers: Still looking to sell your Dallas house as-is? Reply with your timeline! Reply STOP to opt out.",
               "char_count": 116
             }
           ],
@@ -205,15 +205,15 @@
               "status": "approved",
               "rejection_reason": null,
               "email_index": 1,
-              "subject": "Next steps for your Dallas County, Texas property inquiry",
-              "body": "Hello,\n\nThank you for reaching out to Example Home Buyers regarding your property in Dallas County, Texas.\n\nLocal context we track in Dallas County, Texas: 120 hail reports of 1 inch or larger in 2020-2024.\n\nReply to this email with a convenient time for a brief conversation so we can review your goals and timeline.\n\nBest regards,\nExample Home Buyers"
+              "subject": "Your as-is property review for Dallas County, Texas",
+              "body": "Hello,\n\nThank you for requesting an as-is review for your Dallas property with Example Home Buyers in Dallas County, Texas.\n\nWe specialize in straightforward as-is home purchases across Dallas:\n\u2022 100% As-Is: No repairs, cleaning, or staging required.\n\u2022 Zero Commissions: No agent fees or hidden closing deductions.\n\u2022 Your Timeline: Close in as few as 7\u201314 days or on your schedule.\n\nReply directly to this email with a convenient time for a brief 5-minute\ncall so we can review your property details and prepare your cash offer.\n\nBest regards,\nExample Home Buyers"
             },
             {
               "status": "approved",
               "rejection_reason": null,
               "email_index": 2,
-              "subject": "Checking in from Example Home Buyers (Dallas)",
-              "body": "Hello,\n\nWe wanted to check in on your recent inquiry with Example Home Buyers for Dallas County, Texas. If you still have questions or would like to discuss next steps, simply reply here at your convenience.\n\nBest regards,\nExample Home Buyers"
+              "subject": "Checking in on your Dallas property sale (Example Home Buyers)",
+              "body": "Hello,\n\nWe wanted to follow up on your recent cash offer inquiry with Example Home Buyers\nfor Dallas County, Texas.\n\nIf you want to sell without retail open houses, bank financing delays,\nor spending thousands out-of-pocket on repairs, we are ready to help.\n\nThere is zero obligation. Reply here or share the best number to connect.\n\nBest regards,\nExample Home Buyers"
             }
           ]
         },
@@ -227,9 +227,9 @@
         "error_message": null,
         "facts": [
           {
-            "claim": "22.82% of owner-occupied households moved in before 2000",
-            "field": "owner_long_tenure_pct",
-            "value": 22.82,
+            "claim": "Median home value is $355,100 in Pinellas County, Florida",
+            "field": "median_home_value_usd",
+            "value": 355100,
             "source": "U.S. Census Bureau ACS 2020-2024",
             "status": "verified"
           },
@@ -241,16 +241,16 @@
             "status": "verified"
           },
           {
-            "claim": "17.62% housing vacancy rate in Pinellas County, Florida",
-            "field": "vacancy_pct",
-            "value": 17.62,
+            "claim": "22.82% of owner-occupied households moved in before 2000",
+            "field": "owner_long_tenure_pct",
+            "value": 22.82,
             "source": "U.S. Census Bureau ACS 2020-2024",
             "status": "verified"
           },
           {
-            "claim": "Median home construction year is 1977 in Pinellas County, Florida",
-            "field": "median_year_built",
-            "value": 1977,
+            "claim": "17.62% housing vacancy rate in Pinellas County, Florida",
+            "field": "vacancy_pct",
+            "value": 17.62,
             "source": "U.S. Census Bureau ACS 2020-2024",
             "status": "verified"
           }
@@ -357,14 +357,14 @@
               "status": "approved",
               "rejection_reason": null,
               "message_index": 1,
-              "text": "Example Home Buyers: Thanks for contacting us about your Pinellas home. When can we connect? Reply STOP to opt out.",
-              "char_count": 115
+              "text": "Example Home Buyers: Hi! We received your request for an as-is cash offer in Pinellas. When can we chat? Reply STOP to opt out.",
+              "char_count": 127
             },
             {
               "status": "approved",
               "rejection_reason": null,
               "message_index": 2,
-              "text": "Example Home Buyers: Following up on your Pinellas inquiry. Share a good time for a brief call. Reply STOP to opt out.",
+              "text": "Example Home Buyers: Still looking to sell your Pinellas house as-is? Reply with your timeline! Reply STOP to opt out.",
               "char_count": 118
             }
           ],
@@ -373,15 +373,15 @@
               "status": "approved",
               "rejection_reason": null,
               "email_index": 1,
-              "subject": "Next steps for your Pinellas County, Florida property inquiry",
-              "body": "Hello,\n\nThank you for reaching out to Example Home Buyers regarding your property in Pinellas County, Florida.\n\nLocal context we track in Pinellas County, Florida: 22.82% of owner-occupied households moved in before 2000.\n\nReply to this email with a convenient time for a brief conversation so we can review your goals and timeline.\n\nBest regards,\nExample Home Buyers"
+              "subject": "Your as-is property review for Pinellas County, Florida",
+              "body": "Hello,\n\nThank you for requesting an as-is review for your Pinellas property with Example Home Buyers in Pinellas County, Florida.\n\nWe specialize in straightforward as-is home purchases across Pinellas:\n\u2022 100% As-Is: No repairs, cleaning, or staging required.\n\u2022 Zero Commissions: No agent fees or hidden closing deductions.\n\u2022 Your Timeline: Close in as few as 7\u201314 days or on your schedule.\n\nReply directly to this email with a convenient time for a brief 5-minute\ncall so we can review your property details and prepare your cash offer.\n\nBest regards,\nExample Home Buyers"
             },
             {
               "status": "approved",
               "rejection_reason": null,
               "email_index": 2,
-              "subject": "Checking in from Example Home Buyers (Pinellas)",
-              "body": "Hello,\n\nWe wanted to check in on your recent inquiry with Example Home Buyers for Pinellas County, Florida. If you still have questions or would like to discuss next steps, simply reply here at your convenience.\n\nBest regards,\nExample Home Buyers"
+              "subject": "Checking in on your Pinellas property sale (Example Home Buyers)",
+              "body": "Hello,\n\nWe wanted to follow up on your recent cash offer inquiry with Example Home Buyers\nfor Pinellas County, Florida.\n\nIf you want to sell without retail open houses, bank financing delays,\nor spending thousands out-of-pocket on repairs, we are ready to help.\n\nThere is zero obligation. Reply here or share the best number to connect.\n\nBest regards,\nExample Home Buyers"
             }
           ]
         },
@@ -395,9 +395,9 @@
         "error_message": null,
         "facts": [
           {
-            "claim": "31.24% of owner-occupied households moved in before 2000",
-            "field": "owner_long_tenure_pct",
-            "value": 31.24,
+            "claim": "Median home value is $324,500 in Cook County, Illinois",
+            "field": "median_home_value_usd",
+            "value": 324500,
             "source": "U.S. Census Bureau ACS 2020-2024",
             "status": "verified"
           },
@@ -409,16 +409,16 @@
             "status": "verified"
           },
           {
-            "claim": "7.74% housing vacancy rate in Cook County, Illinois",
-            "field": "vacancy_pct",
-            "value": 7.74,
+            "claim": "31.24% of owner-occupied households moved in before 2000",
+            "field": "owner_long_tenure_pct",
+            "value": 31.24,
             "source": "U.S. Census Bureau ACS 2020-2024",
             "status": "verified"
           },
           {
-            "claim": "Median home construction year is 1961 in Cook County, Illinois",
-            "field": "median_year_built",
-            "value": 1961,
+            "claim": "7.74% housing vacancy rate in Cook County, Illinois",
+            "field": "vacancy_pct",
+            "value": 7.74,
             "source": "U.S. Census Bureau ACS 2020-2024",
             "status": "verified"
           }
@@ -525,14 +525,14 @@
               "status": "approved",
               "rejection_reason": null,
               "message_index": 1,
-              "text": "Example Home Buyers: Thanks for contacting us about your Cook home. When can we connect? Reply STOP to opt out.",
-              "char_count": 111
+              "text": "Example Home Buyers: Hi! We received your request for an as-is cash offer in Cook. When can we chat? Reply STOP to opt out.",
+              "char_count": 123
             },
             {
               "status": "approved",
               "rejection_reason": null,
               "message_index": 2,
-              "text": "Example Home Buyers: Following up on your Cook inquiry. Share a good time for a brief call. Reply STOP to opt out.",
+              "text": "Example Home Buyers: Still looking to sell your Cook house as-is? Reply with your timeline! Reply STOP to opt out.",
               "char_count": 114
             }
           ],
@@ -541,15 +541,15 @@
               "status": "approved",
               "rejection_reason": null,
               "email_index": 1,
-              "subject": "Next steps for your Cook County, Illinois property inquiry",
-              "body": "Hello,\n\nThank you for reaching out to Example Home Buyers regarding your property in Cook County, Illinois.\n\nLocal context we track in Cook County, Illinois: 31.24% of owner-occupied households moved in before 2000.\n\nReply to this email with a convenient time for a brief conversation so we can review your goals and timeline.\n\nBest regards,\nExample Home Buyers"
+              "subject": "Your as-is property review for Cook County, Illinois",
+              "body": "Hello,\n\nThank you for requesting an as-is review for your Cook property with Example Home Buyers in Cook County, Illinois.\n\nWe specialize in straightforward as-is home purchases across Cook:\n\u2022 100% As-Is: No repairs, cleaning, or staging required.\n\u2022 Zero Commissions: No agent fees or hidden closing deductions.\n\u2022 Your Timeline: Close in as few as 7\u201314 days or on your schedule.\n\nReply directly to this email with a convenient time for a brief 5-minute\ncall so we can review your property details and prepare your cash offer.\n\nBest regards,\nExample Home Buyers"
             },
             {
               "status": "approved",
               "rejection_reason": null,
               "email_index": 2,
-              "subject": "Checking in from Example Home Buyers (Cook)",
-              "body": "Hello,\n\nWe wanted to check in on your recent inquiry with Example Home Buyers for Cook County, Illinois. If you still have questions or would like to discuss next steps, simply reply here at your convenience.\n\nBest regards,\nExample Home Buyers"
+              "subject": "Checking in on your Cook property sale (Example Home Buyers)",
+              "body": "Hello,\n\nWe wanted to follow up on your recent cash offer inquiry with Example Home Buyers\nfor Cook County, Illinois.\n\nIf you want to sell without retail open houses, bank financing delays,\nor spending thousands out-of-pocket on repairs, we are ready to help.\n\nThere is zero obligation. Reply here or share the best number to connect.\n\nBest regards,\nExample Home Buyers"
             }
           ]
         },
@@ -568,23 +568,23 @@
       "error_message": null,
       "facts": [
         {
-          "claim": "120 hail reports of 1 inch or larger in 2020-2024",
-          "field": "hail_reports_1in",
-          "value": 102,
-          "source": "NOAA Storm Events 2020-2024",
-          "status": "corrected"
-        },
-        {
-          "claim": "26.6% of owner-occupied households moved in before 2000",
-          "field": "owner_long_tenure_pct",
-          "value": 26.6,
+          "claim": "Median home value is $350,000 in Dallas County, Texas",
+          "field": "median_home_value_usd",
+          "value": 303000,
           "source": "U.S. Census Bureau ACS 2020-2024",
-          "status": "verified"
+          "status": "corrected"
         },
         {
           "claim": "42.69% of owner-occupied homes are owned free and clear",
           "field": "free_and_clear_pct",
           "value": 42.69,
+          "source": "U.S. Census Bureau ACS 2020-2024",
+          "status": "verified"
+        },
+        {
+          "claim": "26.6% of owner-occupied households moved in before 2000",
+          "field": "owner_long_tenure_pct",
+          "value": 26.6,
           "source": "U.S. Census Bureau ACS 2020-2024",
           "status": "verified"
         },
@@ -598,10 +598,10 @@
       ],
       "corrections": [
         {
-          "field": "hail_reports_1in",
-          "llm_value": 120,
-          "source_value": 102,
-          "reason": "Corrected from 120 to source value 102."
+          "field": "median_home_value_usd",
+          "llm_value": 350000,
+          "source_value": 303000,
+          "reason": "Corrected from 350000 to source value 303000."
         }
       ],
       "unit_economics": {
@@ -705,14 +705,14 @@
             "status": "approved",
             "rejection_reason": null,
             "message_index": 1,
-            "text": "Example Home Buyers: Thanks for contacting us about your Dallas home. When can we connect? Reply STOP to opt out.",
-            "char_count": 113
+            "text": "Example Home Buyers: Hi! We received your request for an as-is cash offer in Dallas. When can we chat? Reply STOP to opt out.",
+            "char_count": 125
           },
           {
             "status": "approved",
             "rejection_reason": null,
             "message_index": 2,
-            "text": "Example Home Buyers: Following up on your Dallas inquiry. Share a good time for a brief call. Reply STOP to opt out.",
+            "text": "Example Home Buyers: Still looking to sell your Dallas house as-is? Reply with your timeline! Reply STOP to opt out.",
             "char_count": 116
           }
         ],
@@ -721,15 +721,15 @@
             "status": "approved",
             "rejection_reason": null,
             "email_index": 1,
-            "subject": "Next steps for your Dallas County, Texas property inquiry",
-            "body": "Hello,\n\nThank you for reaching out to Example Home Buyers regarding your property in Dallas County, Texas.\n\nLocal context we track in Dallas County, Texas: 120 hail reports of 1 inch or larger in 2020-2024.\n\nReply to this email with a convenient time for a brief conversation so we can review your goals and timeline.\n\nBest regards,\nExample Home Buyers"
+            "subject": "Your as-is property review for Dallas County, Texas",
+            "body": "Hello,\n\nThank you for requesting an as-is review for your Dallas property with Example Home Buyers in Dallas County, Texas.\n\nWe specialize in straightforward as-is home purchases across Dallas:\n\u2022 100% As-Is: No repairs, cleaning, or staging required.\n\u2022 Zero Commissions: No agent fees or hidden closing deductions.\n\u2022 Your Timeline: Close in as few as 7\u201314 days or on your schedule.\n\nReply directly to this email with a convenient time for a brief 5-minute\ncall so we can review your property details and prepare your cash offer.\n\nBest regards,\nExample Home Buyers"
           },
           {
             "status": "approved",
             "rejection_reason": null,
             "email_index": 2,
-            "subject": "Checking in from Example Home Buyers (Dallas)",
-            "body": "Hello,\n\nWe wanted to check in on your recent inquiry with Example Home Buyers for Dallas County, Texas. If you still have questions or would like to discuss next steps, simply reply here at your convenience.\n\nBest regards,\nExample Home Buyers"
+            "subject": "Checking in on your Dallas property sale (Example Home Buyers)",
+            "body": "Hello,\n\nWe wanted to follow up on your recent cash offer inquiry with Example Home Buyers\nfor Dallas County, Texas.\n\nIf you want to sell without retail open houses, bank financing delays,\nor spending thousands out-of-pocket on repairs, we are ready to help.\n\nThere is zero obligation. Reply here or share the best number to connect.\n\nBest regards,\nExample Home Buyers"
           }
         ]
       },
@@ -743,9 +743,9 @@
       "error_message": null,
       "facts": [
         {
-          "claim": "22.82% of owner-occupied households moved in before 2000",
-          "field": "owner_long_tenure_pct",
-          "value": 22.82,
+          "claim": "Median home value is $355,100 in Pinellas County, Florida",
+          "field": "median_home_value_usd",
+          "value": 355100,
           "source": "U.S. Census Bureau ACS 2020-2024",
           "status": "verified"
         },
@@ -757,16 +757,16 @@
           "status": "verified"
         },
         {
-          "claim": "17.62% housing vacancy rate in Pinellas County, Florida",
-          "field": "vacancy_pct",
-          "value": 17.62,
+          "claim": "22.82% of owner-occupied households moved in before 2000",
+          "field": "owner_long_tenure_pct",
+          "value": 22.82,
           "source": "U.S. Census Bureau ACS 2020-2024",
           "status": "verified"
         },
         {
-          "claim": "Median home construction year is 1977 in Pinellas County, Florida",
-          "field": "median_year_built",
-          "value": 1977,
+          "claim": "17.62% housing vacancy rate in Pinellas County, Florida",
+          "field": "vacancy_pct",
+          "value": 17.62,
           "source": "U.S. Census Bureau ACS 2020-2024",
           "status": "verified"
         }
@@ -873,14 +873,14 @@
             "status": "approved",
             "rejection_reason": null,
             "message_index": 1,
-            "text": "Example Home Buyers: Thanks for contacting us about your Pinellas home. When can we connect? Reply STOP to opt out.",
-            "char_count": 115
+            "text": "Example Home Buyers: Hi! We received your request for an as-is cash offer in Pinellas. When can we chat? Reply STOP to opt out.",
+            "char_count": 127
           },
           {
             "status": "approved",
             "rejection_reason": null,
             "message_index": 2,
-            "text": "Example Home Buyers: Following up on your Pinellas inquiry. Share a good time for a brief call. Reply STOP to opt out.",
+            "text": "Example Home Buyers: Still looking to sell your Pinellas house as-is? Reply with your timeline! Reply STOP to opt out.",
             "char_count": 118
           }
         ],
@@ -889,15 +889,15 @@
             "status": "approved",
             "rejection_reason": null,
             "email_index": 1,
-            "subject": "Next steps for your Pinellas County, Florida property inquiry",
-            "body": "Hello,\n\nThank you for reaching out to Example Home Buyers regarding your property in Pinellas County, Florida.\n\nLocal context we track in Pinellas County, Florida: 22.82% of owner-occupied households moved in before 2000.\n\nReply to this email with a convenient time for a brief conversation so we can review your goals and timeline.\n\nBest regards,\nExample Home Buyers"
+            "subject": "Your as-is property review for Pinellas County, Florida",
+            "body": "Hello,\n\nThank you for requesting an as-is review for your Pinellas property with Example Home Buyers in Pinellas County, Florida.\n\nWe specialize in straightforward as-is home purchases across Pinellas:\n\u2022 100% As-Is: No repairs, cleaning, or staging required.\n\u2022 Zero Commissions: No agent fees or hidden closing deductions.\n\u2022 Your Timeline: Close in as few as 7\u201314 days or on your schedule.\n\nReply directly to this email with a convenient time for a brief 5-minute\ncall so we can review your property details and prepare your cash offer.\n\nBest regards,\nExample Home Buyers"
           },
           {
             "status": "approved",
             "rejection_reason": null,
             "email_index": 2,
-            "subject": "Checking in from Example Home Buyers (Pinellas)",
-            "body": "Hello,\n\nWe wanted to check in on your recent inquiry with Example Home Buyers for Pinellas County, Florida. If you still have questions or would like to discuss next steps, simply reply here at your convenience.\n\nBest regards,\nExample Home Buyers"
+            "subject": "Checking in on your Pinellas property sale (Example Home Buyers)",
+            "body": "Hello,\n\nWe wanted to follow up on your recent cash offer inquiry with Example Home Buyers\nfor Pinellas County, Florida.\n\nIf you want to sell without retail open houses, bank financing delays,\nor spending thousands out-of-pocket on repairs, we are ready to help.\n\nThere is zero obligation. Reply here or share the best number to connect.\n\nBest regards,\nExample Home Buyers"
           }
         ]
       },
@@ -911,9 +911,9 @@
       "error_message": null,
       "facts": [
         {
-          "claim": "31.24% of owner-occupied households moved in before 2000",
-          "field": "owner_long_tenure_pct",
-          "value": 31.24,
+          "claim": "Median home value is $324,500 in Cook County, Illinois",
+          "field": "median_home_value_usd",
+          "value": 324500,
           "source": "U.S. Census Bureau ACS 2020-2024",
           "status": "verified"
         },
@@ -925,16 +925,16 @@
           "status": "verified"
         },
         {
-          "claim": "7.74% housing vacancy rate in Cook County, Illinois",
-          "field": "vacancy_pct",
-          "value": 7.74,
+          "claim": "31.24% of owner-occupied households moved in before 2000",
+          "field": "owner_long_tenure_pct",
+          "value": 31.24,
           "source": "U.S. Census Bureau ACS 2020-2024",
           "status": "verified"
         },
         {
-          "claim": "Median home construction year is 1961 in Cook County, Illinois",
-          "field": "median_year_built",
-          "value": 1961,
+          "claim": "7.74% housing vacancy rate in Cook County, Illinois",
+          "field": "vacancy_pct",
+          "value": 7.74,
           "source": "U.S. Census Bureau ACS 2020-2024",
           "status": "verified"
         }
@@ -1041,14 +1041,14 @@
             "status": "approved",
             "rejection_reason": null,
             "message_index": 1,
-            "text": "Example Home Buyers: Thanks for contacting us about your Cook home. When can we connect? Reply STOP to opt out.",
-            "char_count": 111
+            "text": "Example Home Buyers: Hi! We received your request for an as-is cash offer in Cook. When can we chat? Reply STOP to opt out.",
+            "char_count": 123
           },
           {
             "status": "approved",
             "rejection_reason": null,
             "message_index": 2,
-            "text": "Example Home Buyers: Following up on your Cook inquiry. Share a good time for a brief call. Reply STOP to opt out.",
+            "text": "Example Home Buyers: Still looking to sell your Cook house as-is? Reply with your timeline! Reply STOP to opt out.",
             "char_count": 114
           }
         ],
@@ -1057,15 +1057,15 @@
             "status": "approved",
             "rejection_reason": null,
             "email_index": 1,
-            "subject": "Next steps for your Cook County, Illinois property inquiry",
-            "body": "Hello,\n\nThank you for reaching out to Example Home Buyers regarding your property in Cook County, Illinois.\n\nLocal context we track in Cook County, Illinois: 31.24% of owner-occupied households moved in before 2000.\n\nReply to this email with a convenient time for a brief conversation so we can review your goals and timeline.\n\nBest regards,\nExample Home Buyers"
+            "subject": "Your as-is property review for Cook County, Illinois",
+            "body": "Hello,\n\nThank you for requesting an as-is review for your Cook property with Example Home Buyers in Cook County, Illinois.\n\nWe specialize in straightforward as-is home purchases across Cook:\n\u2022 100% As-Is: No repairs, cleaning, or staging required.\n\u2022 Zero Commissions: No agent fees or hidden closing deductions.\n\u2022 Your Timeline: Close in as few as 7\u201314 days or on your schedule.\n\nReply directly to this email with a convenient time for a brief 5-minute\ncall so we can review your property details and prepare your cash offer.\n\nBest regards,\nExample Home Buyers"
           },
           {
             "status": "approved",
             "rejection_reason": null,
             "email_index": 2,
-            "subject": "Checking in from Example Home Buyers (Cook)",
-            "body": "Hello,\n\nWe wanted to check in on your recent inquiry with Example Home Buyers for Cook County, Illinois. If you still have questions or would like to discuss next steps, simply reply here at your convenience.\n\nBest regards,\nExample Home Buyers"
+            "subject": "Checking in on your Cook property sale (Example Home Buyers)",
+            "body": "Hello,\n\nWe wanted to follow up on your recent cash offer inquiry with Example Home Buyers\nfor Cook County, Illinois.\n\nIf you want to sell without retail open houses, bank financing delays,\nor spending thousands out-of-pocket on repairs, we are ready to help.\n\nThere is zero obligation. Reply here or share the best number to connect.\n\nBest regards,\nExample Home Buyers"
           }
         ]
       },

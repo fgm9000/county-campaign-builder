@@ -16,7 +16,7 @@ from county_campaign_builder.domain import QuestionTopic, VerticalConfig, load_v
 from county_campaign_builder.llm import (
     COOK_FIPS,
     DALLAS_FIPS,
-    DALLAS_TRAP_HAIL_VALUE,
+    DALLAS_TRAP_MEDIAN_HOME_VALUE,
     HAIKU_MODEL,
     PINELLAS_FIPS,
     SONNET_MODEL,
@@ -227,20 +227,20 @@ def test_fake_client_dallas_trap_and_grounded() -> None:
     client_trap = FakeModelClient(plant_trap=True)
     trap_out = client_trap.interpret_triggers(dallas, motivated_seller)
     assert len(trap_out.triggers) == 4
-    hail_items = [item for item in trap_out.triggers if item.field == "hail_reports_1in"]
-    assert len(hail_items) == 1
-    assert hail_items[0].value == DALLAS_TRAP_HAIL_VALUE
-    assert dallas.hail_reports_1in == 102
+    median_items = [item for item in trap_out.triggers if item.field == "median_home_value_usd"]
+    assert len(median_items) == 1
+    assert median_items[0].value == DALLAS_TRAP_MEDIAN_HOME_VALUE
+    assert dallas.median_home_value_usd == 303000
 
-    # When roofing has hail_reports_1in first in trigger_fields, seen_fields skips duplicate.
+    # In roofing with trap, median_home_value_usd is trapped as well.
     trap_roofing = client_trap.interpret_triggers(dallas, roofing)
-    assert sum(1 for item in trap_roofing.triggers if item.field == "hail_reports_1in") == 1
+    assert sum(1 for item in trap_roofing.triggers if item.field == "median_home_value_usd") == 1
 
     client_clean = FakeModelClient(plant_trap=False)
-    clean_out = client_clean.interpret_triggers(dallas, roofing)
-    clean_hail = [item for item in clean_out.triggers if item.field == "hail_reports_1in"]
-    assert len(clean_hail) == 1
-    assert clean_hail[0].value == 102
+    clean_out = client_clean.interpret_triggers(dallas, motivated_seller)
+    clean_median = [item for item in clean_out.triggers if item.field == "median_home_value_usd"]
+    assert len(clean_median) == 1
+    assert clean_median[0].value == 303000
 
 
 def test_fake_client_pinellas_cook_and_arbitrary_county() -> None:
