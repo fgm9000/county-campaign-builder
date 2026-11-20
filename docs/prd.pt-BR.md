@@ -48,13 +48,13 @@ Para cada condado, o pacote entrega:
 
 ## 4. Fluxo principal
 **Condados da demo gravada**, escolhidos pelo contraste:
-| Condado | Narrativa esperada |
-|---|---|
-| Dallas County, TX | Muito granizo; a conta fecha |
-| Pinellas County, FL | Vento e furacão, imóveis mais antigos; a conta fica no limite |
-| Cook County, IL | CPC alto de metrópole e poucos eventos de clima; a conta não fecha |
+| Condado | O que os dados mostram (2020–2024 e ACS 2020–2024) | Semáforo esperado |
+|---|---|---|
+| Dallas County, TX | 102 relatos de granizo ≥ 1"; imóveis mais novos (1983); 42,7% quitados | 🟢 fecha |
+| Pinellas County, FL | 18 eventos tropicais; vacância de 17,6%; 48,9% quitados; imóveis de 1977 | 🟡 no limite |
+| Cook County, IL | 455 relatos de vento e 94 de granizo; imóveis mais antigos (1961); 31,2% dos donos há mais de 25 anos | 🔴 ótimos gatilhos, mas o clique de metrópole não fecha a conta |
 
-A narrativa só vale se os dados reais confirmarem; isso é conferido antes de gravar.
+**Revisão de 2026-11-20 (Fase 2):** a narrativa inicial dizia "Cook com poucos eventos de clima", e os dados mostraram o contrário. Cook continua o vermelho, agora pelo motivo mais instrutivo: a IA o recomendaria pelos gatilhos, e o código o reprova pela conta do leilão. O CPC continua sendo premissa do operador, dita como tal na tela.
 
 **Passos:**
 1. O operador informa o condado (código FIPS), a vertical, o lance por lead e as **premissas** de CPC e conversão da landing page (faixa mínima e máxima).
@@ -113,7 +113,10 @@ Os dois juntos são o "check AI-generated facts, calculations, and recommendatio
 | RNF-05 | Idioma | Interface e saídas em inglês (mercado americano); docs PT/EN | Etapa 0 |
 
 ## 7. Dados e privacidade
-- **Fatos locais vêm de dados públicos estruturados, não de busca web:** NOAA Storm Events (granizo e vento por condado e ano) e Census ACS (idade dos imóveis, proporção de donos, valor médio). O código baixa os números; o LLM só escreve a partir deles; o verificador confere também os **números** citados.
+- **Fatos locais vêm de dados públicos estruturados, não de busca web:**
+  - **Motivated seller, sinais principais (Census ACS):** idade dos imóveis, vacância, proporção de imóveis alugados (donos-investidores), donos há mais de 25 anos (B25038) e imóveis quitados (B25081). Incluídos na Fase 2, a pedido do Fabio, porque o clima é gatilho secundário para quem vende.
+  - **Clima (NOAA Storm Events):** gatilho principal de roofing e ângulo secundário de motivated seller (imóvel danificado por tempestade vendido no estado em que está).
+  - Execução hipotecária e impostos atrasados seriam os melhores sinais, mas são dados pagos (ATTOM e afins): ficam como próximo passo. O código baixa os números; o LLM só escreve a partir deles; o verificador confere também os **números** citados.
 - **Snapshot versionado** dos dados dos 3 condados, para o CI e a página pública funcionarem sem rede.
 - Disponibilidade, formato, licença e limites das duas fontes: a confirmar na fonte na Etapa 2.
 

@@ -1,0 +1,44 @@
+{
+  "generated_at": "2026-11-20",
+  "county_count": 3222,
+  "storm_years": "2020-2024",
+  "sources": {
+    "noaa_storm_events": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/StormEvents_details-ftp_v1.0_d<YEAR>_c20261118.csv.gz",
+    "nws_zone_county_map": "https://www.weather.gov/source/gis/Shapefiles/County/bp16ap26.dbx",
+    "census_acs5": "https://api.census.gov/data/2024/acs/acs5?get=NAME,B25035_001E,B25003_001E,B25003_002E,B25002_001E,B25002_003E,B25077_001E,B25038_002E,B25038_007E,B25038_008E,B25081_001E,B25081_009E&for=county:*"
+  },
+  "zone_map_version": "bp16ap26.dbx",
+  "census_vintage": "ACS 5-year 2020-2024",
+  "rules": {
+    "hail_min_inches": 1.0,
+    "wind_min_knots": 50.0,
+    "tropical_event_types": [
+      "Hurricane (Typhoon)",
+      "Tropical Storm",
+      "Tropical Depression"
+    ],
+    "counting_unit": "event records deduplicated by EVENT_ID, not distinct storms",
+    "zone_events": "a zone event counts once for each county the zone covers",
+    "census_negative_values": "Census sentinels (negative) stored as null",
+    "counties_without_events": "0"
+  },
+  "columns": {
+    "fips": "5-digit county FIPS (state + county), text",
+    "county_name": "Census county name, e.g. 'Dallas County, Texas'",
+    "hail_reports_1in": "NOAA Hail event records with MAGNITUDE >= 1.0 inch, county rows only",
+    "severe_wind_reports": "NOAA Thunderstorm Wind records with MAGNITUDE >= 50 knots, county rows",
+    "tornado_events": "NOAA Tornado event records, county rows only",
+    "tropical_events": "NOAA Hurricane (Typhoon), Tropical Storm and Tropical Depression records; zone records count for every county the NWS zone covers",
+    "years_covered": "Storm window, first-last calendar year",
+    "median_year_built": "ACS B25035_001E, median year structure built",
+    "households": "ACS B25003_001E, occupied housing units",
+    "owner_occupied": "ACS B25003_002E, owner-occupied housing units",
+    "owner_occupied_pct": "owner_occupied / households * 100, 2 decimals",
+    "housing_units": "ACS B25002_001E, total housing units",
+    "vacant_units": "ACS B25002_003E, vacant housing units",
+    "vacancy_pct": "vacant_units / housing_units * 100, 2 decimals",
+    "median_home_value_usd": "ACS B25077_001E, median value of owner-occupied units, USD",
+    "owner_long_tenure_pct": "ACS B25038 (_007E + _008E) / _002E * 100: owner-occupied units whose householder moved in before 2000, a proxy for long tenure and built-up equity",
+    "free_and_clear_pct": "ACS B25081_009E / _001E * 100: owner-occupied units without a mortgage (free and clear)"
+  }
+}
