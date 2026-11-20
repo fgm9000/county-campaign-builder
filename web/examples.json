@@ -1,0 +1,1075 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-11-20",
+  "canonical_inputs": {
+    "48113": {
+      "county_fips": "48113",
+      "vertical": "motivated_seller",
+      "bid_per_lead_usd": 125.0,
+      "cpc_usd": {
+        "min": 2.0,
+        "max": 4.0
+      },
+      "landing_cvr": {
+        "min": 0.05,
+        "max": 0.1
+      }
+    },
+    "12103": {
+      "county_fips": "12103",
+      "vertical": "motivated_seller",
+      "bid_per_lead_usd": 125.0,
+      "cpc_usd": {
+        "min": 4.5,
+        "max": 9.0
+      },
+      "landing_cvr": {
+        "min": 0.06,
+        "max": 0.1
+      }
+    },
+    "17031": {
+      "county_fips": "17031",
+      "vertical": "motivated_seller",
+      "bid_per_lead_usd": 125.0,
+      "cpc_usd": {
+        "min": 11.0,
+        "max": 15.0
+      },
+      "landing_cvr": {
+        "min": 0.05,
+        "max": 0.08
+      }
+    }
+  },
+  "comparison": {
+    "campaigns": [
+      {
+        "county_fips": "48113",
+        "county_name": "Dallas County, Texas",
+        "vertical": "motivated_seller",
+        "status": "success",
+        "error_message": null,
+        "facts": [
+          {
+            "claim": "120 hail reports of 1 inch or larger in 2020-2024",
+            "field": "hail_reports_1in",
+            "value": 102,
+            "source": "NOAA Storm Events 2020-2024",
+            "status": "corrected"
+          },
+          {
+            "claim": "26.6% of owner-occupied households moved in before 2000",
+            "field": "owner_long_tenure_pct",
+            "value": 26.6,
+            "source": "U.S. Census Bureau ACS 2020-2024",
+            "status": "verified"
+          },
+          {
+            "claim": "42.69% of owner-occupied homes are owned free and clear",
+            "field": "free_and_clear_pct",
+            "value": 42.69,
+            "source": "U.S. Census Bureau ACS 2020-2024",
+            "status": "verified"
+          },
+          {
+            "claim": "7.72% housing vacancy rate in Dallas County, Texas",
+            "field": "vacancy_pct",
+            "value": 7.72,
+            "source": "U.S. Census Bureau ACS 2020-2024",
+            "status": "verified"
+          }
+        ],
+        "corrections": [
+          {
+            "field": "hail_reports_1in",
+            "llm_value": 120,
+            "source_value": 102,
+            "reason": "Corrected from 120 to source value 102."
+          }
+        ],
+        "unit_economics": {
+          "bid_per_lead_usd": 125.0,
+          "cpl_best_usd": 20.0,
+          "cpl_worst_usd": 80.0,
+          "max_cpc_usd": 6.25,
+          "verdict": "green",
+          "explanation": "Profitable across full range: worst-case CPL is $80.00, within $125.00 bid. Best-case CPL is $20.00."
+        },
+        "assets": {
+          "questions": [
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "question_index": 1,
+              "question": "How soon are you hoping to sell your property in Dallas County, Texas?",
+              "topic": "timeline",
+              "why": "How soon they need to sell separates motivated sellers from browsers."
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "question_index": 2,
+              "question": "What is the overall condition of the home, and are there any major repairs needed?",
+              "topic": "property_condition",
+              "why": "Repairs needed is the main reason to accept an as-is cash offer."
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "question_index": 3,
+              "question": "Is the property currently listed with a real estate agent or on the MLS?",
+              "topic": "listed_with_agent",
+              "why": "A property already listed on the MLS is usually not an off-market deal."
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "question_index": 4,
+              "question": "Are you the sole owner on the title, or are other co-owners part of the decision?",
+              "topic": "decision_maker",
+              "why": "Only the owner on the title (or all owners) can sign."
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "question_index": 5,
+              "question": "What is your primary reason for selling right now (such as relocation, inheritance, or managing tenants)?",
+              "topic": "reason_for_selling",
+              "why": "Inheritance, relocation, tired landlord or financial pressure predict a deal."
+            }
+          ],
+          "ad_copy": {
+            "headlines": [
+              {
+                "status": "approved",
+                "rejection_reason": null,
+                "text": "Sell Your Dallas Home As-Is"
+              },
+              {
+                "status": "approved",
+                "rejection_reason": null,
+                "text": "Fair Cash Offer For Owners"
+              },
+              {
+                "status": "approved",
+                "rejection_reason": null,
+                "text": "Sell Without Repairs Needed"
+              }
+            ],
+            "descriptions": [
+              {
+                "status": "approved",
+                "rejection_reason": null,
+                "text": "Request a straightforward as-is cash offer for your Dallas home today."
+              },
+              {
+                "status": "approved",
+                "rejection_reason": null,
+                "text": "Skip cleanouts and showings. Review an offer on your preferred timeline."
+              }
+            ]
+          },
+          "landing_page": {
+            "status": "approved",
+            "rejection_reason": null,
+            "headline": "Request a Straightforward As-Is Cash Offer in Dallas County, Texas",
+            "subheadline": "Work directly with Example Home Buyers to sell on your timeline without listing.",
+            "cta_text": "Get My Property Review",
+            "bullet_points": [
+              "120 hail reports of 1 inch or larger in 2020-2024",
+              "26.6% of owner-occupied households moved in before 2000",
+              "Tailored local intake for homeowners across Dallas County, Texas.",
+              "Transparent evaluation with clear next steps before you commit."
+            ],
+            "consent_disclosure": "By submitting this form, you agree to receive automated marketing calls and texts from Example Home Buyers at the number provided. Consent is not a condition of any purchase. Reply STOP to opt out."
+          },
+          "sms_messages": [
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "message_index": 1,
+              "text": "Example Home Buyers: Thanks for contacting us about your Dallas home. When can we connect? Reply STOP to opt out.",
+              "char_count": 113
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "message_index": 2,
+              "text": "Example Home Buyers: Following up on your Dallas inquiry. Share a good time for a brief call. Reply STOP to opt out.",
+              "char_count": 116
+            }
+          ],
+          "email_followups": [
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "email_index": 1,
+              "subject": "Next steps for your Dallas County, Texas property inquiry",
+              "body": "Hello,\n\nThank you for reaching out to Example Home Buyers regarding your property in Dallas County, Texas.\n\nLocal context we track in Dallas County, Texas: 120 hail reports of 1 inch or larger in 2020-2024.\n\nReply to this email with a convenient time for a brief conversation so we can review your goals and timeline.\n\nBest regards,\nExample Home Buyers"
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "email_index": 2,
+              "subject": "Checking in from Example Home Buyers (Dallas)",
+              "body": "Hello,\n\nWe wanted to check in on your recent inquiry with Example Home Buyers for Dallas County, Texas. If you still have questions or would like to discuss next steps, simply reply here at your convenience.\n\nBest regards,\nExample Home Buyers"
+            }
+          ]
+        },
+        "needs_human_review": []
+      },
+      {
+        "county_fips": "12103",
+        "county_name": "Pinellas County, Florida",
+        "vertical": "motivated_seller",
+        "status": "success",
+        "error_message": null,
+        "facts": [
+          {
+            "claim": "22.82% of owner-occupied households moved in before 2000",
+            "field": "owner_long_tenure_pct",
+            "value": 22.82,
+            "source": "U.S. Census Bureau ACS 2020-2024",
+            "status": "verified"
+          },
+          {
+            "claim": "48.91% of owner-occupied homes are owned free and clear",
+            "field": "free_and_clear_pct",
+            "value": 48.91,
+            "source": "U.S. Census Bureau ACS 2020-2024",
+            "status": "verified"
+          },
+          {
+            "claim": "17.62% housing vacancy rate in Pinellas County, Florida",
+            "field": "vacancy_pct",
+            "value": 17.62,
+            "source": "U.S. Census Bureau ACS 2020-2024",
+            "status": "verified"
+          },
+          {
+            "claim": "Median home construction year is 1977 in Pinellas County, Florida",
+            "field": "median_year_built",
+            "value": 1977,
+            "source": "U.S. Census Bureau ACS 2020-2024",
+            "status": "verified"
+          }
+        ],
+        "corrections": [],
+        "unit_economics": {
+          "bid_per_lead_usd": 125.0,
+          "cpl_best_usd": 45.0,
+          "cpl_worst_usd": 150.0,
+          "max_cpc_usd": 7.5,
+          "verdict": "yellow",
+          "explanation": "Profitable in favorable conditions: best-case CPL is $45.00 (under $125.00 bid), but worst-case CPL is $150.00. Max viable CPC at 6.0% CVR is $7.50."
+        },
+        "assets": {
+          "questions": [
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "question_index": 1,
+              "question": "How soon are you hoping to sell your property in Pinellas County, Florida?",
+              "topic": "timeline",
+              "why": "How soon they need to sell separates motivated sellers from browsers."
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "question_index": 2,
+              "question": "What is the overall condition of the home, and are there any major repairs needed?",
+              "topic": "property_condition",
+              "why": "Repairs needed is the main reason to accept an as-is cash offer."
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "question_index": 3,
+              "question": "Is the property currently listed with a real estate agent or on the MLS?",
+              "topic": "listed_with_agent",
+              "why": "A property already listed on the MLS is usually not an off-market deal."
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "question_index": 4,
+              "question": "Are you the sole owner on the title, or are other co-owners part of the decision?",
+              "topic": "decision_maker",
+              "why": "Only the owner on the title (or all owners) can sign."
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "question_index": 5,
+              "question": "What is your primary reason for selling right now (such as relocation, inheritance, or managing tenants)?",
+              "topic": "reason_for_selling",
+              "why": "Inheritance, relocation, tired landlord or financial pressure predict a deal."
+            }
+          ],
+          "ad_copy": {
+            "headlines": [
+              {
+                "status": "approved",
+                "rejection_reason": null,
+                "text": "Sell Your Pinellas Home As-Is"
+              },
+              {
+                "status": "approved",
+                "rejection_reason": null,
+                "text": "Fair Cash Offer For Owners"
+              },
+              {
+                "status": "approved",
+                "rejection_reason": null,
+                "text": "Sell Without Repairs Needed"
+              }
+            ],
+            "descriptions": [
+              {
+                "status": "approved",
+                "rejection_reason": null,
+                "text": "Request a straightforward as-is cash offer for your Pinellas home today."
+              },
+              {
+                "status": "approved",
+                "rejection_reason": null,
+                "text": "Skip cleanouts and showings. Review an offer on your preferred timeline."
+              }
+            ]
+          },
+          "landing_page": {
+            "status": "approved",
+            "rejection_reason": null,
+            "headline": "Request a Straightforward As-Is Cash Offer in Pinellas County, Florida",
+            "subheadline": "Work directly with Example Home Buyers to sell on your timeline without listing.",
+            "cta_text": "Get My Property Review",
+            "bullet_points": [
+              "22.82% of owner-occupied households moved in before 2000",
+              "48.91% of owner-occupied homes are owned free and clear",
+              "Tailored local intake for homeowners across Pinellas County, Florida.",
+              "Transparent evaluation with clear next steps before you commit."
+            ],
+            "consent_disclosure": "By submitting this form, you agree to receive automated marketing calls and texts from Example Home Buyers at the number provided. Consent is not a condition of any purchase. Reply STOP to opt out."
+          },
+          "sms_messages": [
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "message_index": 1,
+              "text": "Example Home Buyers: Thanks for contacting us about your Pinellas home. When can we connect? Reply STOP to opt out.",
+              "char_count": 115
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "message_index": 2,
+              "text": "Example Home Buyers: Following up on your Pinellas inquiry. Share a good time for a brief call. Reply STOP to opt out.",
+              "char_count": 118
+            }
+          ],
+          "email_followups": [
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "email_index": 1,
+              "subject": "Next steps for your Pinellas County, Florida property inquiry",
+              "body": "Hello,\n\nThank you for reaching out to Example Home Buyers regarding your property in Pinellas County, Florida.\n\nLocal context we track in Pinellas County, Florida: 22.82% of owner-occupied households moved in before 2000.\n\nReply to this email with a convenient time for a brief conversation so we can review your goals and timeline.\n\nBest regards,\nExample Home Buyers"
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "email_index": 2,
+              "subject": "Checking in from Example Home Buyers (Pinellas)",
+              "body": "Hello,\n\nWe wanted to check in on your recent inquiry with Example Home Buyers for Pinellas County, Florida. If you still have questions or would like to discuss next steps, simply reply here at your convenience.\n\nBest regards,\nExample Home Buyers"
+            }
+          ]
+        },
+        "needs_human_review": []
+      },
+      {
+        "county_fips": "17031",
+        "county_name": "Cook County, Illinois",
+        "vertical": "motivated_seller",
+        "status": "success",
+        "error_message": null,
+        "facts": [
+          {
+            "claim": "31.24% of owner-occupied households moved in before 2000",
+            "field": "owner_long_tenure_pct",
+            "value": 31.24,
+            "source": "U.S. Census Bureau ACS 2020-2024",
+            "status": "verified"
+          },
+          {
+            "claim": "37.61% of owner-occupied homes are owned free and clear",
+            "field": "free_and_clear_pct",
+            "value": 37.61,
+            "source": "U.S. Census Bureau ACS 2020-2024",
+            "status": "verified"
+          },
+          {
+            "claim": "7.74% housing vacancy rate in Cook County, Illinois",
+            "field": "vacancy_pct",
+            "value": 7.74,
+            "source": "U.S. Census Bureau ACS 2020-2024",
+            "status": "verified"
+          },
+          {
+            "claim": "Median home construction year is 1961 in Cook County, Illinois",
+            "field": "median_year_built",
+            "value": 1961,
+            "source": "U.S. Census Bureau ACS 2020-2024",
+            "status": "verified"
+          }
+        ],
+        "corrections": [],
+        "unit_economics": {
+          "bid_per_lead_usd": 125.0,
+          "cpl_best_usd": 137.5,
+          "cpl_worst_usd": 300.0,
+          "max_cpc_usd": 6.25,
+          "verdict": "red",
+          "explanation": "At $15.00 CPC and 5.0% CVR, lead costs $300.00; bid is $125.00: does not close. Best-case CPL is $137.50."
+        },
+        "assets": {
+          "questions": [
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "question_index": 1,
+              "question": "How soon are you hoping to sell your property in Cook County, Illinois?",
+              "topic": "timeline",
+              "why": "How soon they need to sell separates motivated sellers from browsers."
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "question_index": 2,
+              "question": "What is the overall condition of the home, and are there any major repairs needed?",
+              "topic": "property_condition",
+              "why": "Repairs needed is the main reason to accept an as-is cash offer."
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "question_index": 3,
+              "question": "Is the property currently listed with a real estate agent or on the MLS?",
+              "topic": "listed_with_agent",
+              "why": "A property already listed on the MLS is usually not an off-market deal."
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "question_index": 4,
+              "question": "Are you the sole owner on the title, or are other co-owners part of the decision?",
+              "topic": "decision_maker",
+              "why": "Only the owner on the title (or all owners) can sign."
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "question_index": 5,
+              "question": "What is your primary reason for selling right now (such as relocation, inheritance, or managing tenants)?",
+              "topic": "reason_for_selling",
+              "why": "Inheritance, relocation, tired landlord or financial pressure predict a deal."
+            }
+          ],
+          "ad_copy": {
+            "headlines": [
+              {
+                "status": "approved",
+                "rejection_reason": null,
+                "text": "Sell Your Cook Home As-Is"
+              },
+              {
+                "status": "approved",
+                "rejection_reason": null,
+                "text": "Fair Cash Offer For Owners"
+              },
+              {
+                "status": "approved",
+                "rejection_reason": null,
+                "text": "Sell Without Repairs Needed"
+              }
+            ],
+            "descriptions": [
+              {
+                "status": "approved",
+                "rejection_reason": null,
+                "text": "Request a straightforward as-is cash offer for your Cook home today."
+              },
+              {
+                "status": "approved",
+                "rejection_reason": null,
+                "text": "Skip cleanouts and showings. Review an offer on your preferred timeline."
+              }
+            ]
+          },
+          "landing_page": {
+            "status": "approved",
+            "rejection_reason": null,
+            "headline": "Request a Straightforward As-Is Cash Offer in Cook County, Illinois",
+            "subheadline": "Work directly with Example Home Buyers to sell on your timeline without listing.",
+            "cta_text": "Get My Property Review",
+            "bullet_points": [
+              "31.24% of owner-occupied households moved in before 2000",
+              "37.61% of owner-occupied homes are owned free and clear",
+              "Tailored local intake for homeowners across Cook County, Illinois.",
+              "Transparent evaluation with clear next steps before you commit."
+            ],
+            "consent_disclosure": "By submitting this form, you agree to receive automated marketing calls and texts from Example Home Buyers at the number provided. Consent is not a condition of any purchase. Reply STOP to opt out."
+          },
+          "sms_messages": [
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "message_index": 1,
+              "text": "Example Home Buyers: Thanks for contacting us about your Cook home. When can we connect? Reply STOP to opt out.",
+              "char_count": 111
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "message_index": 2,
+              "text": "Example Home Buyers: Following up on your Cook inquiry. Share a good time for a brief call. Reply STOP to opt out.",
+              "char_count": 114
+            }
+          ],
+          "email_followups": [
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "email_index": 1,
+              "subject": "Next steps for your Cook County, Illinois property inquiry",
+              "body": "Hello,\n\nThank you for reaching out to Example Home Buyers regarding your property in Cook County, Illinois.\n\nLocal context we track in Cook County, Illinois: 31.24% of owner-occupied households moved in before 2000.\n\nReply to this email with a convenient time for a brief conversation so we can review your goals and timeline.\n\nBest regards,\nExample Home Buyers"
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "email_index": 2,
+              "subject": "Checking in from Example Home Buyers (Cook)",
+              "body": "Hello,\n\nWe wanted to check in on your recent inquiry with Example Home Buyers for Cook County, Illinois. If you still have questions or would like to discuss next steps, simply reply here at your convenience.\n\nBest regards,\nExample Home Buyers"
+            }
+          ]
+        },
+        "needs_human_review": []
+      }
+    ],
+    "recommended_county_fips": "48113",
+    "summary": "Dallas County, TX (FIPS 48113) is the recommended launch county. Dallas clears the auction math with a green unit-economics verdict\u2014its worst-case CPL stays comfortably below the lead bid with healthy CPC headroom\u2014backed by high hail and wind exposure plus substantial long-tenure equity. By contrast, Cook County, IL (FIPS 17031) fails the auction math with a red verdict where expected CPL does not close below the target bid. Pinellas County (12103) ranks second with strong tropical storm and free-and-clear equity signals, though its auction margin is tighter."
+  },
+  "campaigns": [
+    {
+      "county_fips": "48113",
+      "county_name": "Dallas County, Texas",
+      "vertical": "motivated_seller",
+      "status": "success",
+      "error_message": null,
+      "facts": [
+        {
+          "claim": "120 hail reports of 1 inch or larger in 2020-2024",
+          "field": "hail_reports_1in",
+          "value": 102,
+          "source": "NOAA Storm Events 2020-2024",
+          "status": "corrected"
+        },
+        {
+          "claim": "26.6% of owner-occupied households moved in before 2000",
+          "field": "owner_long_tenure_pct",
+          "value": 26.6,
+          "source": "U.S. Census Bureau ACS 2020-2024",
+          "status": "verified"
+        },
+        {
+          "claim": "42.69% of owner-occupied homes are owned free and clear",
+          "field": "free_and_clear_pct",
+          "value": 42.69,
+          "source": "U.S. Census Bureau ACS 2020-2024",
+          "status": "verified"
+        },
+        {
+          "claim": "7.72% housing vacancy rate in Dallas County, Texas",
+          "field": "vacancy_pct",
+          "value": 7.72,
+          "source": "U.S. Census Bureau ACS 2020-2024",
+          "status": "verified"
+        }
+      ],
+      "corrections": [
+        {
+          "field": "hail_reports_1in",
+          "llm_value": 120,
+          "source_value": 102,
+          "reason": "Corrected from 120 to source value 102."
+        }
+      ],
+      "unit_economics": {
+        "bid_per_lead_usd": 125.0,
+        "cpl_best_usd": 20.0,
+        "cpl_worst_usd": 80.0,
+        "max_cpc_usd": 6.25,
+        "verdict": "green",
+        "explanation": "Profitable across full range: worst-case CPL is $80.00, within $125.00 bid. Best-case CPL is $20.00."
+      },
+      "assets": {
+        "questions": [
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "question_index": 1,
+            "question": "How soon are you hoping to sell your property in Dallas County, Texas?",
+            "topic": "timeline",
+            "why": "How soon they need to sell separates motivated sellers from browsers."
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "question_index": 2,
+            "question": "What is the overall condition of the home, and are there any major repairs needed?",
+            "topic": "property_condition",
+            "why": "Repairs needed is the main reason to accept an as-is cash offer."
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "question_index": 3,
+            "question": "Is the property currently listed with a real estate agent or on the MLS?",
+            "topic": "listed_with_agent",
+            "why": "A property already listed on the MLS is usually not an off-market deal."
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "question_index": 4,
+            "question": "Are you the sole owner on the title, or are other co-owners part of the decision?",
+            "topic": "decision_maker",
+            "why": "Only the owner on the title (or all owners) can sign."
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "question_index": 5,
+            "question": "What is your primary reason for selling right now (such as relocation, inheritance, or managing tenants)?",
+            "topic": "reason_for_selling",
+            "why": "Inheritance, relocation, tired landlord or financial pressure predict a deal."
+          }
+        ],
+        "ad_copy": {
+          "headlines": [
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "text": "Sell Your Dallas Home As-Is"
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "text": "Fair Cash Offer For Owners"
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "text": "Sell Without Repairs Needed"
+            }
+          ],
+          "descriptions": [
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "text": "Request a straightforward as-is cash offer for your Dallas home today."
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "text": "Skip cleanouts and showings. Review an offer on your preferred timeline."
+            }
+          ]
+        },
+        "landing_page": {
+          "status": "approved",
+          "rejection_reason": null,
+          "headline": "Request a Straightforward As-Is Cash Offer in Dallas County, Texas",
+          "subheadline": "Work directly with Example Home Buyers to sell on your timeline without listing.",
+          "cta_text": "Get My Property Review",
+          "bullet_points": [
+            "120 hail reports of 1 inch or larger in 2020-2024",
+            "26.6% of owner-occupied households moved in before 2000",
+            "Tailored local intake for homeowners across Dallas County, Texas.",
+            "Transparent evaluation with clear next steps before you commit."
+          ],
+          "consent_disclosure": "By submitting this form, you agree to receive automated marketing calls and texts from Example Home Buyers at the number provided. Consent is not a condition of any purchase. Reply STOP to opt out."
+        },
+        "sms_messages": [
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "message_index": 1,
+            "text": "Example Home Buyers: Thanks for contacting us about your Dallas home. When can we connect? Reply STOP to opt out.",
+            "char_count": 113
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "message_index": 2,
+            "text": "Example Home Buyers: Following up on your Dallas inquiry. Share a good time for a brief call. Reply STOP to opt out.",
+            "char_count": 116
+          }
+        ],
+        "email_followups": [
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "email_index": 1,
+            "subject": "Next steps for your Dallas County, Texas property inquiry",
+            "body": "Hello,\n\nThank you for reaching out to Example Home Buyers regarding your property in Dallas County, Texas.\n\nLocal context we track in Dallas County, Texas: 120 hail reports of 1 inch or larger in 2020-2024.\n\nReply to this email with a convenient time for a brief conversation so we can review your goals and timeline.\n\nBest regards,\nExample Home Buyers"
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "email_index": 2,
+            "subject": "Checking in from Example Home Buyers (Dallas)",
+            "body": "Hello,\n\nWe wanted to check in on your recent inquiry with Example Home Buyers for Dallas County, Texas. If you still have questions or would like to discuss next steps, simply reply here at your convenience.\n\nBest regards,\nExample Home Buyers"
+          }
+        ]
+      },
+      "needs_human_review": []
+    },
+    {
+      "county_fips": "12103",
+      "county_name": "Pinellas County, Florida",
+      "vertical": "motivated_seller",
+      "status": "success",
+      "error_message": null,
+      "facts": [
+        {
+          "claim": "22.82% of owner-occupied households moved in before 2000",
+          "field": "owner_long_tenure_pct",
+          "value": 22.82,
+          "source": "U.S. Census Bureau ACS 2020-2024",
+          "status": "verified"
+        },
+        {
+          "claim": "48.91% of owner-occupied homes are owned free and clear",
+          "field": "free_and_clear_pct",
+          "value": 48.91,
+          "source": "U.S. Census Bureau ACS 2020-2024",
+          "status": "verified"
+        },
+        {
+          "claim": "17.62% housing vacancy rate in Pinellas County, Florida",
+          "field": "vacancy_pct",
+          "value": 17.62,
+          "source": "U.S. Census Bureau ACS 2020-2024",
+          "status": "verified"
+        },
+        {
+          "claim": "Median home construction year is 1977 in Pinellas County, Florida",
+          "field": "median_year_built",
+          "value": 1977,
+          "source": "U.S. Census Bureau ACS 2020-2024",
+          "status": "verified"
+        }
+      ],
+      "corrections": [],
+      "unit_economics": {
+        "bid_per_lead_usd": 125.0,
+        "cpl_best_usd": 45.0,
+        "cpl_worst_usd": 150.0,
+        "max_cpc_usd": 7.5,
+        "verdict": "yellow",
+        "explanation": "Profitable in favorable conditions: best-case CPL is $45.00 (under $125.00 bid), but worst-case CPL is $150.00. Max viable CPC at 6.0% CVR is $7.50."
+      },
+      "assets": {
+        "questions": [
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "question_index": 1,
+            "question": "How soon are you hoping to sell your property in Pinellas County, Florida?",
+            "topic": "timeline",
+            "why": "How soon they need to sell separates motivated sellers from browsers."
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "question_index": 2,
+            "question": "What is the overall condition of the home, and are there any major repairs needed?",
+            "topic": "property_condition",
+            "why": "Repairs needed is the main reason to accept an as-is cash offer."
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "question_index": 3,
+            "question": "Is the property currently listed with a real estate agent or on the MLS?",
+            "topic": "listed_with_agent",
+            "why": "A property already listed on the MLS is usually not an off-market deal."
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "question_index": 4,
+            "question": "Are you the sole owner on the title, or are other co-owners part of the decision?",
+            "topic": "decision_maker",
+            "why": "Only the owner on the title (or all owners) can sign."
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "question_index": 5,
+            "question": "What is your primary reason for selling right now (such as relocation, inheritance, or managing tenants)?",
+            "topic": "reason_for_selling",
+            "why": "Inheritance, relocation, tired landlord or financial pressure predict a deal."
+          }
+        ],
+        "ad_copy": {
+          "headlines": [
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "text": "Sell Your Pinellas Home As-Is"
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "text": "Fair Cash Offer For Owners"
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "text": "Sell Without Repairs Needed"
+            }
+          ],
+          "descriptions": [
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "text": "Request a straightforward as-is cash offer for your Pinellas home today."
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "text": "Skip cleanouts and showings. Review an offer on your preferred timeline."
+            }
+          ]
+        },
+        "landing_page": {
+          "status": "approved",
+          "rejection_reason": null,
+          "headline": "Request a Straightforward As-Is Cash Offer in Pinellas County, Florida",
+          "subheadline": "Work directly with Example Home Buyers to sell on your timeline without listing.",
+          "cta_text": "Get My Property Review",
+          "bullet_points": [
+            "22.82% of owner-occupied households moved in before 2000",
+            "48.91% of owner-occupied homes are owned free and clear",
+            "Tailored local intake for homeowners across Pinellas County, Florida.",
+            "Transparent evaluation with clear next steps before you commit."
+          ],
+          "consent_disclosure": "By submitting this form, you agree to receive automated marketing calls and texts from Example Home Buyers at the number provided. Consent is not a condition of any purchase. Reply STOP to opt out."
+        },
+        "sms_messages": [
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "message_index": 1,
+            "text": "Example Home Buyers: Thanks for contacting us about your Pinellas home. When can we connect? Reply STOP to opt out.",
+            "char_count": 115
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "message_index": 2,
+            "text": "Example Home Buyers: Following up on your Pinellas inquiry. Share a good time for a brief call. Reply STOP to opt out.",
+            "char_count": 118
+          }
+        ],
+        "email_followups": [
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "email_index": 1,
+            "subject": "Next steps for your Pinellas County, Florida property inquiry",
+            "body": "Hello,\n\nThank you for reaching out to Example Home Buyers regarding your property in Pinellas County, Florida.\n\nLocal context we track in Pinellas County, Florida: 22.82% of owner-occupied households moved in before 2000.\n\nReply to this email with a convenient time for a brief conversation so we can review your goals and timeline.\n\nBest regards,\nExample Home Buyers"
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "email_index": 2,
+            "subject": "Checking in from Example Home Buyers (Pinellas)",
+            "body": "Hello,\n\nWe wanted to check in on your recent inquiry with Example Home Buyers for Pinellas County, Florida. If you still have questions or would like to discuss next steps, simply reply here at your convenience.\n\nBest regards,\nExample Home Buyers"
+          }
+        ]
+      },
+      "needs_human_review": []
+    },
+    {
+      "county_fips": "17031",
+      "county_name": "Cook County, Illinois",
+      "vertical": "motivated_seller",
+      "status": "success",
+      "error_message": null,
+      "facts": [
+        {
+          "claim": "31.24% of owner-occupied households moved in before 2000",
+          "field": "owner_long_tenure_pct",
+          "value": 31.24,
+          "source": "U.S. Census Bureau ACS 2020-2024",
+          "status": "verified"
+        },
+        {
+          "claim": "37.61% of owner-occupied homes are owned free and clear",
+          "field": "free_and_clear_pct",
+          "value": 37.61,
+          "source": "U.S. Census Bureau ACS 2020-2024",
+          "status": "verified"
+        },
+        {
+          "claim": "7.74% housing vacancy rate in Cook County, Illinois",
+          "field": "vacancy_pct",
+          "value": 7.74,
+          "source": "U.S. Census Bureau ACS 2020-2024",
+          "status": "verified"
+        },
+        {
+          "claim": "Median home construction year is 1961 in Cook County, Illinois",
+          "field": "median_year_built",
+          "value": 1961,
+          "source": "U.S. Census Bureau ACS 2020-2024",
+          "status": "verified"
+        }
+      ],
+      "corrections": [],
+      "unit_economics": {
+        "bid_per_lead_usd": 125.0,
+        "cpl_best_usd": 137.5,
+        "cpl_worst_usd": 300.0,
+        "max_cpc_usd": 6.25,
+        "verdict": "red",
+        "explanation": "At $15.00 CPC and 5.0% CVR, lead costs $300.00; bid is $125.00: does not close. Best-case CPL is $137.50."
+      },
+      "assets": {
+        "questions": [
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "question_index": 1,
+            "question": "How soon are you hoping to sell your property in Cook County, Illinois?",
+            "topic": "timeline",
+            "why": "How soon they need to sell separates motivated sellers from browsers."
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "question_index": 2,
+            "question": "What is the overall condition of the home, and are there any major repairs needed?",
+            "topic": "property_condition",
+            "why": "Repairs needed is the main reason to accept an as-is cash offer."
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "question_index": 3,
+            "question": "Is the property currently listed with a real estate agent or on the MLS?",
+            "topic": "listed_with_agent",
+            "why": "A property already listed on the MLS is usually not an off-market deal."
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "question_index": 4,
+            "question": "Are you the sole owner on the title, or are other co-owners part of the decision?",
+            "topic": "decision_maker",
+            "why": "Only the owner on the title (or all owners) can sign."
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "question_index": 5,
+            "question": "What is your primary reason for selling right now (such as relocation, inheritance, or managing tenants)?",
+            "topic": "reason_for_selling",
+            "why": "Inheritance, relocation, tired landlord or financial pressure predict a deal."
+          }
+        ],
+        "ad_copy": {
+          "headlines": [
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "text": "Sell Your Cook Home As-Is"
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "text": "Fair Cash Offer For Owners"
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "text": "Sell Without Repairs Needed"
+            }
+          ],
+          "descriptions": [
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "text": "Request a straightforward as-is cash offer for your Cook home today."
+            },
+            {
+              "status": "approved",
+              "rejection_reason": null,
+              "text": "Skip cleanouts and showings. Review an offer on your preferred timeline."
+            }
+          ]
+        },
+        "landing_page": {
+          "status": "approved",
+          "rejection_reason": null,
+          "headline": "Request a Straightforward As-Is Cash Offer in Cook County, Illinois",
+          "subheadline": "Work directly with Example Home Buyers to sell on your timeline without listing.",
+          "cta_text": "Get My Property Review",
+          "bullet_points": [
+            "31.24% of owner-occupied households moved in before 2000",
+            "37.61% of owner-occupied homes are owned free and clear",
+            "Tailored local intake for homeowners across Cook County, Illinois.",
+            "Transparent evaluation with clear next steps before you commit."
+          ],
+          "consent_disclosure": "By submitting this form, you agree to receive automated marketing calls and texts from Example Home Buyers at the number provided. Consent is not a condition of any purchase. Reply STOP to opt out."
+        },
+        "sms_messages": [
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "message_index": 1,
+            "text": "Example Home Buyers: Thanks for contacting us about your Cook home. When can we connect? Reply STOP to opt out.",
+            "char_count": 111
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "message_index": 2,
+            "text": "Example Home Buyers: Following up on your Cook inquiry. Share a good time for a brief call. Reply STOP to opt out.",
+            "char_count": 114
+          }
+        ],
+        "email_followups": [
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "email_index": 1,
+            "subject": "Next steps for your Cook County, Illinois property inquiry",
+            "body": "Hello,\n\nThank you for reaching out to Example Home Buyers regarding your property in Cook County, Illinois.\n\nLocal context we track in Cook County, Illinois: 31.24% of owner-occupied households moved in before 2000.\n\nReply to this email with a convenient time for a brief conversation so we can review your goals and timeline.\n\nBest regards,\nExample Home Buyers"
+          },
+          {
+            "status": "approved",
+            "rejection_reason": null,
+            "email_index": 2,
+            "subject": "Checking in from Example Home Buyers (Cook)",
+            "body": "Hello,\n\nWe wanted to check in on your recent inquiry with Example Home Buyers for Cook County, Illinois. If you still have questions or would like to discuss next steps, simply reply here at your convenience.\n\nBest regards,\nExample Home Buyers"
+          }
+        ]
+      },
+      "needs_human_review": []
+    }
+  ]
+}

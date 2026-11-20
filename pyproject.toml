@@ -50,6 +50,11 @@ mypy_path = ["src", "."]
 module = ["evals.metrics"]
 disallow_untyped_calls = false
 
+[[tool.mypy.overrides]]
+# openpyxl ships without py.typed or bundled type stubs.
+module = ["openpyxl", "openpyxl.*"]
+ignore_missing_imports = true
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src", "."]

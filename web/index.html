@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https:; base-uri 'none'; form-action 'none'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>County Campaign Builder — Verified Lead-Gen Auction Math &amp; AI Copy</title>
+  <meta name="description" content="Multi-county lead-generation campaign builder with NOAA/Census fact verification, deterministic auction math, TCPA/Fair Housing guardrails, and human review flags.">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="top-utility">
+    <div class="container top-utility-inner">
+      <a href="https://github.com/fgm9000" class="utility-link" target="_blank" rel="noopener noreferrer" data-i18n="moreProjects">← More projects on GitHub</a>
+      <span class="utility-pill" data-i18n="zeroCostBadge">Pre-computed mode: zero API cost</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">CC</div>
+        <div class="brand-text">
+          <h1 class="brand-title">County Campaign Builder</h1>
+          <p class="brand-subtitle" data-i18n="subtitle">Verified local facts · Deterministic auction math · Compliant ad &amp; intake copy</p>
+        </div>
+      </div>
+
+      <nav class="header-actions" aria-label="Resources and language">
+        <a href="https://github.com/fgm9000/county-campaign-builder/raw/main/playbook/auction-math.xlsx" class="header-link" target="_blank" rel="noopener noreferrer" data-i18n="linkExcel">Download Excel Model (auction-math.xlsx)</a>
+        <a href="https://github.com/fgm9000/county-campaign-builder/blob/main/playbook/README.md" class="header-link" target="_blank" rel="noopener noreferrer" data-i18n="linkPlaybook">Non-Code Playbook (README.md)</a>
+        <a href="https://github.com/fgm9000/county-campaign-builder" class="header-link header-link-primary" target="_blank" rel="noopener noreferrer" data-i18n="linkRepo">GitHub Repo ↗</a>
+        <div class="lang-switch" role="group" aria-label="Language selector">
+          <button id="langEn" type="button" class="lang-btn is-active" aria-pressed="true">EN</button>
+          <button id="langPt" type="button" class="lang-btn" aria-pressed="false">PT</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container main-content">
+    <p id="liveAnnouncer" class="sr-only" role="status" aria-live="polite"></p>
+    <p id="examplesError" class="alert-banner alert-error" role="alert" hidden></p>
+
+    <!-- 1. THE 30-SECOND RULE (ABOVE THE FOLD) -->
+    <section id="thirtySecondSection" class="above-fold" aria-labelledby="thirtySecondHeading">
+      <div class="section-kicker-row">
+        <h2 id="thirtySecondHeading" class="sr-only" data-i18n="thirtySecondHeading">30-Second Overview: Auction Math and Fact Verification</h2>
+      </div>
+
+      <div class="above-fold-grid">
+        <!-- Left: Multi-County Auction Math Table -->
+        <article class="card card-elevated" aria-labelledby="auctionTitle">
+          <div class="card-header">
+            <div>
+              <span class="eyebrow" data-i18n="auctionEyebrow">Deterministic Code Math (Never LLM)</span>
+              <h3 id="auctionTitle" class="card-title" data-i18n="auctionTitle">Multi-County Auction Math</h3>
+            </div>
+            <span id="recommendedPill" class="pill pill-green" hidden></span>
+          </div>
+
+          <div class="table-wrap">
+            <table class="auction-table">
+              <thead>
+                <tr>
+                  <th scope="col" data-i18n="colCounty">County</th>
+                  <th scope="col" data-i18n="colVerdict">Verdict</th>
+                  <th scope="col" data-i18n="colBid">Bid</th>
+                  <th scope="col" data-i18n="colCpl">CPL Range</th>
+                  <th scope="col" data-i18n="colMaxCpc">Max CPC</th>
+                  <th scope="col" data-i18n="colMath">Auction Math Explanation</th>
+                </tr>
+              </thead>
+              <tbody id="auctionTableBody">
+                <tr>
+                  <td colspan="6" class="table-loading" data-i18n="loadingExamples">Loading county auction math…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p id="comparisonSummary" class="summary-callout" hidden></p>
+          <p class="footnote" data-i18n="assumptionsNote">Assumptions note: CPC and landing-page CVR ranges in this pre-computed benchmark are illustrative operator inputs (Dallas $2–$4 CPC / 5–10% CVR; Pinellas $4.50–$9 CPC / 6–10% CVR; Cook $11–$15 CPC / 5–8% CVR), not live ad-platform market data.</p>
+        </article>
+
+        <!-- Right: Automated Correction Callout -->
+        <aside class="card card-audit" aria-labelledby="correctionTitle">
+          <div class="card-header">
+            <div>
+              <span class="eyebrow eyebrow-amber" data-i18n="correctionEyebrow">Automated Fact Audit</span>
+              <h3 id="correctionTitle" class="card-title" data-i18n="correctionTitle">Code Caught AI Hallucination</h3>
+            </div>
+            <span class="pill pill-corrected" data-i18n="correctedAuditedBadge">Corrected &amp; Audited</span>
+          </div>
+
+          <div id="correctionBox" class="correction-box">
+            <p class="correction-county" id="correctionCounty">Dallas County, Texas (FIPS 48113)</p>
+            <p class="correction-summary-text" id="correctionHeadline">LLM generated 120 hail reports → NOAA official source is 102: corrected and audited</p>
+
+            <div class="diff-grid">
+              <div class="diff-card diff-wrong">
+                <span class="diff-label" data-i18n="llmGeneratedLabel">LLM Generated</span>
+                <span class="diff-value" id="correctionLlmVal">120</span>
+                <span class="diff-meta" id="correctionFieldLabel">hail_reports_1in</span>
+              </div>
+              <div class="diff-arrow" aria-hidden="true">→</div>
+              <div class="diff-card diff-right">
+                <span class="diff-label" data-i18n="officialSourceLabel">Official Source</span>
+                <span class="diff-value" id="correctionSourceVal">102</span>
+                <span class="diff-meta" id="correctionSourceName">NOAA Storm Events 2020-2024</span>
+              </div>
+            </div>
+
+            <p class="correction-reason" id="correctionReason"></p>
+          </div>
+
+          <div class="division-panel">
+            <h4 class="division-title" data-i18n="divisionTitle">Explicit Division of Labor</h4>
+            <dl class="division-list">
+              <div class="division-item">
+                <dt class="division-role role-ai" data-i18n="roleAi">AI (LLM)</dt>
+                <dd data-i18n="roleAiDesc">Interprets local triggers; drafts questions, RSA ads, landing page, SMS, and emails.</dd>
+              </div>
+              <div class="division-item">
+                <dt class="division-role role-code" data-i18n="roleCode">Code</dt>
+                <dd data-i18n="roleCodeDesc">Verifies numbers vs. NOAA/Census; computes CPL &amp; max CPC; enforces char limits, TCPA &amp; Fair Housing.</dd>
+              </div>
+              <div class="division-item">
+                <dt class="division-role role-human" data-i18n="roleHuman">Human</dt>
+                <dd data-i18n="roleHumanDesc">Approves offer terms, closing promises, quiet hours, and local positioning.</dd>
+              </div>
+            </dl>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 2. COUNTY DEEP DIVE EXPLORER & 3. LIVE COUNTY RUN -->
+    <section id="explorerSection" class="explorer-section" aria-labelledby="explorerHeading">
+      <div class="explorer-header">
+        <div>
+          <h2 id="explorerHeading" class="section-title" data-i18n="explorerHeading">Campaign Package Explorer &amp; Live Runner</h2>
+          <p class="section-subtitle" data-i18n="explorerSubtitle">Inspect every audited asset per county or run the full pipeline live on any of 3,222 U.S. counties.</p>
+        </div>
+      </div>
+
+      <div class="main-tablist" role="tablist" aria-label="County selection and live run">
+        <button id="tabCounty48113" type="button" role="tab" class="main-tab is-active" aria-selected="true" aria-controls="panelExamples" data-county-fips="48113">
+          <span class="tab-dot dot-green" aria-hidden="true"></span>
+          <span data-i18n="tabDallas">Dallas County, TX</span>
+          <span class="tab-meta">48113</span>
+        </button>
+        <button id="tabCounty12103" type="button" role="tab" class="main-tab" aria-selected="false" aria-controls="panelExamples" tabindex="-1" data-county-fips="12103">
+          <span class="tab-dot dot-yellow" aria-hidden="true"></span>
+          <span data-i18n="tabPinellas">Pinellas County, FL</span>
+          <span class="tab-meta">12103</span>
+        </button>
+        <button id="tabCounty17031" type="button" role="tab" class="main-tab" aria-selected="false" aria-controls="panelExamples" tabindex="-1" data-county-fips="17031">
+          <span class="tab-dot dot-red" aria-hidden="true"></span>
+          <span data-i18n="tabCook">Cook County, IL</span>
+          <span class="tab-meta">17031</span>
+        </button>
+        <button id="tabLive" type="button" role="tab" class="main-tab main-tab-live" aria-selected="false" aria-controls="panelLive" tabindex="-1">
+          <span class="tab-dot dot-live" aria-hidden="true"></span>
+          <span data-i18n="tabLive">Live County Run</span>
+        </button>
+      </div>
+
+      <!-- Pre-Computed County Deep Dive Panel -->
+      <div id="panelExamples" role="tabpanel" aria-labelledby="tabCounty48113" class="tab-panel">
+        <div class="package-toolbar">
+          <div class="package-toolbar-info">
+            <h3 id="activeCountyTitle" class="package-title">Dallas County, Texas</h3>
+            <div id="activeCountyBadges" class="badge-row"></div>
+          </div>
+          <div class="package-toolbar-actions">
+            <button id="copyMarkdownBtn" type="button" class="btn btn-secondary" data-i18n="copyMarkdown">Copy as Markdown</button>
+          </div>
+        </div>
+
+        <div id="exampleSectionNav" class="sub-tablist" role="tablist" aria-label="Campaign sections">
+          <button type="button" role="tab" class="sub-tab is-active" aria-selected="true" data-section="all" data-i18n="secAll">All Sections</button>
+          <button type="button" role="tab" class="sub-tab" aria-selected="false" data-section="economics" data-i18n="secEconomics">Unit Economics</button>
+          <button type="button" role="tab" class="sub-tab" aria-selected="false" data-section="facts" data-i18n="secFacts">Verified Facts</button>
+          <button type="button" role="tab" class="sub-tab" aria-selected="false" data-section="questions" data-i18n="secQuestions">Qualification Questions</button>
+          <button type="button" role="tab" class="sub-tab" aria-selected="false" data-section="ads" data-i18n="secAds">Responsive Search Ads</button>
+          <button type="button" role="tab" class="sub-tab" aria-selected="false" data-section="landing" data-i18n="secLanding">Landing Page Top</button>
+          <button type="button" role="tab" class="sub-tab" aria-selected="false" data-section="followup" data-i18n="secFollowup">Follow-Up Sequences</button>
+          <button type="button" role="tab" class="sub-tab" aria-selected="false" data-section="review" data-i18n="secReview">Human Review Checklist</button>
+        </div>
+
+        <div id="exampleViewer" class="campaign-viewer"></div>
+      </div>
+
+      <!-- Live County Run Panel -->
+      <div id="panelLive" role="tabpanel" aria-labelledby="tabLive" class="tab-panel" hidden>
+        <div id="liveApiNotice" class="alert-banner alert-info" hidden></div>
+
+        <form id="liveForm" class="card live-form" novalidate>
+          <div class="live-form-header">
+            <div>
+              <h3 class="card-title" data-i18n="liveFormTitle">Run Live County Pipeline</h3>
+              <p class="card-subtitle" data-i18n="liveFormSubtitle">Streams 6 real-time SSE stages from /v1/campaigns/stream using official NOAA + Census aggregates.</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="liveFips" class="field-label" data-i18n="fFips">County FIPS (5 digits)</label>
+              <input id="liveFips" type="text" inputmode="numeric" pattern="\d{5}" maxlength="5" value="48113" placeholder="48113" required class="field-input">
+              <span class="field-hint" data-i18n="fFipsHint">e.g. 48113 (Dallas), 12103 (Pinellas), 17031 (Cook), or any US county</span>
+            </div>
+
+            <div class="form-field">
+              <label for="liveVertical" class="field-label" data-i18n="fVertical">Vertical</label>
+              <select id="liveVertical" class="field-input">
+                <option value="motivated_seller" data-i18n="vMotivatedSeller">Motivated Seller (Cash Offer)</option>
+                <option value="roofing" data-i18n="vRoofing">Roofing (Roof Replacement)</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="liveBid" class="field-label" data-i18n="fBid">Bid per Lead ($ USD)</label>
+              <input id="liveBid" type="number" min="1" step="0.01" value="125" required class="field-input">
+            </div>
+
+            <div class="form-field">
+              <label for="liveCpcMin" class="field-label" data-i18n="fCpcMin">Min CPC ($ USD)</label>
+              <input id="liveCpcMin" type="number" min="0" step="0.01" value="2.00" required class="field-input">
+            </div>
+
+            <div class="form-field">
+              <label for="liveCpcMax" class="field-label" data-i18n="fCpcMax">Max CPC ($ USD)</label>
+              <input id="liveCpcMax" type="number" min="0" step="0.01" value="4.00" required class="field-input">
+            </div>
+
+            <div class="form-field">
+              <label for="liveCvrMin" class="field-label" data-i18n="fCvrMin">Min Landing CVR (%)</label>
+              <input id="liveCvrMin" type="number" min="0.1" max="100" step="0.1" value="5.0" required class="field-input">
+              <span class="field-hint" data-i18n="fCvrHint">Entered as % (e.g. 5.0 = 5.0% CVR)</span>
+            </div>
+
+            <div class="form-field">
+              <label for="liveCvrMax" class="field-label" data-i18n="fCvrMax">Max Landing CVR (%)</label>
+              <input id="liveCvrMax" type="number" min="0.1" max="100" step="0.1" value="10.0" required class="field-input">
+            </div>
+
+            <div class="form-field">
+              <label for="liveAccessCode" class="field-label" data-i18n="fAccessCode">Access Code</label>
+              <input id="liveAccessCode" type="password" autocomplete="off" required class="field-input">
+              <span class="field-hint" data-i18n="fAccessHint">Held in memory for this tab only; never saved.</span>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button id="liveRunBtn" type="submit" class="btn btn-primary" data-i18n="liveRunBtn">Run Live Campaign</button>
+          </div>
+        </form>
+
+        <div id="liveStatusArea" class="live-status-area" hidden>
+          <div id="liveErrorBanner" class="alert-banner alert-error" role="alert" hidden>
+            <p id="liveErrorText" class="alert-error-text"></p>
+            <button id="fallbackExamplesBtn" type="button" class="btn btn-secondary btn-sm" data-i18n="fallbackExamplesBtn">Explore Pre-Computed Examples</button>
+          </div>
+
+          <div class="card">
+            <h4 class="card-title-sm" data-i18n="progressTitle">Live Pipeline Progress</h4>
+            <ol id="liveProgressList" class="progress-steps" aria-label="Pipeline execution stages"></ol>
+          </div>
+        </div>
+
+        <div id="liveResultContainer" class="live-result-container" hidden>
+          <div class="package-toolbar">
+            <div class="package-toolbar-info">
+              <h3 id="liveCountyTitle" class="package-title"></h3>
+              <div id="liveCountyBadges" class="badge-row"></div>
+            </div>
+            <div class="package-toolbar-actions">
+              <button id="copyLiveMarkdownBtn" type="button" class="btn btn-secondary" data-i18n="copyMarkdown">Copy as Markdown</button>
+            </div>
+          </div>
+          <div id="liveViewer" class="campaign-viewer"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p data-i18n="footerCopy">County Campaign Builder · Automated compliance checks are not legal advice; a human operator reviews every package before launch.</p>
+      <p class="footer-links">
+        <a href="https://github.com/fgm9000/county-campaign-builder/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" data-i18n="footerLicense">PolyForm Noncommercial 1.0.0</a>
+      </p>
+    </div>
+  </footer>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

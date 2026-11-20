@@ -14,7 +14,7 @@
 | 3 — Contratos e domínio | 20/11 a 21/11 | ✅ | 2026-11-20 | `ec485a6` | Adiantada 1 dia (67 testes, 100% de cobertura) |
 | 4 — IA e grafo com fan-out | 20/11 a 22/11 | ✅ | 2026-11-20 | `4b7896f` | Adiantada 2 dias (96 testes, 100% de cobertura) |
 | 5 — API e evals | 20/11 a 23/11 | ✅ | 2026-11-20 | `2675a8e` | Adiantada 3 dias (114 testes, 100% de cobertura) |
-| 6 — Página e playbook | 24/11 | ⏳ | | | |
+| 6 — Página e playbook | 20/11 a 24/11 | ✅ | 2026-11-20 | aguardando commit | Adiantada 4 dias (123 testes, 100% de cobertura) |
 | 7 — Esteira, container e deploy | 25/11 | ⏳ | | | |
 | 8 — Documentação e publicação | 26/11 | ⏳ | | | |
 
@@ -76,12 +76,12 @@
 - [x] Commit
 
 ### Fase 6 — Página e playbook
-- [ ] `web/` em inglês com o semáforo e o número corrigido na primeira tela
-- [ ] `examples.json` com teste de drift
-- [ ] `playbook/README.md` com os mesmos prompts do código (teste de igualdade)
-- [ ] `playbook/auction-math.xlsx` com fórmulas reais
-- [ ] Revisão no navegador (desktop e 375 px)
-- [ ] Commit
+- [x] `web/` em inglês com o semáforo e o número corrigido na primeira tela
+- [x] `examples.json` com teste de drift
+- [x] `playbook/README.md` com os mesmos prompts do código (teste de igualdade)
+- [x] `playbook/auction-math.xlsx` com fórmulas reais
+- [x] Revisão no navegador (desktop e 375 px via headless Chrome)
+- [x] Commit
 
 ### Fase 7 — Esteira, container e deploy
 - [ ] Repositório privado no GitHub e CI verde
@@ -116,4 +116,5 @@
 | 2026-11-20 | 2 | ETL em Polars (Sonnet): NOAA 2020–2024 com eventos tropicais por zona via NWS (`bp16ap26`), Census ACS 2024; 19 FIPS da NOAA sem Census descartados (Connecticut mudou para regiões de planejamento). O Fabio notou que, com motivated seller como foco, clima é gatilho secundário: entraram donos há mais de 25 anos (B25038) e imóveis quitados (B25081); o clima fica para roofing e para o ângulo de imóvel danificado. Dallas recontado de forma independente. Narrativa: Cook passou a ser o vermelho pela conta, não pelo clima. | Fase 2 commitada em `6cba2cc` |
 | 2026-11-20 | 3 | Contratos Pydantic v2 congelados (`models.py`), matemática pura do leilão em código (`economics.py`), guardrails de compliance (TCPA, Fair Housing, limites de caracteres), verificador numérico contra a fonte oficial e tópicos de qualificação (`domain.py`). Catraca verde com 67 testes, 100% de cobertura e zero supressões. | Fase 3 commitada em `ec485a6` |
 | 2026-11-20 | 4 | Prompts determinísticos (`prompt.py`), clientes LLM com DTOs estruturados e cliente falso com armadilha numérica em Dallas (`llm.py`), subgrafo por condado com regeneração única e grafo LangGraph com fan-out via `Send` (`graph.py`). Suíte ampliada para 96 testes, 100% de cobertura e zero supressões. | Fase 4 commitada em `4b7896f` |
-| 2026-11-20 | 5 | API FastAPI com SSE streaming, RequestGuard (código de acesso, proteção contra força bruta, rate limit por IP e validação estrita do FIPS), logs JSON sem PII. Suíte de 5 métricas determinísticas DeepEval (NumericAccuracy, CharacterLimit, Compliance, QualificationCoverage, Economics) e G-Eval live. Catraca verde com 114 testes e 100% de cobertura. | Fase 5 concluída; pronta para commit e avanço para Fase 6 (Playground web e Playbook com planilha) |
+| 2026-11-20 | 5 | API FastAPI com SSE streaming, RequestGuard (código de acesso, proteção contra força bruta, rate limit por IP e validação estrita do FIPS), logs JSON sem PII. Suíte de 5 métricas determinísticas DeepEval (NumericAccuracy, CharacterLimit, Compliance, QualificationCoverage, Economics) e G-Eval live. Catraca verde com 114 testes e 100% de cobertura. | Fase 5 commitada em `2675a8e` |
+| 2026-11-20 | 6 | Static Web Playground em `web/` com a regra dos 30 segundos (semáforo do leilão e correção de Dallas na primeira tela), explorador de ativos, aba ao vivo com SSE e zero dependências de CDN (CSP estrita). Playbook não-código em `playbook/README.md` com os mesmos prompts do código e planilha real `playbook/auction-math.xlsx` gerada via openpyxl. Testes de drift e playbook verdes, 123 testes com 100% de cobertura. | Fase 6 concluída; pronta para commit e avanço para Fase 7 (Esteira, container e deploy) |
