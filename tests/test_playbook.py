@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+import importlib.util
+import sys
 from pathlib import Path
-from typing import Any
+from types import ModuleType
+from typing import Any, cast
 
 import openpyxl
 
@@ -22,20 +25,34 @@ from county_campaign_builder.prompt import (
     build_regeneration_prompt,
     build_trigger_interpretation_prompt,
 )
-from scripts.build_playbook import (
-    COUNTIES_PARQUET_PATH,
-    DEMO_COUNTIES,
-    SUMMARY_HEADERS,
-    _build_sample_verified_facts,
-    _format_county_summary_line,
-    build_playbook_markdown,
-    build_workbook,
-)
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PLAYBOOK_DIR = REPO_ROOT / "playbook"
 WORKBOOK_PATH = PLAYBOOK_DIR / "auction-math.xlsx"
 README_PATH = PLAYBOOK_DIR / "README.md"
+BUILD_PLAYBOOK_PATH = REPO_ROOT / "scripts" / "build_playbook.py"
+
+
+def _load_build_playbook_module() -> ModuleType:
+    module_name = "build_playbook_script"
+    if module_name in sys.modules:
+        return sys.modules[module_name]
+    spec = importlib.util.spec_from_file_location(module_name, BUILD_PLAYBOOK_PATH)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[module_name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+_mod = _load_build_playbook_module()
+COUNTIES_PARQUET_PATH: Path = cast(Path, _mod.COUNTIES_PARQUET_PATH)
+DEMO_COUNTIES: list[Any] = cast("list[Any]", _mod.DEMO_COUNTIES)
+SUMMARY_HEADERS: tuple[str, ...] = cast("tuple[str, ...]", _mod.SUMMARY_HEADERS)
+_build_sample_verified_facts: Any = _mod._build_sample_verified_facts
+_format_county_summary_line: Any = _mod._format_county_summary_line
+build_playbook_markdown: Any = _mod.build_playbook_markdown
+build_workbook: Any = _mod.build_workbook
 
 
 def _load_workbook() -> Any:
