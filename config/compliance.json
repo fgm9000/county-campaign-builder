@@ -1,0 +1,109 @@
+{
+  "version": "2026-11-20",
+  "disclaimer": "Automated checks against public rule texts; not legal advice. A human reviews every package before use.",
+  "character_limits": {
+    "headline": 30,
+    "description": 90,
+    "sms": 160,
+    "source": "Google Ads responsive search ads (headlines 30, descriptions 90); 160 characters is one GSM-7 SMS segment."
+  },
+  "fair_housing": {
+    "source": "42 U.S.C. 3604(c) and (e); 24 CFR 100.75 (read 2026-11-19 at law.cornell.edu)",
+    "protected_classes": ["race", "color", "religion", "sex", "handicap", "familial status", "national origin"],
+    "rules": [
+      {
+        "rule_id": "fha-familial-status",
+        "reference": "42 U.S.C. 3604(c); 24 CFR 100.75(c)(1)",
+        "description": "Ad copy must not state a preference or limitation based on familial status.",
+        "forbidden_patterns": [
+          "\\b(no|without) (kids|children)\\b",
+          "\\badults? only\\b",
+          "\\bperfect for (singles|couples|empty nesters)\\b",
+          "\\bnot suitable for (kids|children|families)\\b"
+        ]
+      },
+      {
+        "rule_id": "fha-religion-national-origin-race",
+        "reference": "42 U.S.C. 3604(c); 24 CFR 100.75(c)(1)",
+        "description": "Ad copy must not reference race, color, religion or national origin as a preference or as a description of the people in an area.",
+        "forbidden_patterns": [
+          "\\b(christian|muslim|jewish|catholic) (home|neighborhood|community|buyers?|sellers?)\\b",
+          "\\b(white|black|hispanic|latino|asian) (neighborhood|community|area)\\b",
+          "\\bethnic (neighborhood|area)\\b"
+        ]
+      },
+      {
+        "rule_id": "fha-disability",
+        "reference": "42 U.S.C. 3604(c); 24 CFR 100.75(c)(1)",
+        "description": "Ad copy must not exclude or discourage people with disabilities.",
+        "forbidden_patterns": [
+          "\\bno (wheelchairs?|disabled)\\b",
+          "\\bable[- ]bodied\\b"
+        ]
+      },
+      {
+        "rule_id": "fha-blockbusting",
+        "reference": "42 U.S.C. 3604(e)",
+        "description": "Ad copy must not urge owners to sell because of who is moving into the neighborhood (blockbusting).",
+        "forbidden_patterns": [
+          "\\bneighborhood (is )?changing\\b",
+          "\\bsell before (the )?(neighborhood|area|values?) (changes?|declines?|drops?)\\b",
+          "\\b(new|different) (people|families|residents) (are )?moving in\\b"
+        ]
+      }
+    ]
+  },
+  "tcpa_sms": {
+    "source": "47 CFR 64.1200(a)(2), (a)(9), (a)(10), (c)(1), (d)(4), (f)(9) (read 2026-11-19); FCC 26-67, Federal Register 2026-21821, section B, effective 2026-11-25",
+    "opt_out_keywords": ["STOP", "QUIT", "END", "REVOKE", "OPT OUT", "CANCEL", "UNSUBSCRIBE"],
+    "rules": [
+      {
+        "rule_id": "tcpa-opt-out-in-every-sms",
+        "reference": "47 CFR 64.1200(a)(10); FCC 26-67 section B",
+        "description": "Every SMS discloses how to revoke consent with at least one standardized word (for example 'Reply STOP to opt out')."
+      },
+      {
+        "rule_id": "tcpa-sender-identification",
+        "reference": "47 CFR 64.1200(d)(4)",
+        "description": "Every SMS identifies the sender by the brand name of the package."
+      },
+      {
+        "rule_id": "tcpa-written-consent",
+        "reference": "47 CFR 64.1200(a)(2), (f)(9)",
+        "description": "The lead form shows a consent statement: the person agrees to receive automated marketing texts and calls at the number provided, consent is not a condition of any purchase, and they can reply STOP to opt out.",
+        "required_phrases": ["automated", "not a condition", "stop"]
+      },
+      {
+        "rule_id": "tcpa-quiet-hours",
+        "reference": "47 CFR 64.1200(c)(1)",
+        "description": "Texts are sent only between 8 a.m. and 9 p.m. in the recipient's local time. The package cannot schedule sends, so this always goes to human review."
+      }
+    ]
+  },
+  "human_review_patterns": {
+    "description": "Claims the code cannot verify: they are not rejected, they go to the human review list.",
+    "rules": [
+      {
+        "rule_id": "review-offer-terms",
+        "reason": "Promises a price, speed or fee condition that only the buyer of the lead can confirm.",
+        "patterns": [
+          "\\bguarantee[ds]?\\b",
+          "\\bclose in \\d+ days?\\b",
+          "\\b\\d+[- ]days? clos(e|ing)\\b",
+          "\\bno (fees|commissions?|closing costs)\\b",
+          "\\b(top|highest|best) (dollar|price|offer)\\b",
+          "\\bcash (offer )?(in|within) \\d+ (hours?|days?)\\b"
+        ]
+      },
+      {
+        "rule_id": "review-insurance-claims",
+        "reason": "Talks about insurance coverage or claims, which depend on each policy.",
+        "patterns": [
+          "\\binsurance (will )?(cover|pay)s?\\b",
+          "\\bfree roof\\b",
+          "\\b(at )?no cost to you\\b"
+        ]
+      }
+    ]
+  }
+}
