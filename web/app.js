@@ -661,6 +661,121 @@ function renderUnitEconomicsSection(campaign, inputAssumptions) {
   return section;
 }
 
+const METRIC_INSIGHTS = {
+  free_and_clear_pct: {
+    nameEn: "U.S. Census Bureau ACS (Table B25081)",
+    namePt: "U.S. Census Bureau ACS (Tabela B25081)",
+    shortNameEn: "Census B25081",
+    shortNamePt: "Censo B25081",
+    url: "https://data.census.gov/table?q=B25081",
+    whyEn:
+      "Homeowners without a bank mortgage have 100% equity with zero lender payoff requirements. This gives them full flexibility to accept an as-is cash offer with quick 7–14 day closing.",
+    whyPt:
+      "Proprietários sem hipoteca bancária têm 100% do patrimônio líquido livre sem saldo devedor a quitar. Isso garante total flexibilidade para aceitar ofertas à vista com fechamento rápido em 7 a 14 dias.",
+  },
+  owner_long_tenure_pct: {
+    nameEn: "U.S. Census Bureau ACS (Table B25038)",
+    namePt: "U.S. Census Bureau ACS (Tabela B25038)",
+    shortNameEn: "Census B25038",
+    shortNamePt: "Censo B25038",
+    url: "https://data.census.gov/table?q=B25038",
+    whyEn:
+      "Homeowners of 20+ years frequently carry deferred maintenance, aging roofs/systems, or life transitions (probate/retirement). An as-is sale eliminates $30k–$80k in retail remodeling costs.",
+    whyPt:
+      "Famílias no imóvel há mais de 20 anos frequentemente acumulam manutenções pendentes ou transições de vida (aposentadoria/herança). Vender no estado atual elimina $30k–$80k em reformas.",
+  },
+  median_year_built: {
+    nameEn: "U.S. Census Bureau ACS (Table B25035)",
+    namePt: "U.S. Census Bureau ACS (Tabela B25035)",
+    shortNameEn: "Census B25035",
+    shortNamePt: "Censo B25035",
+    url: "https://data.census.gov/table?q=B25035",
+    whyEn:
+      "Older housing stock correlates with aging electrical, plumbing, and structural components that fail buyer mortgage inspections, strongly favoring cash buyers who waive repairs.",
+    whyPt:
+      "Imóveis mais antigos acumulam desgaste estrutural e reprovam em vistorias de bancos, favorecendo compradores que compram à vista sem exigir reformas prévias.",
+  },
+  vacancy_pct: {
+    nameEn: "U.S. Census Bureau ACS (Table B25002)",
+    namePt: "U.S. Census Bureau ACS (Tabela B25002)",
+    shortNameEn: "Census B25002",
+    shortNamePt: "Censo B25002",
+    url: "https://data.census.gov/table?q=B25002",
+    whyEn:
+      "Unoccupied properties generate zero income while accumulating property taxes, insurance, and deterioration, creating urgency for motivated sellers to liquidate quickly.",
+    whyPt:
+      "Casas desocupadas não geram renda e continuam acumulando IPTU local, seguro e desgaste físico, criando forte motivação para venda rápida à vista.",
+  },
+  hail_reports_1in: {
+    nameEn: "NOAA Storm Events Database (2020–2024)",
+    namePt: "Base de Tempestades da NOAA (2020–2024)",
+    shortNameEn: "NOAA Storm Events",
+    shortNamePt: "NOAA Tempestades",
+    url: "https://www.ncdc.noaa.gov/stormevents/",
+    whyEn:
+      "Severe hail (>= 1.0 inch) damages roofs and siding. Homeowners facing insurance deductibles or out-of-pocket restoration costs often prefer an immediate as-is cash sale.",
+    whyPt:
+      "Granizo severo perfura telhados e danifica fachadas. Proprietários sem verba para franquia de seguro ou reformas preferem vender a casa à vista no estado em que se encontra.",
+  },
+  wind_reports_50kt: {
+    nameEn: "NOAA Storm Events Database (2020–2024)",
+    namePt: "Base de Tempestades da NOAA (2020–2024)",
+    shortNameEn: "NOAA High Wind",
+    shortNamePt: "NOAA Vendavais",
+    url: "https://www.ncdc.noaa.gov/stormevents/",
+    whyEn:
+      "Gale-force winds cause structural damage and fallen trees, leading owners to seek fast cash liquidation over lengthy insurance restoration delays.",
+    whyPt:
+      "Vendavais severos causam destelhamento e danos estruturais, levando proprietários a buscar liquidação rápida em vez de aguardar restaurações demoradas.",
+  },
+  tropical_storm_events: {
+    nameEn: "NOAA & NWS Zone Weather Database",
+    namePt: "Base Meteorológica NOAA & NWS",
+    shortNameEn: "NOAA Coastal",
+    shortNamePt: "NOAA Costeira",
+    url: "https://www.ncdc.noaa.gov/stormevents/",
+    whyEn:
+      "Tropical storm and hurricane exposure creates flood and wind risks, prompting owners in coastal counties to capitalize on equity via quick off-market sales.",
+    whyPt:
+      "Exposição a furacões e tempestades tropicais cria riscos recorrentes de inundação e vento, acelerando a decisão de venda de proprietários em áreas costeiras.",
+  },
+};
+
+function findFactForBullet(bp, facts) {
+  if (!Array.isArray(facts)) return null;
+  const lower = String(bp || "").toLowerCase();
+  for (const fact of facts) {
+    const valStr = String(fact.value);
+    if (lower.includes(valStr)) {
+      return fact;
+    }
+  }
+  for (const fact of facts) {
+    if (
+      fact.field === "owner_long_tenure_pct" &&
+      (lower.includes("moved in") || lower.includes("before 2000") || lower.includes("20+ year"))
+    ) {
+      return fact;
+    }
+    if (
+      fact.field === "free_and_clear_pct" &&
+      (lower.includes("free and clear") || lower.includes("free & clear") || lower.includes("no mortgage"))
+    ) {
+      return fact;
+    }
+    if (fact.field === "hail_reports_1in" && lower.includes("hail")) {
+      return fact;
+    }
+    if (fact.field === "median_year_built" && (lower.includes("built") || lower.includes("age"))) {
+      return fact;
+    }
+    if (fact.field === "vacancy_pct" && lower.includes("vacan")) {
+      return fact;
+    }
+  }
+  return null;
+}
+
 function renderFactsSection(campaign) {
   const section = el("section", "pkg-section");
   const head = el("div", "pkg-section-head");
@@ -695,6 +810,34 @@ function renderFactsSection(campaign) {
       `${t("fieldLabel")} ${fact.field} · ${t("valueLabel")} ${fact.value}`
     );
     card.appendChild(detailLine);
+
+    const insight = METRIC_INSIGHTS[fact.field];
+    if (insight) {
+      const isPt = state.lang === "pt";
+      const whyBox = el("div", "fact-why-box");
+      whyBox.appendChild(
+        el(
+          "strong",
+          "fact-why-label",
+          isPt ? "💡 Por que este número importa na negociação:" : "💡 Why this metric matters for campaigns:"
+        )
+      );
+      whyBox.appendChild(el("p", "fact-why-text", isPt ? insight.whyPt : insight.whyEn));
+
+      const linkRow = el("div", "fact-why-link-row");
+      const a = document.createElement("a");
+      a.className = "fact-dataset-link";
+      a.href = insight.url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.textContent = isPt
+        ? `Consultar base oficial (${insight.namePt}) ↗`
+        : `Open official dataset (${insight.nameEn}) ↗`;
+      linkRow.appendChild(a);
+      whyBox.appendChild(linkRow);
+
+      card.appendChild(whyBox);
+    }
 
     if (isCorrected && correctionsByField.has(fact.field)) {
       const corr = correctionsByField.get(fact.field);
@@ -833,7 +976,66 @@ function renderLandingPageSection(campaign) {
   if (Array.isArray(lp.bullet_points) && lp.bullet_points.length > 0) {
     const ul = el("ul", "lp-bullets");
     for (const bp of lp.bullet_points) {
-      ul.appendChild(el("li", "", bp));
+      const li = el("li", "lp-bullet-item");
+      const textSpan = el("span", "lp-bullet-text", bp);
+      li.appendChild(textSpan);
+
+      const matchedFact = findFactForBullet(bp, campaign.facts);
+      if (matchedFact && METRIC_INSIGHTS[matchedFact.field]) {
+        const insight = METRIC_INSIGHTS[matchedFact.field];
+        const isPt = state.lang === "pt";
+        const anchor = el("span", "bullet-tooltip-anchor");
+
+        const pill = document.createElement("a");
+        pill.className = "bullet-source-pill";
+        pill.href = insight.url;
+        pill.target = "_blank";
+        pill.rel = "noopener noreferrer";
+        pill.title = isPt
+          ? "Clique para abrir a base oficial no portal do governo"
+          : "Click to view official government dataset";
+        pill.innerHTML = `<span>📊</span> <span>${isPt ? insight.shortNamePt : insight.shortNameEn}</span> <span class="pill-info-icon">ℹ️</span>`;
+        anchor.appendChild(pill);
+
+        const tooltip = el("span", "bullet-tooltip");
+        const ttHead = el("span", "bullet-tooltip-header");
+        ttHead.appendChild(el("strong", "", isPt ? insight.namePt : insight.nameEn));
+        ttHead.appendChild(el("span", "badge badge-green", isPt ? "✅ Verificado" : "✅ Verified"));
+        tooltip.appendChild(ttHead);
+
+        const ttBody = el("span", "bullet-tooltip-body");
+        ttBody.appendChild(
+          el(
+            "strong",
+            "bullet-tooltip-why-title",
+            isPt ? "💡 Por que este número importa:" : "💡 Why this metric matters:"
+          )
+        );
+        ttBody.appendChild(
+          el("span", "bullet-tooltip-why-text", isPt ? insight.whyPt : insight.whyEn)
+        );
+        tooltip.appendChild(ttBody);
+
+        const ttMeta = el("span", "bullet-tooltip-meta");
+        ttMeta.textContent = isPt
+          ? `Dado oficial: ${matchedFact.value} · Condado: ${campaign.county_name}`
+          : `Official value: ${matchedFact.value} · County: ${campaign.county_name}`;
+        tooltip.appendChild(ttMeta);
+
+        const ttLink = document.createElement("a");
+        ttLink.className = "bullet-tooltip-link";
+        ttLink.href = insight.url;
+        ttLink.target = "_blank";
+        ttLink.rel = "noopener noreferrer";
+        ttLink.textContent = isPt
+          ? "Abrir tabela oficial no portal do governo ↗"
+          : "Open official government dataset ↗";
+        tooltip.appendChild(ttLink);
+
+        anchor.appendChild(tooltip);
+        li.appendChild(anchor);
+      }
+      ul.appendChild(li);
     }
     preview.appendChild(ul);
   }
