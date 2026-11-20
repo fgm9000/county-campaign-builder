@@ -1,0 +1,87 @@
+{
+  "version": "2026-11-20",
+  "verticals": {
+    "motivated_seller": {
+      "label": "Motivated seller (cash offer)",
+      "goal": "Find owners who want to sell quickly and as-is, and qualify them before the lead is sold, so the buyer gets a better lead-to-deal ratio.",
+      "trigger_fields": [
+        "owner_long_tenure_pct",
+        "free_and_clear_pct",
+        "vacancy_pct",
+        "median_year_built",
+        "owner_occupied_pct",
+        "median_home_value_usd",
+        "tropical_events",
+        "hail_reports_1in"
+      ],
+      "required_question_topics": [
+        {
+          "topic": "timeline",
+          "why": "How soon they need to sell separates motivated sellers from browsers.",
+          "keywords": ["\\bhow soon\\b", "\\btimeline\\b", "\\bwhen (do|would) you\\b", "\\bwithin\\b.*\\b(days?|weeks?|months?)\\b"]
+        },
+        {
+          "topic": "property_condition",
+          "why": "Repairs needed is the main reason to accept an as-is cash offer.",
+          "keywords": ["\\bcondition\\b", "\\brepairs?\\b", "\\bdamage\\b"]
+        },
+        {
+          "topic": "listed_with_agent",
+          "why": "A property already listed on the MLS is usually not an off-market deal.",
+          "keywords": ["\\blisted\\b", "\\bagent\\b", "\\brealtor\\b", "\\bmls\\b"]
+        },
+        {
+          "topic": "decision_maker",
+          "why": "Only the owner on the title (or all owners) can sign.",
+          "keywords": ["\\btitle\\b", "\\bowner\\b", "\\bdecision\\b", "\\bco-?owners?\\b"]
+        },
+        {
+          "topic": "reason_for_selling",
+          "why": "Inheritance, relocation, tired landlord or financial pressure predict a deal.",
+          "keywords": ["\\bwhy\\b", "\\breason\\b", "\\binherit", "\\brelocat", "\\btenants?\\b"]
+        }
+      ],
+      "brand_name": "Example Home Buyers"
+    },
+    "roofing": {
+      "label": "Roof replacement",
+      "goal": "Find homeowners who need a full roof replacement, not a minor repair, and qualify them before the lead is sold.",
+      "trigger_fields": [
+        "hail_reports_1in",
+        "severe_wind_reports",
+        "tornado_events",
+        "tropical_events",
+        "median_year_built",
+        "owner_occupied_pct"
+      ],
+      "required_question_topics": [
+        {
+          "topic": "homeowner",
+          "why": "Only the owner can approve a replacement.",
+          "keywords": ["\\bown\\b", "\\bowner\\b", "\\brent\\b"]
+        },
+        {
+          "topic": "roof_age",
+          "why": "Roofs over 15 to 20 years old are replacement candidates.",
+          "keywords": ["\\bhow old\\b", "\\broof age\\b", "\\byears? old\\b", "\\binstalled\\b"]
+        },
+        {
+          "topic": "damage_type",
+          "why": "Storm damage over large areas points to replacement; a single leak points to repair.",
+          "keywords": ["\\bdamage\\b", "\\bleak", "\\bhail\\b", "\\bwind\\b", "\\bmissing shingles\\b"]
+        },
+        {
+          "topic": "replacement_vs_repair",
+          "why": "Separates replacement leads (high value) from repair leads.",
+          "keywords": ["\\breplace", "\\brepair\\b", "\\bnew roof\\b"]
+        },
+        {
+          "topic": "insurance_claim",
+          "why": "An open or approved claim changes timing and budget.",
+          "keywords": ["\\binsurance\\b", "\\bclaim\\b", "\\badjuster\\b"]
+        }
+      ],
+      "brand_name": "Example Roofing Co."
+    }
+  }
+}

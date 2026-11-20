@@ -52,7 +52,13 @@
 - SMS conta como "call" ((a)(9)). Mensagem de marketing automatizada para celular exige **consentimento expresso por escrito** ((a)(2) e (f)(9)).
 - "STOP", "QUIT", "END", "REVOKE", "OPT OUT", "CANCEL" e "UNSUBSCRIBE" revogam o consentimento ((a)(10)); a revogação deve ser honrada em até **10 dias úteis**.
 - Identificar quem envia e oferecer contato ((d)(4)); horário de **8h às 21h** no fuso de quem recebe ((c)(1)).
-- **Emenda nova:** FCC 26-67, publicada no Federal Register em 26/10/2026, **em vigor a partir de 25/11/2026**. Ela permite designar um método exclusivo de revogação, e segundo os escritórios consultados vale para mensagens **informativas**, não de telemarketing. Os SMS da demo são de marketing; a regra de opt-out por "STOP" continua. O texto vigente é relido na Fase 3, antes de virar configuração.
+- **Emenda nova:** FCC 26-67, publicada no Federal Register em 26/10/2026 e **em vigor 30 dias depois (25/11/2026)**.
+  - **Correção feita na Fase 3**, depois de ler o texto do documento 2026-21821 (seção B), e não os resumos dos escritórios:
+    - a revogação por **categoria** vale só para chamadas e textos informativos;
+    - a revogação de telemarketing continua valendo para **todo** o telemarketing daquele remetente;
+    - a possibilidade de designar um **método exclusivo** de revogação vale para **qualquer remetente**, telemarketing incluído. Um dos métodos é responder ao texto com uma das palavras-padrão.
+  - **Quem designa a resposta por texto como método exclusivo** precisa informar o método **em cada mensagem**. Basta uma das palavras-padrão (o exemplo do texto é responder "stop"), mas todas as sete continuam valendo como revogação.
+  - **Consequência para o checador:** todo SMS do pacote traz "Reply STOP to opt out" (ou equivalente com uma das palavras-padrão). É o que permite ao remetente usar a resposta por texto como método exclusivo.
 
 **Google Ads, "Housing in personalized advertising"** (nova página `support.google.com/adspolicy/answer/16701755`; a antiga deu 404):
 - Nos EUA e no Canadá, anúncios de moradia **não podem segmentar** por gênero, idade, status parental, estado civil ou CEP.

@@ -10,8 +10,8 @@
 |------|----------|--------|--------------|--------|------------|
 | 0 — Kickoff (PRD, ADRs, plano) | 19/11 | ✅ | 2026-11-19 | — | Portões 1, 2 e 3 aprovados |
 | 1 — Esqueleto reaproveitado e spikes | 19/11 a 20/11 | ✅ | 2026-11-19 | `67e66e4` | Adiantada 1 dia |
-| 2 — ETL dos condados | 20/11 | 🔄 | | aguardando OK | Tudo pronto; falta o commit |
-| 3 — Contratos e domínio | 21/11 | ⏳ | | | |
+| 2 — ETL dos condados | 20/11 | ✅ | 2026-11-20 | `6cba2cc` | No prazo |
+| 3 — Contratos e domínio | 20/11 a 21/11 | ✅ | 2026-11-20 | aguardando commit | Adiantada 1 dia (67 testes, 100% de cobertura) |
 | 4 — IA e grafo com fan-out | 21/11 a 22/11 | ⏳ | | | Checkpoint de corte |
 | 5 — API e evals | 23/11 | ⏳ | | | |
 | 6 — Página e playbook | 24/11 | ⏳ | | | |
@@ -46,18 +46,18 @@
 - [x] Conferência manual: Dallas recontado de forma independente nos arquivos brutos (102 granizo, 50 vento)
 - [x] Narrativa dos 3 condados decidida: Dallas 🟢, Pinellas 🟡, Cook 🔴 (gatilhos ótimos, conta não fecha)
 - [x] Catraca verde, 100% de cobertura (29 testes)
-- [ ] Commit
+- [x] Commit (`6cba2cc`)
 
 ### Fase 3 — Contratos e domínio
-- [ ] `models.py` (entrada, fatos numéricos, correções, ativos com status, economia, revisão humana, comparação)
-- [ ] Verificador numérico
-- [ ] `economics.py` (CPL, CPC máximo, semáforo)
-- [ ] Limites de caracteres (títulos ≤ 30, descrições ≤ 90, SMS ≤ 160)
-- [ ] TCPA relido no texto vigente (inclui a emenda FCC 26-67) e transformado em `config/compliance.json`
-- [ ] Regras de Fair Housing (classes protegidas, *blockbusting*)
-- [ ] `config/verticals/` (motivated seller e roofing: perguntas obrigatórias, gatilhos, regras)
-- [ ] 100% de cobertura em `models` e `domain`
-- [ ] Commit
+- [x] `models.py` (entrada, fatos numéricos, correções, ativos com status, economia, revisão humana, comparação)
+- [x] Verificador numérico
+- [x] `economics.py` (CPL, CPC máximo, semáforo)
+- [x] Limites de caracteres (títulos ≤ 30, descrições ≤ 90, SMS ≤ 160)
+- [x] TCPA relido no texto vigente (inclui a emenda FCC 26-67) e transformado em `config/compliance.json`
+- [x] Regras de Fair Housing (classes protegidas, *blockbusting*)
+- [x] `config/verticals.json` (motivated seller e roofing: perguntas obrigatórias, gatilhos, regras)
+- [x] 100% de cobertura em `models`, `economics` e `domain` (67 testes)
+- [x] Commit
 
 ### Fase 4 — IA e grafo com fan-out
 - [ ] `prompt.py` (os prompts que o playbook reutiliza)
@@ -113,4 +113,5 @@
 |------|------|-----------------|-------------------------|
 | 2026-11-19 | 0 | Kickoff a partir da vaga "Marketing AI & Automation Builder" (lead-gen imobiliário). O Fabio preferiu uma demo nova a pivotar o briefing-scout. PRD: 3 condados lado a lado, motivated seller + roofing, dados públicos estruturados, semáforo do leilão e número corrigido na primeira tela, revisão humana por pacote, playbook com planilha. Stack: motor do briefing-scout copiado, Anthropic (Haiku + Sonnet), fan-out com `Send`, ETL em Polars. | Fase 1; o Fabio vai pedir a chave do Census em api.census.gov/data/key_signup.html |
 | 2026-11-19 | 1 | Esqueleto copiado do briefing-scout (Haiku): pacote `county_campaign_builder`, catraca verde (14 testes, 100%), workflows com `permissions`. Spikes: fan-out passa no mypy; Census com chave do Fabio devolve 3.222 condados; NOAA com 2 achados (furacão por zona e Cook com mais granizo que Dallas em 2024); textos oficiais lidos (FHA, HUD, TCPA e a emenda FCC 26-67, que vale a partir de 25/11 para mensagens informativas; política do Google é de segmentação). | Fase 1 commitada em `67e66e4`; Fase 2 decide a narrativa com 5 anos de dados |
-| 2026-11-20 | 2 | ETL em Polars (Sonnet): NOAA 2020–2024 com eventos tropicais por zona via NWS (`bp16ap26`), Census ACS 2024; 19 FIPS da NOAA sem Census descartados (Connecticut mudou para regiões de planejamento). O Fabio notou que, com motivated seller como foco, clima é gatilho secundário: entraram donos há mais de 25 anos (B25038) e imóveis quitados (B25081); o clima fica para roofing e para o ângulo de imóvel danificado. Dallas recontado de forma independente. Narrativa: Cook passou a ser o vermelho pela conta, não pelo clima. | Commit da Fase 2 aguardando o OK do Fabio |
+| 2026-11-20 | 2 | ETL em Polars (Sonnet): NOAA 2020–2024 com eventos tropicais por zona via NWS (`bp16ap26`), Census ACS 2024; 19 FIPS da NOAA sem Census descartados (Connecticut mudou para regiões de planejamento). O Fabio notou que, com motivated seller como foco, clima é gatilho secundário: entraram donos há mais de 25 anos (B25038) e imóveis quitados (B25081); o clima fica para roofing e para o ângulo de imóvel danificado. Dallas recontado de forma independente. Narrativa: Cook passou a ser o vermelho pela conta, não pelo clima. | Fase 2 commitada em `6cba2cc` |
+| 2026-11-20 | 3 | Contratos Pydantic v2 congelados (`models.py`), matemática pura do leilão em código (`economics.py`), guardrails de compliance (TCPA, Fair Housing, limites de caracteres), verificador numérico contra a fonte oficial e tópicos de qualificação (`domain.py`). Catraca verde com 67 testes, 100% de cobertura e zero supressões. | Fase 3 concluída; aguardando commit e pronto para Fase 4 (IA e grafo LangGraph com fan-out) |
