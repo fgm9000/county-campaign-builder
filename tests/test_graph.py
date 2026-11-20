@@ -640,9 +640,7 @@ def test_regeneration_and_human_review_helpers_edge_branches() -> None:
         missing_topics=[],
         compliance=deps.compliance_config,
     )
-    assert any(
-        item.item == "question_1" and item.rule_id == "asset-rejected" for item in q_review
-    )
+    assert any(item.item == "question_1" and item.rule_id == "asset-rejected" for item in q_review)
 
 
 def _build_approved_lp(brand_name: str) -> LandingPageTop:

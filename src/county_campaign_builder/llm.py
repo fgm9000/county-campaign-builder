@@ -206,27 +206,19 @@ def _fit_text(candidate: str, fallback: str, max_chars: int) -> str:
 
 def _format_trigger_claim(field: str, value: float | int, county: CountyRecord) -> str:
     templates: dict[str, str] = {
-        "hail_reports_1in": (
-            f"{value} hail reports of 1 inch or larger in {county.years_covered}"
-        ),
+        "hail_reports_1in": (f"{value} hail reports of 1 inch or larger in {county.years_covered}"),
         "severe_wind_reports": (
             f"{value} severe thunderstorm wind reports (50+ kt) in {county.years_covered}"
         ),
         "tornado_events": f"{value} tornado events recorded in {county.years_covered}",
         "tropical_events": f"{value} tropical storm or hurricane events in {county.years_covered}",
-        "median_year_built": (
-            f"Median home construction year is {value} in {county.county_name}"
-        ),
+        "median_year_built": (f"Median home construction year is {value} in {county.county_name}"),
         "owner_occupied_pct": (
             f"{value}% of households are owner-occupied in {county.county_name}"
         ),
         "vacancy_pct": f"{value}% housing vacancy rate in {county.county_name}",
-        "median_home_value_usd": (
-            f"Median home value is ${int(value):,} in {county.county_name}"
-        ),
-        "owner_long_tenure_pct": (
-            f"{value}% of owner-occupied households moved in before 2000"
-        ),
+        "median_home_value_usd": (f"Median home value is ${int(value):,} in {county.county_name}"),
+        "owner_long_tenure_pct": (f"{value}% of owner-occupied households moved in before 2000"),
         "free_and_clear_pct": f"{value}% of owner-occupied homes are owned free and clear",
     }
     return templates.get(field, f"{field.replace('_', ' ')} is {value} in {county.county_name}")
@@ -698,13 +690,10 @@ class AnthropicModelClient:
         except (anthropic.APIError, httpx.HTTPError, OSError, TimeoutError) as exc:
             raise LlmError(f"Anthropic API call failed for model '{model}': {exc}") from exc
 
-        text_chunks = [
-            block.text for block in message.content if isinstance(block, TextBlock)
-        ]
+        text_chunks = [block.text for block in message.content if isinstance(block, TextBlock)]
         if not text_chunks:
             raise LlmOutputError(
-                f"Anthropic model '{model}' returned no text blocks for "
-                f"{response_model.__name__}."
+                f"Anthropic model '{model}' returned no text blocks for {response_model.__name__}."
             )
 
         raw_json = _extract_json_text("\n".join(text_chunks))
