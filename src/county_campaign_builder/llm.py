@@ -667,7 +667,9 @@ class AnthropicModelClient:
         sonnet_model: str = SONNET_MODEL,
         max_tokens: int = DEFAULT_MAX_TOKENS,
     ) -> None:
-        self._client = client if client is not None else anthropic.Anthropic(api_key=api_key)
+        self._client = (
+            client if client is not None else anthropic.Anthropic(api_key=api_key, max_retries=4)
+        )
         self._haiku_model = haiku_model
         self._sonnet_model = sonnet_model
         self._max_tokens = max_tokens
