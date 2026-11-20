@@ -297,9 +297,17 @@ def _build_compliant_sms(brand_name: str, body: str) -> str:
 
 def _extract_json_text(raw_text: str) -> str:
     stripped = raw_text.strip()
-    match = _JSON_FENCE_RE.match(stripped)
-    if match is not None:
-        return match.group(1).strip()
+    fence_pattern = re.search(
+        r"```(?:json)?\s*\n?(.*?)\n?```",
+        stripped,
+        re.DOTALL | re.IGNORECASE,
+    )
+    if fence_pattern is not None:
+        return fence_pattern.group(1).strip()
+    start = stripped.find("{")
+    end = stripped.rfind("}")
+    if start != -1 and end != -1 and end > start:
+        return stripped[start : end + 1]
     return stripped
 
 
@@ -307,8 +315,9 @@ def _build_json_system_prompt(schema: dict[str, object]) -> str:
     schema_json = json.dumps(schema, ensure_ascii=True)
     return (
         "You must respond with ONLY a single valid JSON object and no surrounding prose or "
-        "markdown fences. The JSON object MUST conform strictly to this JSON Schema:\n"
-        f"{schema_json}"
+        "markdown fences. Never use unescaped double quotes inside string values (use single "
+        "quotes or escape them with a backslash). The JSON object MUST conform strictly to this "
+        f"JSON Schema:\n{schema_json}"
     )
 
 
@@ -682,29 +691,35 @@ class AnthropicModelClient:
         response_model: type[OutputT],
     ) -> OutputT:
         system_prompt = _build_json_system_prompt(response_model.model_json_schema())
-        try:
-            message = self._client.messages.create(
-                model=model,
-                max_tokens=self._max_tokens,
-                system=system_prompt,
-                messages=[{"role": "user", "content": prompt}],
-            )
-        except (anthropic.APIError, httpx.HTTPError, OSError, TimeoutError) as exc:
-            raise LlmError(f"Anthropic API call failed for model '{model}': {exc}") from exc
+        last_error: Exception | None = None
+        for _ in range(2):
+            try:
+                message = self._client.messages.create(
+                    model=model,
+                    max_tokens=self._max_tokens,
+                    system=system_prompt,
+                    messages=[{"role": "user", "content": prompt}],
+                )
+            except (anthropic.APIError, httpx.HTTPError, OSError, TimeoutError) as exc:
+                raise LlmError(f"Anthropic API call failed for model '{model}': {exc}") from exc
 
-        text_chunks = [block.text for block in message.content if isinstance(block, TextBlock)]
-        if not text_chunks:
-            raise LlmOutputError(
-                f"Anthropic model '{model}' returned no text blocks for {response_model.__name__}."
-            )
+            text_chunks = [block.text for block in message.content if isinstance(block, TextBlock)]
+            if not text_chunks:
+                name = response_model.__name__
+                raise LlmOutputError(
+                    f"Anthropic model '{model}' returned no text blocks for {name}."
+                )
 
-        raw_json = _extract_json_text("\n".join(text_chunks))
-        try:
-            return response_model.model_validate_json(raw_json)
-        except ValidationError as exc:
-            raise LlmOutputError(
-                f"Anthropic output failed validation for {response_model.__name__}: {exc}"
-            ) from exc
+            raw_json = _extract_json_text("\n".join(text_chunks))
+            try:
+                return response_model.model_validate_json(raw_json)
+            except ValidationError as exc:
+                last_error = exc
+                continue
+
+        raise LlmOutputError(
+            f"Anthropic output failed validation for {response_model.__name__}: {last_error}"
+        ) from last_error
 
     def interpret_triggers(
         self,

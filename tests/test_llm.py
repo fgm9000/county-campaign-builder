@@ -211,7 +211,10 @@ def test_llm_helpers_edge_cases() -> None:
     assert trimmed_sms.endswith("... Reply STOP to opt out.")
 
     assert _extract_json_text('```json\n{"a": 1}\n```') == '{"a": 1}'
+    assert _extract_json_text('Some text\n```json\n{"a": 1}\n```\nMore text') == '{"a": 1}'
+    assert _extract_json_text('Leading text {"a": 1} trailing text') == '{"a": 1}'
     assert _extract_json_text('{"a": 1}') == '{"a": 1}'
+    assert _extract_json_text("plain text without braces") == "plain text without braces"
 
 
 def test_fake_client_dallas_trap_and_grounded() -> None:
@@ -534,3 +537,19 @@ def test_anthropic_client_empty_and_invalid_json_raises_llm_output_error(
     monkeypatch.setattr(sdk_client.messages, "create", return_wrong_schema)
     with pytest.raises(LlmOutputError, match="failed validation"):
         client.compare_counties(["Dallas"])
+
+    # Test retry on validation error where second attempt succeeds
+    attempts = 0
+
+    def retry_then_succeed(**kwargs: Any) -> Message:
+        nonlocal attempts
+        attempts += 1
+        _ = kwargs
+        if attempts == 1:
+            return _make_message("{broken json")
+        return _make_message('{"recommended_county_fips": "48113", "summary": "Dallas"}')
+
+    monkeypatch.setattr(sdk_client.messages, "create", retry_then_succeed)
+    result = client.compare_counties(["Dallas"])
+    assert result.recommended_county_fips == "48113"
+    assert attempts == 2
