@@ -15,8 +15,8 @@
 | 4 — IA e grafo com fan-out | 20/11 a 22/11 | ✅ | 2026-11-20 | `4b7896f` | Adiantada 2 dias (96 testes, 100% de cobertura) |
 | 5 — API e evals | 20/11 a 23/11 | ✅ | 2026-11-20 | `2675a8e` | Adiantada 3 dias (114 testes, 100% de cobertura) |
 | 6 — Página e playbook | 20/11 a 24/11 | ✅ | 2026-11-20 | `66771b8` | Adiantada 4 dias (123 testes, 100% de cobertura) |
-| 7 — Esteira, container e deploy | 20/11 a 25/11 | 🔄 | | | Container, deploy.yml e smoke tests prontos; aguardando GCP / GitHub |
-| 8 — Documentação e publicação | 26/11 | ⏳ | | | |
+| 7 — Esteira, container e deploy | 20/11 a 25/11 | 🔄 | | `00b088e` | Container, deploy.yml e smoke tests prontos; aguardando GCP / GitHub |
+| 8 — Documentação e publicação | 20/11 a 26/11 | 🔄 | | | Documentação bilíngue completa (README, arquitetura, runbook, PRD, 8 ADRs) |
 
 ## Spikes da Fase 1
 
@@ -93,11 +93,11 @@
 - [ ] Commit
 
 ### Fase 8 — Documentação e publicação
-- [ ] README em inglês e português (divisão IA, código e humano em destaque)
-- [ ] Arquitetura, runbook, PRD e ADRs em inglês
-- [ ] Repositório público, Pages e teste de 30 segundos
+- [x] README em inglês e português (divisão IA, código e humano em destaque)
+- [x] Arquitetura, runbook, PRD e 8 ADRs em inglês
+- [ ] Repositório remoto no GitHub, Pages e teste de 30 segundos
 - [ ] Guia de estudo fechado
-- [ ] Commit
+- [x] Commit
 
 ## Medições (preencher com dado real, nunca estimativa)
 
@@ -120,4 +120,5 @@
 | 2026-11-20 | 4 | Prompts determinísticos (`prompt.py`), clientes LLM com DTOs estruturados e cliente falso com armadilha numérica em Dallas (`llm.py`), subgrafo por condado com regeneração única e grafo LangGraph com fan-out via `Send` (`graph.py`). Suíte ampliada para 96 testes, 100% de cobertura e zero supressões. | Fase 4 commitada em `4b7896f` |
 | 2026-11-20 | 5 | API FastAPI com SSE streaming, RequestGuard (código de acesso, proteção contra força bruta, rate limit por IP e validação estrita do FIPS), logs JSON sem PII. Suíte de 5 métricas determinísticas DeepEval (NumericAccuracy, CharacterLimit, Compliance, QualificationCoverage, Economics) e G-Eval live. Catraca verde com 114 testes e 100% de cobertura. | Fase 5 commitada em `2675a8e` |
 | 2026-11-20 | 6 | Static Web Playground em `web/` com a regra dos 30 segundos (semáforo do leilão e correção de Dallas na primeira tela), explorador de ativos, aba ao vivo com SSE e zero dependências de CDN (CSP estrita). Playbook não-código em `playbook/README.md` com os mesmos prompts do código e planilha real `playbook/auction-math.xlsx` gerada via openpyxl. Testes de drift e playbook verdes, 123 testes com 100% de cobertura. | Fase 6 commitada em `66771b8` |
-| 2026-11-20 | 7 | Dockerfile multi-stage com uv e usuário não-root, workflow de deploy para Cloud Run via WIF (`deploy.yml`), script de smoke tests (`smoke_test.py`) com 17 testes unitários e runbook de infraestrutura detalhado (`deployment-runbook.pt-BR.md`). Catraca verde com 140 testes e 100% de cobertura. | Fase 7 em andamento; pronta para commit e configuração de recursos GCP |
+| 2026-11-20 | 7 | Dockerfile multi-stage com uv e usuário não-root, workflow de deploy para Cloud Run via WIF (`deploy.yml`), script de smoke tests (`smoke_test.py`) com 17 testes unitários e runbook de infraestrutura detalhado (`deployment-runbook.pt-BR.md`). Catraca verde com 140 testes e 100% de cobertura. | Fase 7 commitada em `00b088e` |
+| 2026-11-20 | 8 | Documentação bilíngue completa: README em inglês e português com divisão IA/código/humano em destaque e links de 30 segundos, arquitetura bilíngue detalhada com diagramas Mermaid, deployment runbook em inglês e traduções dos 8 ADRs e PRD. Catraca verde mantida (140 testes, 100% de cobertura, zero problemas de lint e tipos). | Documentação commitada; aguardando OK do Fabio para recursos GCP e publicação no GitHub |
