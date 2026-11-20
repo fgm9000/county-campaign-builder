@@ -14,7 +14,7 @@
 | 3 — Contratos e domínio | 20/11 a 21/11 | ✅ | 2026-11-20 | `ec485a6` | Adiantada 1 dia (67 testes, 100% de cobertura) |
 | 4 — IA e grafo com fan-out | 20/11 a 22/11 | ✅ | 2026-11-20 | `4b7896f` | Adiantada 2 dias (96 testes, 100% de cobertura) |
 | 5 — API e evals | 20/11 a 23/11 | ✅ | 2026-11-20 | `2675a8e` | Adiantada 3 dias (114 testes, 100% de cobertura) |
-| 6 — Página e playbook | 20/11 a 24/11 | ✅ | 2026-11-20 | aguardando commit | Adiantada 4 dias (123 testes, 100% de cobertura) |
+| 6 — Página e playbook | 20/11 a 24/11 | ✅ | 2026-11-20 | `66771b8` | Adiantada 4 dias (123 testes, 100% de cobertura) |
 | 7 — Esteira, container e deploy | 25/11 | ⏳ | | | |
 | 8 — Documentação e publicação | 26/11 | ⏳ | | | |
 
