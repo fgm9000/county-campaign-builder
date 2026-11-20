@@ -44,3 +44,6 @@ local_cache/
 
 # Live evaluation report
 eval-results-live.json
+
+# Raw downloads for the county ETL (NOAA CSVs, NWS zone map)
+data/raw/

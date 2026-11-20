@@ -9,8 +9,8 @@
 | Fase | Previsto | Status | Concluída em | Commit | Observação |
 |------|----------|--------|--------------|--------|------------|
 | 0 — Kickoff (PRD, ADRs, plano) | 19/11 | ✅ | 2026-11-19 | — | Portões 1, 2 e 3 aprovados |
-| 1 — Esqueleto reaproveitado e spikes | 19/11 a 20/11 | 🔄 | | aguardando OK | Tudo pronto; falta o commit |
-| 2 — ETL dos condados | 20/11 | ⏳ | | | |
+| 1 — Esqueleto reaproveitado e spikes | 19/11 a 20/11 | ✅ | 2026-11-19 | `67e66e4` | Adiantada 1 dia |
+| 2 — ETL dos condados | 20/11 | 🔄 | | aguardando OK | Tudo pronto; falta o commit |
 | 3 — Contratos e domínio | 21/11 | ⏳ | | | |
 | 4 — IA e grafo com fan-out | 21/11 a 22/11 | ⏳ | | | Checkpoint de corte |
 | 5 — API e evals | 23/11 | ⏳ | | | |
@@ -27,13 +27,83 @@
 | 3 | Fan-out com `Send` passa no `mypy --strict`? | ✅ | langgraph 1.2.22 | ADR 001 |
 | 4 | Texto oficial de TCPA, Fair Housing e política de Housing do Google | ✅ | Google restringe segmentação, não texto; emenda TCPA em vigor em 25/11 (informativas) | ADR 002 |
 
+## Checklist por fase
+
+### Fase 1 — Esqueleto reaproveitado e spikes
+- [x] `pyproject` (versões exatas, + polars e openpyxl, sem lancedb e voyageai), `uv.lock`, `.gitignore`, `.gitattributes`, `LICENSE`
+- [x] `limits.py` e `settings.py` adaptados do briefing-scout, com testes
+- [x] Catraca (`quality_baseline`/`quality_check`) e `quality-baseline.json`
+- [x] Workflows `ci`, `codeql`, `eval-live` e `pages` com `permissions`; Dependabot
+- [x] Spikes 1 a 4 em `docs/spikes.pt-BR.md`
+- [x] Commit (`67e66e4`)
+
+### Fase 2 — ETL dos condados
+- [x] Localizar o arquivo atual de correlação zona–condado da NWS (`bp16ap26.dbx`, de 16/04/2026)
+- [x] `county_data.py` (granizo ≥ 1", vento ≥ 50 nós, tornados, eventos tropicais por zona; Census com sentinelas tratadas) com testes sobre amostras versionadas
+- [x] Sinais de motivated seller do Census: donos há mais de 25 anos (B25038) e imóveis quitados (B25081)
+- [x] `scripts/build_county_table.py` (NOAA 2020–2024, NWS, Census com a chave só no processo)
+- [x] `data/counties.parquet` + `data/counties_meta.json` (3.222 condados, ~120 KB)
+- [x] Conferência manual: Dallas recontado de forma independente nos arquivos brutos (102 granizo, 50 vento)
+- [x] Narrativa dos 3 condados decidida: Dallas 🟢, Pinellas 🟡, Cook 🔴 (gatilhos ótimos, conta não fecha)
+- [x] Catraca verde, 100% de cobertura (29 testes)
+- [ ] Commit
+
+### Fase 3 — Contratos e domínio
+- [ ] `models.py` (entrada, fatos numéricos, correções, ativos com status, economia, revisão humana, comparação)
+- [ ] Verificador numérico
+- [ ] `economics.py` (CPL, CPC máximo, semáforo)
+- [ ] Limites de caracteres (títulos ≤ 30, descrições ≤ 90, SMS ≤ 160)
+- [ ] TCPA relido no texto vigente (inclui a emenda FCC 26-67) e transformado em `config/compliance.json`
+- [ ] Regras de Fair Housing (classes protegidas, *blockbusting*)
+- [ ] `config/verticals/` (motivated seller e roofing: perguntas obrigatórias, gatilhos, regras)
+- [ ] 100% de cobertura em `models` e `domain`
+- [ ] Commit
+
+### Fase 4 — IA e grafo com fan-out
+- [ ] `prompt.py` (os prompts que o playbook reutiliza)
+- [ ] `llm.py` (Haiku e Sonnet com saída estruturada; modelo falso por cenário)
+- [ ] `graph.py` (subgrafo por condado, `Send`, `compare_counties`, regeneração única, degradação)
+- [ ] 3 cenários falsos com uma armadilha numérica plantada
+- [ ] Execução real com custo e tempo medidos
+- [ ] Decisão de corte registrada
+- [ ] Commit
+
+### Fase 5 — API e evals
+- [ ] API (`POST /v1/campaigns` e `/stream`, código de acesso, rate limit, validação do FIPS)
+- [ ] Testes de API (401, 429, FIPS inválido, ordem do SSE)
+- [ ] `evals/`: 5 métricas determinísticas + G-Eval live
+- [ ] Rodada live com relatório
+- [ ] Commit
+
+### Fase 6 — Página e playbook
+- [ ] `web/` em inglês com o semáforo e o número corrigido na primeira tela
+- [ ] `examples.json` com teste de drift
+- [ ] `playbook/README.md` com os mesmos prompts do código (teste de igualdade)
+- [ ] `playbook/auction-math.xlsx` com fórmulas reais
+- [ ] Revisão no navegador (desktop e 375 px)
+- [ ] Commit
+
+### Fase 7 — Esteira, container e deploy
+- [ ] Repositório privado no GitHub e CI verde
+- [ ] Recursos no GCP (contas, WIF, 2 segredos), com o OK do Fabio em cada passo
+- [ ] Dockerfile, `deploy.yml` e smoke tests
+- [ ] Um condado real rodando ao vivo
+- [ ] Commit
+
+### Fase 8 — Documentação e publicação
+- [ ] README em inglês e português (divisão IA, código e humano em destaque)
+- [ ] Arquitetura, runbook, PRD e ADRs em inglês
+- [ ] Repositório público, Pages e teste de 30 segundos
+- [ ] Guia de estudo fechado
+- [ ] Commit
+
 ## Medições (preencher com dado real, nunca estimativa)
 
 | Métrica | Alvo | Medido | Data | Fonte |
 |---------|------|--------|------|-------|
 | Custo por condado ao vivo | ≤ US$ 0,30 | | | |
 | Tempo por condado ao vivo | ≤ 90 s | | | |
-| Tamanho da tabela de condados | ≤ 5 MB | | | |
+| Tamanho da tabela de condados | ≤ 5 MB | 122.909 bytes (3.222 condados, 17 colunas) | 2026-11-20 | `data/counties.parquet` |
 | Ativos reprovados no fim (live) | ≤ 10% | | | |
 | Nota G-Eval do copy | ≥ 0,7 | | | |
 
@@ -42,4 +112,5 @@
 | Data | Fase | O que aconteceu | Decisão / próximo passo |
 |------|------|-----------------|-------------------------|
 | 2026-11-19 | 0 | Kickoff a partir da vaga "Marketing AI & Automation Builder" (lead-gen imobiliário). O Fabio preferiu uma demo nova a pivotar o briefing-scout. PRD: 3 condados lado a lado, motivated seller + roofing, dados públicos estruturados, semáforo do leilão e número corrigido na primeira tela, revisão humana por pacote, playbook com planilha. Stack: motor do briefing-scout copiado, Anthropic (Haiku + Sonnet), fan-out com `Send`, ETL em Polars. | Fase 1; o Fabio vai pedir a chave do Census em api.census.gov/data/key_signup.html |
-| 2026-11-19 | 1 | Esqueleto copiado do briefing-scout (Haiku): pacote `county_campaign_builder`, catraca verde (14 testes, 100%), workflows com `permissions`. Spikes: fan-out passa no mypy; Census com chave do Fabio devolve 3.222 condados; NOAA com 2 achados (furacão por zona e Cook com mais granizo que Dallas em 2024); textos oficiais lidos (FHA, HUD, TCPA e a emenda FCC 26-67, que vale a partir de 25/11 para mensagens informativas; política do Google é de segmentação). | Commit da Fase 1 aguardando o OK do Fabio; Fase 2 decide a narrativa com 5 anos de dados |
+| 2026-11-19 | 1 | Esqueleto copiado do briefing-scout (Haiku): pacote `county_campaign_builder`, catraca verde (14 testes, 100%), workflows com `permissions`. Spikes: fan-out passa no mypy; Census com chave do Fabio devolve 3.222 condados; NOAA com 2 achados (furacão por zona e Cook com mais granizo que Dallas em 2024); textos oficiais lidos (FHA, HUD, TCPA e a emenda FCC 26-67, que vale a partir de 25/11 para mensagens informativas; política do Google é de segmentação). | Fase 1 commitada em `67e66e4`; Fase 2 decide a narrativa com 5 anos de dados |
+| 2026-11-20 | 2 | ETL em Polars (Sonnet): NOAA 2020–2024 com eventos tropicais por zona via NWS (`bp16ap26`), Census ACS 2024; 19 FIPS da NOAA sem Census descartados (Connecticut mudou para regiões de planejamento). O Fabio notou que, com motivated seller como foco, clima é gatilho secundário: entraram donos há mais de 25 anos (B25038) e imóveis quitados (B25081); o clima fica para roofing e para o ângulo de imóvel danificado. Dallas recontado de forma independente. Narrativa: Cook passou a ser o vermelho pela conta, não pelo clima. | Commit da Fase 2 aguardando o OK do Fabio |
