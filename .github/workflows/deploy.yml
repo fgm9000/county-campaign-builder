@@ -1,0 +1,104 @@
+name: Deploy to Cloud Run
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: ["completed"]
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  GCP_REGION: us-central1
+  SERVICE_NAME: county-campaign-builder
+  ARTIFACT_REPO: county-campaign-builder
+
+jobs:
+  deploy:
+    name: Build & Deploy to Cloud Run
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.event == 'push')
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Check GCP configuration variables
+        id: gcp_check
+        run: |
+          if [ -z "${{ vars.GCP_PROJECT_ID }}" ] || [ -z "${{ vars.GCP_WIF_PROVIDER }}" ] || [ -z "${{ vars.GCP_SERVICE_ACCOUNT }}" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::GCP Workload Identity Federation repository variables (GCP_PROJECT_ID, GCP_WIF_PROVIDER, GCP_SERVICE_ACCOUNT) are not configured yet. Skipping live Cloud Run deployment."
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Authenticate to Google Cloud via Workload Identity Federation
+        if: steps.gcp_check.outputs.configured == 'true'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+
+      - name: Set up Cloud SDK
+        if: steps.gcp_check.outputs.configured == 'true'
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for Artifact Registry
+        if: steps.gcp_check.outputs.configured == 'true'
+        run: gcloud auth configure-docker "${{ env.GCP_REGION }}-docker.pkg.dev" --quiet
+
+      - name: Build and push container image
+        if: steps.gcp_check.outputs.configured == 'true'
+        env:
+          IMAGE_TAG: ${{ github.event.workflow_run.head_sha || github.sha }}
+        run: |
+          IMAGE_URI="${{ env.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ env.ARTIFACT_REPO }}/${{ env.SERVICE_NAME }}:${IMAGE_TAG}"
+          docker build -t "${IMAGE_URI}" .
+          docker push "${IMAGE_URI}"
+          echo "IMAGE_URI=${IMAGE_URI}" >> "$GITHUB_ENV"
+
+      # Secrets live in Secret Manager and are mounted as environment variables by Cloud Run;
+      # the runtime service account only has secretAccessor on these two secrets.
+      - name: Deploy to Google Cloud Run
+        if: steps.gcp_check.outputs.configured == 'true'
+        id: deploy
+        run: |
+          SERVICE_URL=$(gcloud run deploy "${{ env.SERVICE_NAME }}" \
+            --project="${{ vars.GCP_PROJECT_ID }}" \
+            --region="${{ env.GCP_REGION }}" \
+            --image="${{ env.IMAGE_URI }}" \
+            --platform=managed \
+            --service-account="county-campaign-runtime@${{ vars.GCP_PROJECT_ID }}.iam.gserviceaccount.com" \
+            --min-instances=0 \
+            --max-instances=1 \
+            --concurrency=10 \
+            --memory=512Mi \
+            --cpu=1 \
+            --timeout=120 \
+            --no-invoker-iam-check \
+            --labels=app=county-campaign-builder \
+            --set-env-vars="FAKE_MODEL=0,CORS_ORIGINS=${{ vars.CORS_ORIGINS || 'https://fgm9000.github.io' }}" \
+            --set-secrets="ANTHROPIC_API_KEY=anthropic-api-key:latest,LIVE_ACCESS_CODE=county-campaign-live-access-code:latest" \
+            --format="value(status.url)")
+          echo "service_url=${SERVICE_URL}" >> "$GITHUB_OUTPUT"
+
+      - name: Set up uv for smoke test
+        if: steps.gcp_check.outputs.configured == 'true'
+        uses: astral-sh/setup-uv@v5
+
+      - name: Post-deploy smoke test
+        if: steps.gcp_check.outputs.configured == 'true'
+        env:
+          SERVICE_URL: ${{ steps.deploy.outputs.service_url }}
+          LIVE_ACCESS_CODE: ${{ secrets.LIVE_ACCESS_CODE }}
+        run: |
+          uv sync --frozen --no-dev
+          uv run --no-sync python scripts/smoke_test.py --url "$SERVICE_URL" --code "$LIVE_ACCESS_CODE"
