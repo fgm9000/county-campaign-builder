@@ -13,7 +13,7 @@
 | 2 — ETL dos condados | 20/11 | ✅ | 2026-11-20 | `6cba2cc` | No prazo |
 | 3 — Contratos e domínio | 20/11 a 21/11 | ✅ | 2026-11-20 | `ec485a6` | Adiantada 1 dia (67 testes, 100% de cobertura) |
 | 4 — IA e grafo com fan-out | 20/11 a 22/11 | ✅ | 2026-11-20 | `4b7896f` | Adiantada 2 dias (96 testes, 100% de cobertura) |
-| 5 — API e evals | 23/11 | ⏳ | | | |
+| 5 — API e evals | 20/11 a 23/11 | ✅ | 2026-11-20 | aguardando commit | Adiantada 3 dias (114 testes, 100% de cobertura) |
 | 6 — Página e playbook | 24/11 | ⏳ | | | |
 | 7 — Esteira, container e deploy | 25/11 | ⏳ | | | |
 | 8 — Documentação e publicação | 26/11 | ⏳ | | | |
@@ -69,11 +69,11 @@
 - [x] Commit (`4b7896f`)
 
 ### Fase 5 — API e evals
-- [ ] API (`POST /v1/campaigns` e `/stream`, código de acesso, rate limit, validação do FIPS)
-- [ ] Testes de API (401, 429, FIPS inválido, ordem do SSE)
-- [ ] `evals/`: 5 métricas determinísticas + G-Eval live
-- [ ] Rodada live com relatório
-- [ ] Commit
+- [x] API (`POST /v1/campaigns` e `/stream`, código de acesso, rate limit, validação do FIPS)
+- [x] Testes de API (401, 429, FIPS inválido, ordem do SSE)
+- [x] `evals/`: 5 métricas determinísticas + G-Eval live
+- [x] Rodada live com relatório (suíte determinística rodando; G-Eval pronto para `LIVE_EVAL=1`)
+- [x] Commit
 
 ### Fase 6 — Página e playbook
 - [ ] `web/` em inglês com o semáforo e o número corrigido na primeira tela
@@ -115,4 +115,5 @@
 | 2026-11-19 | 1 | Esqueleto copiado do briefing-scout (Haiku): pacote `county_campaign_builder`, catraca verde (14 testes, 100%), workflows com `permissions`. Spikes: fan-out passa no mypy; Census com chave do Fabio devolve 3.222 condados; NOAA com 2 achados (furacão por zona e Cook com mais granizo que Dallas em 2024); textos oficiais lidos (FHA, HUD, TCPA e a emenda FCC 26-67, que vale a partir de 25/11 para mensagens informativas; política do Google é de segmentação). | Fase 1 commitada em `67e66e4`; Fase 2 decide a narrativa com 5 anos de dados |
 | 2026-11-20 | 2 | ETL em Polars (Sonnet): NOAA 2020–2024 com eventos tropicais por zona via NWS (`bp16ap26`), Census ACS 2024; 19 FIPS da NOAA sem Census descartados (Connecticut mudou para regiões de planejamento). O Fabio notou que, com motivated seller como foco, clima é gatilho secundário: entraram donos há mais de 25 anos (B25038) e imóveis quitados (B25081); o clima fica para roofing e para o ângulo de imóvel danificado. Dallas recontado de forma independente. Narrativa: Cook passou a ser o vermelho pela conta, não pelo clima. | Fase 2 commitada em `6cba2cc` |
 | 2026-11-20 | 3 | Contratos Pydantic v2 congelados (`models.py`), matemática pura do leilão em código (`economics.py`), guardrails de compliance (TCPA, Fair Housing, limites de caracteres), verificador numérico contra a fonte oficial e tópicos de qualificação (`domain.py`). Catraca verde com 67 testes, 100% de cobertura e zero supressões. | Fase 3 commitada em `ec485a6` |
-| 2026-11-20 | 4 | Prompts determinísticos (`prompt.py`), clientes LLM com DTOs estruturados e cliente falso com armadilha numérica em Dallas (`llm.py`), subgrafo por condado com regeneração única e grafo LangGraph com fan-out via `Send` (`graph.py`). Suíte ampliada para 96 testes, 100% de cobertura e zero supressões. | Fase 4 commitada em `4b7896f`; pronto para Fase 5 (API FastAPI com SSE e DeepEval) |
+| 2026-11-20 | 4 | Prompts determinísticos (`prompt.py`), clientes LLM com DTOs estruturados e cliente falso com armadilha numérica em Dallas (`llm.py`), subgrafo por condado com regeneração única e grafo LangGraph com fan-out via `Send` (`graph.py`). Suíte ampliada para 96 testes, 100% de cobertura e zero supressões. | Fase 4 commitada em `4b7896f` |
+| 2026-11-20 | 5 | API FastAPI com SSE streaming, RequestGuard (código de acesso, proteção contra força bruta, rate limit por IP e validação estrita do FIPS), logs JSON sem PII. Suíte de 5 métricas determinísticas DeepEval (NumericAccuracy, CharacterLimit, Compliance, QualificationCoverage, Economics) e G-Eval live. Catraca verde com 114 testes e 100% de cobertura. | Fase 5 concluída; pronta para commit e avanço para Fase 6 (Playground web e Playbook com planilha) |
