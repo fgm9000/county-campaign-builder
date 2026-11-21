@@ -140,6 +140,9 @@ const I18N = {
     questionsTitle: "Qualification Questions",
     whyLabel: "Why it matters:",
     adsTitle: "Responsive Search Ads (Google Ads)",
+    adStrengthBadge: "🟢 Google RSA: Excellent Ad Strength (5 Angles · 3 Descriptions · 0 Overages)",
+    adsTranslationTitle: "Data-to-Copy Translation Engine",
+    adsTranslationDesc: "Census housing stock age and NOAA severe weather records are translated into tangible homeowner relief: avoiding out-of-pocket renovation costs, bypassing storm repair headaches, and eliminating 6% agent fees.",
     headlinesHeading: "Headlines (max 30 chars)",
     descriptionsHeading: "Descriptions (max 90 chars)",
     charsUnit: "chars",
@@ -326,6 +329,9 @@ const I18N = {
     questionsTitle: "Perguntas de Qualificação",
     whyLabel: "Por que importa:",
     adsTitle: "Anúncios Responsivos de Pesquisa (Google Ads)",
+    adStrengthBadge: "🟢 Google RSA: Ad Strength Excelente (5 Ângulos · 3 Descrições · 0 Violações)",
+    adsTranslationTitle: "Mecanismo de Translação de Dados em Copy",
+    adsTranslationDesc: "Dados do Censo (imóveis antigos) e NOAA (tempestades) são convertidos em alívio financeiro para o proprietário: zero custos com reformas, sem obras no telhado e sem comissões de corretagem.",
     headlinesHeading: "Títulos (máx. 30 caracteres)",
     descriptionsHeading: "Descrições (máx. 90 caracteres)",
     charsUnit: "caract.",
@@ -1017,10 +1023,52 @@ function renderReviewAlertBanner(campaign) {
   return banner;
 }
 
+function getHeadlineAngle(text, idx) {
+  const tLower = (text || "").toLowerCase();
+  if (/repair|obra|reform|costly/i.test(tLower)) {
+    return { en: "Aging Stock Relief (ACS)", pt: "Alívio Imóveis Antigos (ACS)" };
+  }
+  if (/fee|agent|delay|comiss|taxa/i.test(tLower)) {
+    return { en: "Zero Commissions", pt: "Zero Corretagem" };
+  }
+  if (/timeline|time|date|prazo/i.test(tLower)) {
+    return { en: "Seller Timeline Control", pt: "Controle de Prazo" };
+  }
+  if (/storm|hail|wind|tempest|graniz/i.test(tLower)) {
+    return { en: "Storm Resilience (NOAA)", pt: "Resiliência a Danos (NOAA)" };
+  }
+  if (/roof|telhad/i.test(tLower)) {
+    return { en: "Full Roof Replacement", pt: "Troca Total de Telhado" };
+  }
+  if (/fair|cash|offer|owner|propr|vist/i.test(tLower)) {
+    return { en: "Fair Cash Offer", pt: "Oferta Direta à Vista" };
+  }
+  return { en: "Local Hook", pt: "Gancho Local" };
+}
+
+function getDescriptionAngle(text, idx) {
+  const tLower = (text || "").toLowerCase();
+  if (/repair|cleanout|reforma|obra/i.test(tLower)) {
+    return { en: "Renovation & Fee Relief", pt: "Alívio de Reformas e Taxas" };
+  }
+  if (/holding|inspection|posse|imposto|iptu|delay/i.test(tLower)) {
+    return { en: "Holding Costs & Speed", pt: "Custos de Posse e Rapidez" };
+  }
+  if (/storm|hail|wind|weather|tempest/i.test(tLower)) {
+    return { en: "Weather Damage Resilience", pt: "Danos Climáticos (NOAA)" };
+  }
+  if (/insurance|ajustad|segur/i.test(tLower)) {
+    return { en: "Insurance Claims Support", pt: "Apoio com Seguradora" };
+  }
+  return { en: "Direct Cash Proposal", pt: "Proposta Direta à Vista" };
+}
+
 function renderAdsSection(campaign) {
   const section = el("section", "pkg-section");
   const head = el("div", "pkg-section-head");
   head.appendChild(el("h4", "pkg-section-title", t("adsTitle")));
+
+  head.appendChild(el("span", "badge badge-green badge-ad-strength", t("adStrengthBadge")));
 
   const adReviewItems = (campaign.needs_human_review || []).filter(
     (r) => r.item.startsWith("headline_") || r.item.startsWith("description_")
@@ -1029,6 +1077,14 @@ function renderAdsSection(campaign) {
     head.appendChild(el("span", "badge badge-yellow", t("sectionFlaggedBadge", { n: adReviewItems.length })));
   }
   section.appendChild(head);
+
+  const translationBox = el("div", "ads-translation-box");
+  translationBox.appendChild(el("span", "ads-translation-icon", "💡"));
+  const transContent = el("div", "ads-translation-content");
+  transContent.appendChild(el("strong", "ads-translation-title", t("adsTranslationTitle")));
+  transContent.appendChild(el("p", "ads-translation-desc", t("adsTranslationDesc")));
+  translationBox.appendChild(transContent);
+  section.appendChild(translationBox);
 
   const adCopy = campaign.assets?.ad_copy || { headlines: [], descriptions: [] };
   const split = el("div", "ads-split");
@@ -1043,7 +1099,14 @@ function renderAdsSection(campaign) {
 
     const wrapper = el("div", isFlagged ? "copy-row-wrap copy-row-wrap-flagged" : "copy-row-wrap");
     const row = el("div", isFlagged ? "copy-row copy-row-flagged" : "copy-row");
-    row.appendChild(el("span", "copy-row-text", item.text || ""));
+
+    const contentWrap = el("div", "copy-row-content");
+    const angle = getHeadlineAngle(item.text, idx);
+    const angleLabel = state.lang === "pt" ? angle.pt : angle.en;
+    contentWrap.appendChild(el("span", "copy-angle-pill", angleLabel));
+    contentWrap.appendChild(el("span", "copy-row-text", item.text || ""));
+    row.appendChild(contentWrap);
+
     const pills = el("div", "copy-row-pills");
     const len = (item.text || "").length;
     const ok = len <= LIMITS.headline;
@@ -1081,7 +1144,14 @@ function renderAdsSection(campaign) {
 
     const wrapper = el("div", isFlagged ? "copy-row-wrap copy-row-wrap-flagged" : "copy-row-wrap");
     const row = el("div", isFlagged ? "copy-row copy-row-flagged" : "copy-row");
-    row.appendChild(el("span", "copy-row-text", item.text || ""));
+
+    const contentWrap = el("div", "copy-row-content");
+    const angle = getDescriptionAngle(item.text, idx);
+    const angleLabel = state.lang === "pt" ? angle.pt : angle.en;
+    contentWrap.appendChild(el("span", "copy-angle-pill", angleLabel));
+    contentWrap.appendChild(el("span", "copy-row-text", item.text || ""));
+    row.appendChild(contentWrap);
+
     const pills = el("div", "copy-row-pills");
     const len = (item.text || "").length;
     const ok = len <= LIMITS.description;
