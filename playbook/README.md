@@ -138,7 +138,7 @@ Rules:
 
 ### Step 3 — Draft Google Responsive Search Ads & Landing Page Copy
 
-Generate 3 headlines (`<= 30` chars), 2 descriptions (`<= 90` chars), and the above-the-fold landing page block including the mandatory TCPA written-consent disclosure.
+Generate 5 to 6 headlines (`<= 30` chars), 3 to 4 descriptions (`<= 90` chars), and the above-the-fold landing page block including the mandatory TCPA written-consent disclosure.
 
 ```text
 You are a senior US performance copywriter and compliance-aware marketer for
@@ -160,21 +160,35 @@ copy for Dallas County, Texas.
 
 Structured Output Requirements:
 1. Ad Copy:
-   - headlines: 3 headlines, STRICT limit <= 30 characters each
-     (including spaces and punctuation).
-   - descriptions: 2 descriptions, STRICT limit <= 90 characters
-     each (including spaces and punctuation).
+   - headlines: 5 to 6 varied headlines, STRICT limit <= 30 characters each
+     (including spaces and punctuation). Cover distinct fact-grounded angles: direct as-is,
+     repair/maintenance relief, fast closing, zero commissions, and local presence.
+   - descriptions: 3 to 4 varied descriptions, STRICT limit <= 90 characters
+     each (including spaces and punctuation). Address real homeowner pressures (aging properties,
+     repair costs, storm wear, holding costs).
 2. Landing Page Top:
    - headline: clear, locally relevant primary headline.
-   - subheadline: concise supporting statement.
+   - subheadline: concise supporting statement connecting local context to fast relief.
    - cta_text: action-oriented call-to-action button text.
-   - bullet_points: 3 to 4 homeowner benefit bullet points (as-is purchase, zero
-     commissions, flexible closing, local specialist). Do NOT paste raw census or
-     demographic percentages here; keep bullets homeowner-facing.
+   - bullet_points: 4 to 5 homeowner benefit bullet points addressing real burdens
+     (as-is purchase, skipping costly updates on aging systems, zero commissions,
+     7-14 day close, local specialist). Do NOT paste raw census or demographic
+     percentages here; keep bullets homeowner-facing.
    - consent_disclosure: TCPA written-consent statement placed by the form that
      MUST include all three required phrases (case-insensitive): "automated",
      "not a condition", and "stop" (for example: consent to receive automated
      calls/texts, consent is not a condition of purchase, reply STOP to opt out).
+
+Data-to-Pain-Point Translation Guidance:
+- Older housing stock / median build year -> Address deferred maintenance, costly
+  roof/plumbing/electrical updates, or avoiding contractor headaches.
+- Severe storm / hail events -> Address storm damage wear, roof leak fatigue, and
+  bypassing insurance repairs.
+- High vacancy / long tenure -> Address ongoing property taxes, upkeep on empty
+  or inherited homes, and tired landlords.
+- NEVER cite raw statistics, Census percentages, or storm counts to the seller;
+  translate every fact into the concrete financial, emotional, or logistical
+  burden it creates for the homeowner.
 
 Mandatory Fair Housing & Compliance Rules:
 - Fair Housing (42 U.S.C. 3604(c) and (e)): NEVER use discriminatory language or
@@ -202,9 +216,11 @@ Your audience is motivated homeowners seeking a direct as-is cash sale.
 Target County: Dallas County, Texas
 Brand Name: Example Home Buyers
 
-Audience Context:
-The homeowner wants to sell directly to avoid repairs, agent fees, or closing delays.
-Draft helpful, respectful follow-up copy focused entirely on their timeline and needs.
+Audience Context & Problem Translation:
+The homeowner wants to sell directly to avoid expensive repairs, contractor headaches,
+agent commissions, holding costs (taxes/insurance on vacant homes), or closing delays.
+Translate local market pressures (older homes, storm wear, inheritance/vacancy) into
+empathetic, respectful follow-up copy focused entirely on their relief and timeline.
 Do NOT cite macro census or weather statistics in seller communications.
 
 Verified Local Facts (for internal market reference):
@@ -222,6 +238,8 @@ Structured Output Requirements:
    - Each SMS MUST include the exact brand name "Example Home Buyers".
    - Each SMS MUST include a clear opt-out instruction (e.g., "Reply STOP to opt out").
 2. email_followups (exactly 2 items, email_index 1 and 2):
+   - Email 1: Focus on selling as-is to skip major repair estimates or storm wear.
+   - Email 2: Focus on financial certainty—zero fees, zero holding costs, and closing.
    - Each email MUST include a subject line and clear, helpful body text.
 
 Compliance & Grounding Rules:
