@@ -51,8 +51,9 @@ const I18N = {
     pillar1Text: "Zero tolerance for invented numbers. LLM claims are cross-checked against local Parquet Census ACS tables. Mismatches are automatically reconciled and logged to an audit trail.",
     pillar2Title: "Deterministic Auction Math",
     pillar2Text: "Unit economics (target CPL, max CPC threshold, traffic-light go/no-go verdicts) are 100% computed in Python with float precision — never delegated to a probabilistic model.",
-    pillar3Title: "Audience-Tailored Copywriting",
-    pillar3Text: "Strict separation between B2B intelligence (market tenure, equity) and B2C creative. Landing pages and SMS speak 100% to motivated home sellers (as-is sale, zero fees, 7-14 day close).",
+    pillar3Title: "Fact-Grounded Persuasion",
+    pillar3Text:
+      "No generic AI fluff. Messaging is anchored in real local pressures—aging properties, deferred maintenance, holding costs, and storm damage. It converts motivated sellers by solving concrete financial burdens.",
     pillar4Title: "Deterministic Compliance",
     pillar4Text: "Deterministic regex engine enforces Fair Housing Act rules, TCPA SMS disclosures, Google Ads character counts (30/90), and qualification question logic with 100% test coverage.",
     thirtySecondHeading: "30-Second Overview: Auction Math and Fact Verification",
@@ -236,8 +237,9 @@ const I18N = {
     pillar1Text: "Tolerância zero a números inventados. Afirmações do LLM são auditadas contra tabelas Parquet oficiais do Censo ACS. Divergências são retificadas automaticamente com trilha de auditoria.",
     pillar2Title: "Matemática de Leilão Determinística",
     pillar2Text: "Unit economics (CPL alvo, teto de CPC, semáforo go/no-go) são calculados 100% em Python com precisão de ponto flutuante — nunca delegados a modelos probabilísticos.",
-    pillar3Title: "Copywriting Focado no Público Certo",
-    pillar3Text: "Separação estrita entre inteligência de mercado B2B e peças B2C. Landing pages e SMS falam 100% com proprietários que querem vender (sem reformas, zero taxas, fechamento em 7-14 dias).",
+    pillar3Title: "Copy Guiada por Fatos e Pressões Reais",
+    pillar3Text:
+      "Zero clichês genéricos de IA. A copy nasce de pressões locais reais — desgaste de imóveis antigos, custos de reforma, IPTU de casas vazias e tempestades. Converte proprietários atacando dores financeiras concretas.",
     pillar4Title: "Conformidade Regulatória por Código",
     pillar4Text: "Mecanismo regex determinístico garante conformidade com Fair Housing Act, TCPA para SMS, limites de caracteres do Google Ads (30/90) e qualificação com 100% de cobertura de testes.",
     thirtySecondHeading: "Visão em 30 Segundos: Conta do Leilão e Verificação de Fatos",
