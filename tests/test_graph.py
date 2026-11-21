@@ -240,9 +240,9 @@ def test_run_campaign_dallas_catches_planted_trap_and_computes_economics() -> No
 
     assert len(campaign.assets.questions) == 5
     assert all(q.status == "approved" for q in campaign.assets.questions)
-    assert len(campaign.assets.ad_copy.headlines) == 3
+    assert len(campaign.assets.ad_copy.headlines) == 5
     assert all(h.status == "approved" for h in campaign.assets.ad_copy.headlines)
-    assert len(campaign.assets.ad_copy.descriptions) == 2
+    assert len(campaign.assets.ad_copy.descriptions) == 3
     assert all(d.status == "approved" for d in campaign.assets.ad_copy.descriptions)
     assert campaign.assets.landing_page is not None
     assert campaign.assets.landing_page.status == "approved"

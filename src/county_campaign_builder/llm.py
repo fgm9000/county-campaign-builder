@@ -425,8 +425,18 @@ class FakeModelClient:
                     AD_HEADLINE_MAX_CHARS,
                 ),
                 _fit_text(
-                    "Storm Roof Inspections",
-                    "Storm Roof Inspections",
+                    "Storm & Hail Roof Replace",
+                    "Storm & Hail Roof Replace",
+                    AD_HEADLINE_MAX_CHARS,
+                ),
+                _fit_text(
+                    "Free Roof Assessment Today",
+                    "Roof Assessment Today",
+                    AD_HEADLINE_MAX_CHARS,
+                ),
+                _fit_text(
+                    "Insurance Claim Assistance",
+                    "Insurance Claim Assistance",
                     AD_HEADLINE_MAX_CHARS,
                 ),
                 _fit_text(
@@ -443,8 +453,13 @@ class FakeModelClient:
                     AD_DESCRIPTION_MAX_CHARS,
                 ),
                 _fit_text(
-                    "Full roof replacements built for severe hail and wind weather conditions.",
+                    "Full roof replacements built for severe hail and storm wind conditions.",
                     "Full roof replacements built for severe hail and wind weather.",
+                    AD_DESCRIPTION_MAX_CHARS,
+                ),
+                _fit_text(
+                    "Direct insurance claims support and documentation with certified specialists.",
+                    "Direct insurance claims support and documentation with certified specialists.",
                     AD_DESCRIPTION_MAX_CHARS,
                 ),
             ]
@@ -456,8 +471,9 @@ class FakeModelClient:
             cta_text = "Request Your Roof Assessment"
             bullet_points = [
                 "Full roof replacement engineered for severe storm and hail resilience.",
-                "Zero-obligation inspection with complete photographic evidence.",
-                "Direct insurance claims assistance and documentation support.",
+                "Zero-obligation inspection with complete photographic damage evidence.",
+                "Direct insurance claims assistance and adjuster documentation support.",
+                "Address aging shingles before leaks cause costly structural wood rot.",
                 f"Licensed, bonded, and insured specialists serving {county_name}.",
             ]
         else:
@@ -468,13 +484,23 @@ class FakeModelClient:
                     AD_HEADLINE_MAX_CHARS,
                 ),
                 _fit_text(
+                    "No Costly Repairs Needed",
+                    "No Costly Repairs Needed",
+                    AD_HEADLINE_MAX_CHARS,
+                ),
+                _fit_text(
                     "Fair Cash Offer For Owners",
                     "Fair Cash Offer For Owners",
                     AD_HEADLINE_MAX_CHARS,
                 ),
                 _fit_text(
-                    "Sell Without Repairs Needed",
-                    "Sell Without Repairs Needed",
+                    "Skip Agent Fees & Delays",
+                    "Skip Agent Fees & Delays",
+                    AD_HEADLINE_MAX_CHARS,
+                ),
+                _fit_text(
+                    "Sell On Your Own Timeline",
+                    "Sell On Your Own Timeline",
                     AD_HEADLINE_MAX_CHARS,
                 ),
             ]
@@ -485,8 +511,13 @@ class FakeModelClient:
                     AD_DESCRIPTION_MAX_CHARS,
                 ),
                 _fit_text(
-                    "Skip cleanouts and showings. Review an offer on your preferred timeline.",
-                    "Skip cleanouts and showings. Review an offer on your timeline.",
+                    "Skip costly repairs, cleanouts, and agent fees. Sell on your exact timeline.",
+                    "Skip costly repairs, cleanouts, and agent fees. Sell on your timeline.",
+                    AD_DESCRIPTION_MAX_CHARS,
+                ),
+                _fit_text(
+                    "Avoid holding costs and inspection delays with a direct local cash offer.",
+                    "Avoid holding costs and inspection delays with a direct local cash offer.",
                     AD_DESCRIPTION_MAX_CHARS,
                 ),
             ]
@@ -498,8 +529,9 @@ class FakeModelClient:
             cta_text = "Get My Property Review"
             bullet_points = [
                 "Sell 100% as-is — no repairs, cleaning, or staging required.",
+                "Skip expensive updates — avoid out-of-pocket costs on aging roofs or plumbing.",
                 "Zero agent commissions, hidden fees, or closing cost surprises.",
-                "Flexible closing timeline on your schedule (as fast as 7–14 days).",
+                "Flexible closing timeline on your schedule (close on your preferred date).",
                 f"Direct cash offer review with a dedicated {county_name} specialist.",
             ]
 
@@ -546,22 +578,22 @@ class FakeModelClient:
                     f"Thank you for requesting an as-is review for your {short} property with "
                     f"{brand_name} in {county_name}.\n\n"
                     f"We specialize in straightforward as-is home purchases across {short}:\n"
-                    f"• 100% As-Is: No repairs, cleaning, or staging required.\n"
-                    f"• Zero Commissions: No agent fees or hidden closing deductions.\n"
-                    f"• Your Timeline: Close in as few as 7–14 days or on your schedule.\n\n"
+                    f"• 100% As-Is: No out-of-pocket repairs or cleaning required.\n"
+                    f"• Zero Commissions: No 6% agent fees or hidden closing deductions.\n"
+                    f"• Certainty & Timeline: Close on your preferred schedule.\n\n"
                     f"Reply directly to this email with a convenient time for a brief 5-minute\n"
                     f"call so we can review your property details and prepare your cash offer.\n\n"
                     f"Best regards,\n{brand_name}"
                 ),
             ),
             EmailItem(
-                subject=f"Checking in on your {short} property sale ({brand_name})",
+                subject=f"Skip repair costs and delays on your {short} home ({brand_name})",
                 body=(
                     f"Hello,\n\n"
                     f"We wanted to follow up on your recent cash offer inquiry with {brand_name}\n"
                     f"for {county_name}.\n\n"
                     f"If you want to sell without retail open houses, bank financing delays,\n"
-                    f"or spending thousands out-of-pocket on repairs, we are ready to help.\n\n"
+                    f"or spending money on deferred repairs, we are ready to help.\n\n"
                     f"There is zero obligation. Reply here or share the best number to connect.\n\n"
                     f"Best regards,\n{brand_name}"
                 ),

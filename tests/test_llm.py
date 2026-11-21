@@ -301,11 +301,17 @@ def test_fake_client_qualification_ads_followup_regen_and_compare() -> None:
     assert "custom topic" in qual_custom.questions[0].question
 
     ads_ms = client.draft_ads_and_lp("Dallas County, Texas", motivated_seller, facts)
+    assert len(ads_ms.headlines) == 5
+    assert len(ads_ms.descriptions) == 3
+    assert len(ads_ms.bullet_points) == 5
     assert all(len(h) <= AD_HEADLINE_MAX_CHARS for h in ads_ms.headlines)
     assert all(len(d) <= AD_DESCRIPTION_MAX_CHARS for d in ads_ms.descriptions)
     assert "automated" in ads_ms.consent_disclosure.lower()
 
     ads_roofing = client.draft_ads_and_lp("Dallas County, Texas", roofing, [])
+    assert len(ads_roofing.headlines) == 5
+    assert len(ads_roofing.descriptions) == 3
+    assert len(ads_roofing.bullet_points) == 5
     assert all(len(h) <= AD_HEADLINE_MAX_CHARS for h in ads_roofing.headlines)
     assert all(len(d) <= AD_DESCRIPTION_MAX_CHARS for d in ads_roofing.descriptions)
     assert "Roof" in ads_roofing.lp_headline

@@ -660,7 +660,7 @@ def build_playbook_markdown(
         "---\n",
         "### Step 3 — Draft Google Responsive Search Ads & Landing Page Copy\n",
         (
-            f"Generate 3 headlines (`<= {AD_HEADLINE_MAX_CHARS}` chars), 2 descriptions "
+            f"Generate 5 to 6 headlines (`<= {AD_HEADLINE_MAX_CHARS}` chars), 3 to 4 descriptions "
             f"(`<= {AD_DESCRIPTION_MAX_CHARS}` chars), and the above-the-fold landing page block "
             "including the mandatory TCPA written-consent disclosure.\n"
         ),
