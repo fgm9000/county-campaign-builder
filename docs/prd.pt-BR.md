@@ -5,7 +5,7 @@
 ## 0. Enquadramento (Etapa 0, fechado em 2026-11-19)
 - **Nome provisório:** county-campaign-builder
 - **Problema em uma frase:** escalar campanhas locais de lead gen (motivated sellers e roofing) em muitos condados dos EUA sem cair em copy genérico, com cada afirmação local de fonte checada e a conta do leilão verificada pelo código.
-- **Tipo:** demo de portfólio (`fgm9000`) pensada para a candidatura à vaga "Marketing AI & Automation Builder" para times de geração de leads imobiliários. Inglês primeiro. Pode ficar privada até o envio.
+- **Tipo:** demo de portfólio (`fgm9000`) pensada para workflows de "Marketing AI & Automation Builder" em times de geração de leads imobiliários. Inglês primeiro. Pode ficar privada até o envio.
 - **Repositório:** `C:\Users\fabio\development\county-campaign-builder` (junto das outras demos, fora do Google Drive).
 - **Relação com o briefing-scout:** reaproveita o motor (grafo, verificador de citação, regras de setor, evals, esteira). O briefing-scout continua intacto.
 
@@ -20,7 +20,7 @@
 Para times de lead gen que precisam lançar campanhas locais em muitos condados dos EUA, o county-campaign-builder transforma dados públicos de cada condado num pacote de campanha pronto para revisão: perguntas de qualificação, anúncios, landing page, SMS e e-mails. Cada número local é conferido contra a fonte, a conta do leilão é calculada pelo código e o que só um humano pode julgar sai marcado. Usar o ChatGPT sozinho dá copy genérico, sem fonte verificável e sem saber se a campanha fecha a conta.
 
 - **Competência que a demo prova** (na linguagem da vaga): transformar um problema de negócio ambíguo num workflow de IA em várias etapas; checar fatos e cálculos da IA; construir um processo reutilizável que outras pessoas sigam; explicar onde a IA ajuda e onde precisa de um humano.
-- **Avaliador alvo:** quem contrata no time de marketing ou operações, provavelmente alguém de marketing ou operações, não um engenheiro. Por isso a primeira tela fala de negócio (custo por lead, lance) e o playbook não exige programação.
+- **Avaliador alvo:** uma liderança de marketing ou operações, não um engenheiro. Por isso a primeira tela fala de negócio (custo por lead, lance) e o playbook não exige programação.
 - **Operador na história:** o próprio "Marketing AI & Automation Builder", ou alguém do time de marketing que usa o workflow.
 
 ## 3. Escopo

@@ -5,7 +5,7 @@
 ## 0. Framing (Stage 0, closed on 2026-11-19)
 - **Working name:** county-campaign-builder
 - **One-sentence problem:** Scale local lead-gen campaigns (motivated sellers and roofing) across many U.S. counties without falling back to generic copy, with every local claim checked against its source and auction math verified by code.
-- **Type:** Portfolio demo (`fgm9000`) built for the "Marketing AI & Automation Builder" real estate lead-gen teams. English-first. May stay private until submission.
+- **Type:** Portfolio demo (`fgm9000`) built for "Marketing AI & Automation Builder" workflows supporting real estate lead-gen teams. English-first. May stay private until submission.
 - **Repository:** `C:\Users\fabio\development\county-campaign-builder` (alongside the other demos, outside Google Drive).
 - **Relationship to briefing-scout:** Reuses the engine (graph, citation verifier, vertical rules, evals, pipeline). `briefing-scout` remains untouched.
 
@@ -18,7 +18,7 @@
 For lead-gen teams that need to launch local campaigns across many U.S. counties, `county-campaign-builder` turns public county-level data into a review-ready campaign pack: qualification questions, ads, landing page copy, SMS, and emails. Every local number is checked against the source, auction math is computed by code, and anything requiring human judgment is flagged. Using ChatGPT alone produces generic copy, with no verifiable source and no check on whether the campaign pencils out.
 
 - **Competencies the demo proves** (in the job description's language): turning an ambiguous business problem into a multi-step AI workflow; checking AI-generated facts and calculations; building a reusable process others can follow; explaining where AI adds value and where human judgment is needed.
-- **Target evaluator:** The marketing or operations stakeholder, likely from marketing or operations rather than an engineer. That is why the first screen speaks business (cost per lead, bid) and the playbook requires no coding.
+- **Target evaluator:** A marketing or operations stakeholder rather than an engineer. That is why the first screen speaks business (cost per lead, bid) and the playbook requires no coding.
 - **Operator in the story:** The "Marketing AI & Automation Builder" themselves, or someone on the marketing team running the workflow.
 
 ## 3. Scope
