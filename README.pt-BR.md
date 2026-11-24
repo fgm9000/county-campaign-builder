@@ -9,7 +9,7 @@
 [![Testes](https://img.shields.io/badge/testes-140%20passando-brightgreen)](quality-baseline.json)
 [![Licença: PolyForm Noncommercial](https://img.shields.io/badge/licen%C3%A7a-PolyForm%20Noncommercial-blue)](LICENSE)
 
-**Gerador de campanhas de lead gen por condado nos EUA para as verticais de *motivated seller* e *roofing*.** O operador informa os condados alvo (códigos FIPS), a vertical, o lance por lead e as premissas de CPC e conversão. O pipeline transforma dados públicos oficiais (**NOAA Storm Events 2020–2024** e **U.S. Census ACS 2020–2024**) em um pacote pronto para revisão: gatilhos locais com fonte checada, 5 perguntas de qualificação, anúncio de pesquisa do Google (RSA com 8 títulos e 3 descrições), topo da landing page, 3 SMS de *speed-to-lead*, e-mails de follow-up, matemática do leilão em código e uma lista explícita de revisão humana.
+**Motor de campanhas de aquisição paga e geração de leads por condado nos EUA — ancorado em dados reais de clima e estoque imobiliário.** O operador informa os condados alvo (códigos FIPS), a vertical, o lance por lead e as premissas de CPC e conversão. Em vez de gerar clichês genéricos de `{Cidade}` ou estatísticas acadêmicas frias, o pipeline traduz dados públicos oficiais (**U.S. Census ACS 2020–2024** e **NOAA Storm Events 2020–2024**) em anúncios e landing pages empáticos de alta conversão — combinados com matemática de leilão determinística em código, verificação anti-alucinação e travas de compliance. Projetado para demonstrar fluxos verificáveis de IA aplicados a growth, MarTech e mídia paga (Fase 1 ao vivo em aquisições residenciais; arquitetura por configuração pronta para Fase 2 em *roofing* / serviços residenciais).
 
 > Demo de portfólio (POC), não é produto de cliente. O playground público usa respostas pré-computadas e premissas ilustrativas de CPC/CVR; o modo ao vivo roda só com código de acesso.
 
@@ -19,9 +19,12 @@
 
 ## A regra dos 30 segundos
 
-A primeira tela coloca duas provas lado a lado antes de qualquer rolagem:
+A primeira tela abre liderando com a **Dupla Perfeita** para aquisição paga orientada a margem — **persuasão ancorada em pressões locais reais** e **matemática que protege o leilão** — apoiadas por um escudo transparente de governança:
 
-1. **Tabela de Matemática do Leilão por Condado com Semáforo** (lance alvo de `US$ 125,00` por lead):
+1. **Persuasão Guiada por Fatos (Tradução de Dados em Copy):**
+   Pressões reais do estoque habitacional no Censo dos EUA (idade mediana dos imóveis, tempo de posse >25 anos, imóveis quitados, vacância) e histórico severo da NOAA orientam **anúncios Google RSA com tags de ângulo (5 títulos, 3 descrições), topo da landing page, SMS, e-mails e 5 perguntas de qualificação** por condado. Sem clichês genéricos de IA e sem jogar números acadêmicos crus: a copy converte proprietários motivados atacando dores concretas financeiras e de manutenção.
+
+2. **Tabela de Matemática do Leilão por Condado com Semáforo** (lance alvo de `US$ 125,00` por lead):
 
    | Condado (FIPS) | Faixa de CPC | Conversão da LP | Faixa de CPL | CPC Máx. Viável | Semáforo |
    |---|---:|---:|---:|---:|---|
@@ -31,8 +34,8 @@ A primeira tela coloca duas provas lado a lado antes de qualquer rolagem:
 
    *Nota: as faixas de CPC e conversão da LP no benchmark são premissas ilustrativas do operador, nunca apresentadas como dado de mercado ao vivo das plataformas de anúncio.*
 
-2. **Alucinação da IA Capturada e Corrigida pelo Código:**
-   No pacote de Dallas County, a IA redigiu **120** relatos de granizo (`1 polegada ou maior em 2020-2024`) para o campo `hail_reports_1in`. O registro oficial da **NOAA Storm Events 2020–2024** em `data/counties.parquet` é **102**. O código detectou a divergência, substituiu `120` por `102`, marcou o fato como `corrected` e gravou a trilha de auditoria em `corrections` (`llm_value: 120`, `source_value: 102`).
+3. **Escudo de Governança — Alucinação da IA Capturada e Corrigida pelo Código:**
+   No pacote de referência de Dallas County (`48113`), o LLM gerou **`US$ 350.000`** para `median_home_value_usd`. O registro oficial da **U.S. Census Bureau ACS (`Table B25077`)** em `data/counties.parquet` é **`US$ 303.000`**. O código detectou a divergência, substituiu `350000` por `303000`, marcou o fato como `corrected` e gravou a trilha de auditoria (`llm_value: 350000`, `source_value: 303000`).
 
 ---
 
@@ -44,7 +47,7 @@ Pedir ao ChatGPT sozinho para *"escrever uma campanha para Cook County"* gera co
 |---|---|---|
 | Gatilhos de mercado citando estatísticas do condado (`field`, `value`, `source`) | Todo número citado é conferido contra `data/counties.parquet` (tolerância `±0,01`); divergências são corrigidas e registradas em `corrections`, e campos sem lastro ficam como `unverified` | Qualquer afirmação numérica `unverified` ou sensibilidade local |
 | Estratégia de leilão e resumo comparativo | **Conta 100% em código:** `CPL = CPC ÷ CVR`, `CPC Máx. = Lance × CVR Mín.` e o semáforo `green`/`yellow`/`red` nunca dependem do LLM | Viabilidade do lance, premissas reais de CPC/CVR e decisão final de lançamento |
-| 5 perguntas de qualificação, 8 títulos e 3 descrições RSA, topo da LP, 3 SMS e e-mails | Limites de caracteres (títulos ≤ 30, descrições ≤ 90, SMS ≤ 160), 5 tópicos obrigatórios de qualificação da vertical, remetente + opt-out + consentimento TCPA e regras de Fair Housing | Promessas de oferta (ex.: fechamento em 7 dias, garantia de compra no estado, avaliação), horários permitidos (quiet hours), termos do comprador e tom |
+| 5 perguntas de qualificação, 5 títulos e 3 descrições RSA, topo da LP, 3 SMS e e-mails | Limites de caracteres (títulos ≤ 30, descrições ≤ 90, SMS ≤ 160), 5 tópicos obrigatórios de qualificação da vertical, remetente + opt-out + consentimento TCPA e regras de Fair Housing | Promessas de oferta (ex.: fechamento em 7 dias, garantia de compra no estado, avaliação), horários permitidos (quiet hours), termos do comprador e tom |
 
 Ativos que falham em limites ou compliance são regenerados **uma única vez** com o motivo da falha no prompt; se falharem de novo, ficam marcados como `rejected` e nunca saem como aprovados.
 
@@ -72,7 +75,7 @@ flowchart LR
 
 - **Divisão estruturada de LLMs:** `claude-haiku-4-5` interpreta os dados do condado em gatilhos e redige perguntas de qualificação, SMS e e-mails; `claude-sonnet-4-5` redige os títulos/descrições de Google Ads RSA e o topo da landing page. Todas as chamadas usam saída estruturada (DTOs Pydantic).
 - **Tabela pré-agregada dos condados (sem API externa de dados em produção):** `scripts/build_county_table.py` (Polars) pré-calcula **3.222 condados dos EUA** (17 colunas, `122.909` bytes) em `data/counties.parquet` a partir da NOAA Storm Events (`2020–2024`), da tabela de correlação zona–condado da NWS (`bp16ap26.dbx`) e do Census ACS 5-year (`2020–2024`). Produção não depende da chave do Census nem de downloads da NOAA.
-- **Troca de vertical por configuração:** `motivated_seller` e `roofing` rodam exatamente no mesmo grafo e código — trocar de vertical muda apenas `config/verticals.json` (campos de gatilho, tópicos obrigatórios e regras de copy).
+- **Verticais orientadas por configuração:** a Fase 1 em produção foca 100% em Motivated Seller (`motivated_seller`). O pipeline é modular via `config/verticals.json` — a Fase 2 no roadmap estende para Roofing & Home Services (`roofing`), com evals ao vivo e testes de campo pendentes.
 - **Degradação explícita:** se um condado falha durante o *fan-out*, ele sai com `status: "failed"` enquanto os demais seguem normalmente; se a sumarização do `compare_counties` falhar no LLM, um fallback determinístico ordena pelo semáforo e pelo pior CPL.
 
 Detalhes em [`docs/architecture.pt-BR.md`](docs/architecture.pt-BR.md).

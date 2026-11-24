@@ -39,23 +39,27 @@ const I18N = {
   en: {
     moreProjects: "← More projects on GitHub",
     zeroCostBadge: "Pre-computed mode: zero API cost",
-    subtitle: "Verified local facts · Deterministic auction math · Compliant ad & intake copy",
+    subtitle: "Fact-grounded local persuasion · Deterministic auction math · Zero-hallucination guardrails",
     linkExcel: "Download Excel Model (auction-math.xlsx)",
     linkPlaybook: "Non-Code Playbook (README.md)",
     linkRepo: "GitHub Repo ↗",
     heroBadgeArchitecture: "Production AI Engine Architecture",
     heroBadgeStack: "LangGraph + Parquet + Census ACS + NOAA",
     heroTitle: "Why Pure LLMs Fail in Paid Acquisition — And How Code Makes Them Production-Ready",
-    heroLead: "In high-stakes paid advertising, pure LLMs hallucinate financial metrics, blow past ad character limits, and violate regulatory disclosures. This demo showcases a deterministic, audit-first orchestration system: Code owns the math, data integrity, and compliance; AI owns copy creativity and audience persuasion.",
-    pillar1Title: "Anti-Hallucination Firewall",
-    pillar1Text: "Zero tolerance for invented numbers. LLM claims are cross-checked against local Parquet Census ACS tables. Mismatches are automatically reconciled and logged to an audit trail.",
+    heroLead:
+      "In high-stakes paid acquisition, pure LLMs either write generic copy or hallucinate numbers and break ad and compliance rules. This demo showcases an audit-first orchestration engine: Real public data steers the persuasion; pure code owns the unit economics, fact verification, and compliance.",
+    pillar1Title: "Fact-Grounded Persuasion",
+    pillar1Text:
+      "Census housing stock and NOAA storm history are translated into concrete local homeowner pressures across ads, landing pages, and intake questions — never generic {City} fluff or cold statistics.",
     pillar2Title: "Deterministic Auction Math",
-    pillar2Text: "Unit economics (target CPL, max CPC threshold, traffic-light go/no-go verdicts) are 100% computed in Python with float precision — never delegated to a probabilistic model.",
-    pillar3Title: "Fact-Grounded Persuasion",
+    pillar2Text:
+      "Unit economics (target CPL, max viable CPC threshold, Green/Yellow/Red go/no-go verdicts) are 100% computed in pure Python before ad spend — never delegated to a probabilistic model.",
+    pillar3Title: "Anti-Hallucination Firewall",
     pillar3Text:
-      "No generic AI fluff. Messaging is anchored in real local pressures—aging properties, deferred maintenance, holding costs, and storm damage. It converts motivated sellers by solving concrete financial burdens.",
-    pillar4Title: "Deterministic Compliance",
-    pillar4Text: "Deterministic regex engine enforces Fair Housing Act rules, TCPA SMS disclosures, Google Ads character counts (30/90), and qualification question logic with 100% test coverage.",
+      "Zero tolerance for invented numbers. Every LLM claim is cross-checked against local Parquet tables from U.S. Census ACS and NOAA Storm Events; mismatches are auto-corrected with an audit trail.",
+    pillar4Title: "Deterministic Compliance & Human Review",
+    pillar4Text:
+      "Regex guardrails enforce Google Ads limits (30/90), Fair Housing Act anti-bias patterns, TCPA SMS disclosures, and explicit needs_human_review flags with 100% test coverage.",
     thirtySecondHeading: "30-Second Overview: Auction Math and Fact Verification",
     auctionEyebrow: "Deterministic Code Math (Never LLM)",
     auctionTitle: "Multi-County Auction Math",
@@ -228,23 +232,27 @@ const I18N = {
   pt: {
     moreProjects: "← Mais projetos no GitHub",
     zeroCostBadge: "Modo pré-computado: custo zero de API",
-    subtitle: "Fatos locais verificados · Conta do leilão determinística · Copy e compliance",
+    subtitle: "Persuasão ancorada em dados locais · Conta do leilão determinística · Firewall anti-alucinação",
     linkExcel: "Baixar Planilha Excel (auction-math.xlsx)",
     linkPlaybook: "Playbook Sem Código (README.md)",
     linkRepo: "Repositório GitHub ↗",
     heroBadgeArchitecture: "Arquitetura de Motor de IA em Produção",
     heroBadgeStack: "LangGraph + Parquet + Censo ACS + NOAA",
     heroTitle: "Por que LLMs Puros Falham em Tráfego Pago — E Como Código os Torna Confiáveis",
-    heroLead: "Em tráfego pago de alto risco, LLMs puros inventam métricas financeiras, estouram limites de caracteres de anúncios e violam leis de compliance. Esta demo apresenta uma arquitetura determinística de auditoria contínua: Código domina a matemática, integridade de dados e conformidade; IA domina a criatividade e persuasão das mensagens.",
-    pillar1Title: "Firewall Anti-Alucinação",
-    pillar1Text: "Tolerância zero a números inventados. Afirmações do LLM são auditadas contra tabelas Parquet oficiais do Censo ACS. Divergências são retificadas automaticamente com trilha de auditoria.",
+    heroLead:
+      "Em aquisição paga de alto risco, LLMs puros escrevem copy genérico ou inventam números e violam regras de anúncios e compliance. Esta demo apresenta uma arquitetura auditável: Dados públicos reais guiam a persuasão; código puro garante a conta do leilão, a checagem factual e a conformidade.",
+    pillar1Title: "Persuasão Guiada por Fatos",
+    pillar1Text:
+      "Estoque habitacional do Censo ACS e histórico de tempestades da NOAA são traduzidos em pressões locais concretas nos anúncios, landing pages e perguntas de triagem — sem clichês de {Cidade} nem estatísticas frias.",
     pillar2Title: "Matemática de Leilão Determinística",
-    pillar2Text: "Unit economics (CPL alvo, teto de CPC, semáforo go/no-go) são calculados 100% em Python com precisão de ponto flutuante — nunca delegados a modelos probabilísticos.",
-    pillar3Title: "Copy Guiada por Fatos e Pressões Reais",
+    pillar2Text:
+      "Unit economics (CPL alvo, CPC máximo viável e semáforo Verde/Amarelo/Vermelho) são calculados 100% em Python antes de investir mídia — nunca delegados a modelos probabilísticos.",
+    pillar3Title: "Firewall Anti-Alucinação",
     pillar3Text:
-      "Zero clichês genéricos de IA. A copy nasce de pressões locais reais — desgaste de imóveis antigos, custos de reforma, IPTU de casas vazias e tempestades. Converte proprietários atacando dores financeiras concretas.",
-    pillar4Title: "Conformidade Regulatória por Código",
-    pillar4Text: "Mecanismo regex determinístico garante conformidade com Fair Housing Act, TCPA para SMS, limites de caracteres do Google Ads (30/90) e qualificação com 100% de cobertura de testes.",
+      "Tolerância zero a números inventados. Afirmações do LLM são conferidas contra tabelas Parquet do Censo ACS e da NOAA; divergências são retificadas automaticamente com trilha de auditoria.",
+    pillar4Title: "Conformidade & Revisão Humana",
+    pillar4Text:
+      "Travas em regex garantem limites do Google Ads (30/90), Fair Housing Act, divulgações TCPA no SMS e flags explícitos de needs_human_review com 100% de cobertura de testes.",
     thirtySecondHeading: "Visão em 30 Segundos: Conta do Leilão e Verificação de Fatos",
     auctionEyebrow: "Matemática Determinística em Código (Nunca LLM)",
     auctionTitle: "Conta do Leilão Multi-Condado",

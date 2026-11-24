@@ -9,7 +9,7 @@
 [![Tests](https://img.shields.io/badge/tests-140%20passing-brightgreen)](quality-baseline.json)
 [![License: PolyForm Noncommercial](https://img.shields.io/badge/license-PolyForm%20Noncommercial-blue)](LICENSE)
 
-**County-level lead generation campaign builder for motivated seller real estate acquisitions.** Enter target U.S. counties (FIPS codes), a lead bid, and CPC/conversion assumptions. The pipeline turns authoritative public county data (**NOAA Storm Events 2020–2024** and **U.S. Census ACS 2020–2024**) into an audited campaign package: grounded local triggers, 5 lead-qualification intake questions, Google Ads RSA copy (5 headlines, 3 descriptions), landing page above-the-fold copy, speed-to-lead SMS messages, follow-up emails, deterministic auction unit economics, and an explicit human review list.
+**Multi-county paid acquisition & lead generation campaign engine — grounded in real local housing and climate pressures.** Enter target U.S. counties (FIPS codes), a lead bid, and CPC/conversion assumptions. Instead of generating generic `{City}` templates or raw academic stats, the pipeline translates authoritative **U.S. Census ACS (2020–2024)** and **NOAA Storm Events (2020–2024)** data into empathetic, high-converting ads and landing pages — paired with pure-code auction unit economics, anti-hallucination verification, and compliance guardrails. Built to demonstrate verifiable AI workflows for growth, MarTech, and paid acquisition teams (Phase 1 live on residential acquisitions; Phase 2 configuration roadmap ready for home services / roofing).
 
 > Portfolio demo (POC), not a client product. The public playground uses pre-computed responses and illustrative CPC/CVR operator assumptions; live mode runs only with an access code.
 
@@ -19,9 +19,12 @@
 
 ## The 30-second rule
 
-The opening screen puts two proofs side by side before any scroll:
+The opening screen leads with the **Perfect Pair** for revenue-driven paid acquisition — **persuasion grounded in real local pressures** plus **margin-protecting math** — backed by a transparent governance shield:
 
-1. **Multi-County Auction Math with Traffic Lights** (at a `$125.00` target lead bid):
+1. **Fact-Grounded Persuasion (Data-to-Copy Translation):**
+   Verified U.S. Census housing stock pressures (median build year, long-term ownership >25 years, free-and-clear equity, vacancy) and NOAA severe weather history steer **angle-tagged Google RSA ads (5 headlines, 3 descriptions), LP hero copy, SMS, emails, and 5 intake qualification questions** per county. Instead of generic AI fluff or quoting dry statistics, copy converts motivated prospects by addressing concrete local financial and maintenance burdens.
+
+2. **Multi-County Auction Math with Traffic Lights** (at a `$125.00` target lead bid):
 
    | County (FIPS) | CPC Range | Landing CVR | CPL Range | Max Viable CPC | Verdict |
    |---|---:|---:|---:|---:|---|
@@ -31,8 +34,8 @@ The opening screen puts two proofs side by side before any scroll:
 
    *Note: CPC and landing-page CVR ranges in the benchmark are illustrative operator inputs, never presented as live ad-platform market data.*
 
-2. **AI Hallucination Caught & Corrected by Code:**
-   In the Dallas County package, the AI drafted **120** hail reports (`1 inch or larger in 2020-2024`) for `hail_reports_1in`. The authoritative **NOAA Storm Events 2020–2024** record in `data/counties.parquet` is **102**. Code caught the discrepancy, replaced `120` with `102`, marked the fact `corrected`, and recorded the audit trail in `corrections` (`llm_value: 120`, `source_value: 102`).
+3. **Governance Shield — AI Hallucination Caught & Corrected by Code:**
+   In the Dallas County (`48113`) benchmark package, the LLM drafted **`$350,000`** for `median_home_value_usd`. The authoritative **U.S. Census Bureau ACS (`Table B25077`)** record in `data/counties.parquet` is **`$303,000`**. Code caught the discrepancy, replaced `$350,000` with `$303,000`, marked the fact `corrected`, and recorded the audit trail (`llm_value: 350000`, `source_value: 303000`).
 
 ---
 
@@ -44,7 +47,7 @@ Asking a chat LLM to *"write a campaign for Cook County"* produces generic copy,
 |---|---|---|
 | Market triggers citing county statistics (`field`, `value`, `source`) | Every cited number is checked against `data/counties.parquet` (`±0.01` tolerance); mismatches are overwritten and logged in `corrections`, and unbacked fields become `unverified` | Any `unverified` numeric claim or local angle sensitivity |
 | Auction strategy & county recommendation summary | **100% pure-code math:** `CPL = CPC / CVR`, `Max CPC = Bid × Min CVR`, and the `green`/`yellow`/`red` verdict never depend on an LLM | Bid viability, actual market CPC/CVR assumptions, and final launch decision |
-| 5 qualification questions, 8 RSA headlines, 3 descriptions, landing page copy, 3 SMS, follow-up emails | Character limits (headlines ≤ 30, descriptions ≤ 90, SMS ≤ 160), 5 required vertical qualification topics, TCPA sender ID + opt-out keywords + consent disclosure, and Fair Housing forbidden patterns | Offer promises (e.g., 7-day close, cash-as-is guarantees, valuation claims), TCPA quiet hours, buyer terms, and brand tone |
+| 5 qualification questions, 5 RSA headlines, 3 descriptions, landing page copy, 3 SMS, follow-up emails | Character limits (headlines ≤ 30, descriptions ≤ 90, SMS ≤ 160), 5 required vertical qualification topics, TCPA sender ID + opt-out keywords + consent disclosure, and Fair Housing forbidden patterns | Offer promises (e.g., 7-day close, cash-as-is guarantees, valuation claims), TCPA quiet hours, buyer terms, and brand tone |
 
 Assets that fail character limits or compliance checks are regenerated **once** with the failure reason injected into the prompt; if they fail again, they stay marked `rejected` and are never emitted as approved.
 
