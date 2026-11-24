@@ -86,6 +86,8 @@ def log_event(
                 "verdict": result.unit_economics.verdict,
             }
         )
+        if result.error_message:
+            payload["error_message"] = result.error_message
     elif isinstance(result, CampaignComparison):
         payload.update(
             {

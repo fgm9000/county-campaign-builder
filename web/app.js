@@ -43,6 +43,19 @@ const I18N = {
     linkExcel: "Download Excel Model (auction-math.xlsx)",
     linkPlaybook: "Non-Code Playbook (README.md)",
     linkRepo: "GitHub Repo ↗",
+    heroBadgeArchitecture: "Production AI Engine Architecture",
+    heroBadgeStack: "LangGraph + Parquet + Census ACS + NOAA",
+    heroTitle: "Why Pure LLMs Fail in Paid Acquisition — And How Code Makes Them Production-Ready",
+    heroLead: "In high-stakes paid advertising, pure LLMs hallucinate financial metrics, blow past ad character limits, and violate regulatory disclosures. This demo showcases a deterministic, audit-first orchestration system: Code owns the math, data integrity, and compliance; AI owns copy creativity and audience persuasion.",
+    pillar1Title: "Anti-Hallucination Firewall",
+    pillar1Text: "Zero tolerance for invented numbers. LLM claims are cross-checked against local Parquet Census ACS tables. Mismatches are automatically reconciled and logged to an audit trail.",
+    pillar2Title: "Deterministic Auction Math",
+    pillar2Text: "Unit economics (target CPL, max CPC threshold, traffic-light go/no-go verdicts) are 100% computed in Python with float precision — never delegated to a probabilistic model.",
+    pillar3Title: "Fact-Grounded Persuasion",
+    pillar3Text:
+      "No generic AI fluff. Messaging is anchored in real local pressures—aging properties, deferred maintenance, holding costs, and storm damage. It converts motivated sellers by solving concrete financial burdens.",
+    pillar4Title: "Deterministic Compliance",
+    pillar4Text: "Deterministic regex engine enforces Fair Housing Act rules, TCPA SMS disclosures, Google Ads character counts (30/90), and qualification question logic with 100% test coverage.",
     thirtySecondHeading: "30-Second Overview: Auction Math and Fact Verification",
     auctionEyebrow: "Deterministic Code Math (Never LLM)",
     auctionTitle: "Multi-County Auction Math",
@@ -118,7 +131,8 @@ const I18N = {
     metricCplWorst: "Worst-Case CPL",
     metricMaxCpc: "Max Viable CPC",
     assumptionsLine: "Operator inputs: CPC {cpcMin}–{cpcMax} · Landing CVR {cvrMin}–{cvrMax}",
-    factsTitle: "Verified Facts",
+    factsTitle: "County Intelligence & Audited Facts (B2B Strategy)",
+    factsSubtitle: "Official U.S. Census Bureau & NOAA demographic/climate data used by media buyers and acquisition teams to evaluate equity, repair risks, and calibrate local ad spend.",
     sourceLabel: "Source:",
     fieldLabel: "Field:",
     valueLabel: "Verified value:",
@@ -126,10 +140,13 @@ const I18N = {
     questionsTitle: "Qualification Questions",
     whyLabel: "Why it matters:",
     adsTitle: "Responsive Search Ads (Google Ads)",
+    adStrengthBadge: "🟢 Google RSA: Excellent Ad Strength (5 Angles · 3 Descriptions · 0 Overages)",
+    adsTranslationTitle: "Data-to-Copy Translation Engine",
+    adsTranslationDesc: "Census housing stock age and NOAA severe weather records are translated into tangible homeowner relief: avoiding out-of-pocket renovation costs, bypassing storm repair headaches, and eliminating 6% agent fees.",
     headlinesHeading: "Headlines (max 30 chars)",
     descriptionsHeading: "Descriptions (max 90 chars)",
     charsUnit: "chars",
-    landingTitle: "Landing Page Top",
+    landingTitle: "Landing Page Preview (Homeowner Above-the-Fold)",
     ctaPreviewLabel: "CTA Button:",
     tcpaBadge: "TCPA Consent Disclosure",
     followupTitle: "Follow-Up Sequences",
@@ -143,6 +160,16 @@ const I18N = {
     optOutBadge: "Opt-out: {keyword}",
     optOutMissingBadge: "Missing opt-out",
     reviewTitle: "Human Review Checklist",
+    reviewAlertTitle: "{n} Item(s) Flagged for Human Sign-Off Before Launch",
+    reviewAlertDesc:
+      "The automated compliance engine detected unverified promises or offer terms that require human operator approval. Review the highlighted yellow items below:",
+    sectionFlaggedBadge: "⚠️ {n} flagged for review",
+    inlineReviewBadge: "⚠️ Human Sign-Off Required",
+    needsReviewPill: "Needs Sign-Off",
+    headlineWord: "Headline",
+    descriptionWord: "Description",
+    lpHeadlineWord: "Landing Page Headline",
+    lpSubheadlineWord: "Landing Page Subheadline",
     reviewFlaggedCount: "{n} item(s) flagged",
     reviewCleanBadge: "0 claim triggers fired",
     reviewEmptyMsg:
@@ -157,7 +184,7 @@ const I18N = {
     fFipsHint: "e.g. 48113 (Dallas), 12103 (Pinellas), 17031 (Cook), or any US county",
     fVertical: "Vertical",
     vMotivatedSeller: "Motivated Seller (Cash Offer)",
-    vRoofing: "Roofing (Roof Replacement)",
+    vRoofing: "Roofing (Phase 2 Roadmap — Tests Pending)",
     fBid: "Bid per Lead ($ USD)",
     fCpcMin: "Min CPC ($ USD)",
     fCpcMax: "Max CPC ($ USD)",
@@ -205,6 +232,19 @@ const I18N = {
     linkExcel: "Baixar Planilha Excel (auction-math.xlsx)",
     linkPlaybook: "Playbook Sem Código (README.md)",
     linkRepo: "Repositório GitHub ↗",
+    heroBadgeArchitecture: "Arquitetura de Motor de IA em Produção",
+    heroBadgeStack: "LangGraph + Parquet + Censo ACS + NOAA",
+    heroTitle: "Por que LLMs Puros Falham em Tráfego Pago — E Como Código os Torna Confiáveis",
+    heroLead: "Em tráfego pago de alto risco, LLMs puros inventam métricas financeiras, estouram limites de caracteres de anúncios e violam leis de compliance. Esta demo apresenta uma arquitetura determinística de auditoria contínua: Código domina a matemática, integridade de dados e conformidade; IA domina a criatividade e persuasão das mensagens.",
+    pillar1Title: "Firewall Anti-Alucinação",
+    pillar1Text: "Tolerância zero a números inventados. Afirmações do LLM são auditadas contra tabelas Parquet oficiais do Censo ACS. Divergências são retificadas automaticamente com trilha de auditoria.",
+    pillar2Title: "Matemática de Leilão Determinística",
+    pillar2Text: "Unit economics (CPL alvo, teto de CPC, semáforo go/no-go) são calculados 100% em Python com precisão de ponto flutuante — nunca delegados a modelos probabilísticos.",
+    pillar3Title: "Copy Guiada por Fatos e Pressões Reais",
+    pillar3Text:
+      "Zero clichês genéricos de IA. A copy nasce de pressões locais reais — desgaste de imóveis antigos, custos de reforma, IPTU de casas vazias e tempestades. Converte proprietários atacando dores financeiras concretas.",
+    pillar4Title: "Conformidade Regulatória por Código",
+    pillar4Text: "Mecanismo regex determinístico garante conformidade com Fair Housing Act, TCPA para SMS, limites de caracteres do Google Ads (30/90) e qualificação com 100% de cobertura de testes.",
     thirtySecondHeading: "Visão em 30 Segundos: Conta do Leilão e Verificação de Fatos",
     auctionEyebrow: "Matemática Determinística em Código (Nunca LLM)",
     auctionTitle: "Conta do Leilão Multi-Condado",
@@ -280,7 +320,8 @@ const I18N = {
     metricCplWorst: "Pior CPL",
     metricMaxCpc: "CPC Máx. Viável",
     assumptionsLine: "Premissas do operador: CPC {cpcMin}–{cpcMax} · CVR da LP {cvrMin}–{cvrMax}",
-    factsTitle: "Fatos Verificados",
+    factsTitle: "Dossiê de Mercado & Fatos Auditados (Estratégia B2B)",
+    factsSubtitle: "Métricas oficiais do Censo dos EUA e NOAA utilizadas pela equipe de aquisição imobiliária para analisar o mercado do condado e calibrar lances de leilão.",
     sourceLabel: "Fonte:",
     fieldLabel: "Campo:",
     valueLabel: "Valor verificado:",
@@ -288,10 +329,13 @@ const I18N = {
     questionsTitle: "Perguntas de Qualificação",
     whyLabel: "Por que importa:",
     adsTitle: "Anúncios Responsivos de Pesquisa (Google Ads)",
+    adStrengthBadge: "🟢 Google RSA: Ad Strength Excelente (5 Ângulos · 3 Descrições · 0 Violações)",
+    adsTranslationTitle: "Mecanismo de Translação de Dados em Copy",
+    adsTranslationDesc: "Dados do Censo (imóveis antigos) e NOAA (tempestades) são convertidos em alívio financeiro para o proprietário: zero custos com reformas, sem obras no telhado e sem comissões de corretagem.",
     headlinesHeading: "Títulos (máx. 30 caracteres)",
     descriptionsHeading: "Descrições (máx. 90 caracteres)",
     charsUnit: "caract.",
-    landingTitle: "Topo da Landing Page",
+    landingTitle: "Prévia da Landing Page (Visão do Proprietário)",
     ctaPreviewLabel: "Botão CTA:",
     tcpaBadge: "Declaração de Consentimento TCPA",
     followupTitle: "Sequências de Follow-Up",
@@ -305,6 +349,16 @@ const I18N = {
     optOutBadge: "Opt-out: {keyword}",
     optOutMissingBadge: "Opt-out ausente",
     reviewTitle: "Checklist de Revisão Humana",
+    reviewAlertTitle: "{n} Item(ns) Marcado(s) para Aprovação Humana Antes de Publicar",
+    reviewAlertDesc:
+      "O mecanismo de conformidade detectou promessas ou condições de oferta que exigem confirmação do operador humano. Confira os itens destacados em amarelo abaixo:",
+    sectionFlaggedBadge: "⚠️ {n} marcado(s) para revisão",
+    inlineReviewBadge: "⚠️ Aprovação Humana Obrigatória",
+    needsReviewPill: "Requer Aprovação",
+    headlineWord: "Título",
+    descriptionWord: "Descrição",
+    lpHeadlineWord: "Título da Landing Page",
+    lpSubheadlineWord: "Subtítulo da Landing Page",
     reviewFlaggedCount: "{n} item(ns) marcado(s)",
     reviewCleanBadge: "0 gatilhos de promessa disparados",
     reviewEmptyMsg:
@@ -319,7 +373,7 @@ const I18N = {
     fFipsHint: "ex.: 48113 (Dallas), 12103 (Pinellas), 17031 (Cook) ou qualquer condado dos EUA",
     fVertical: "Vertical",
     vMotivatedSeller: "Motivated Seller (Oferta em Dinheiro)",
-    vRoofing: "Roofing (Troca de Telhado)",
+    vRoofing: "Roofing (Roadmap Fase 2 — Testes Pendentes)",
     fBid: "Lance por Lead ($ USD)",
     fCpcMin: "CPC Mínimo ($ USD)",
     fCpcMax: "CPC Máximo ($ USD)",
@@ -583,15 +637,33 @@ function renderCorrectionCallout() {
     ? targetCampaign.facts.find((f) => f.field === targetCorrection.field)
     : null;
 
+  const isCurrency = targetCorrection.field === "median_home_value_usd";
+  const llmDisplay = isCurrency
+    ? `$${Number(targetCorrection.llm_value).toLocaleString("en-US")}`
+    : String(targetCorrection.llm_value);
+  const srcDisplay = isCurrency
+    ? `$${Number(targetCorrection.source_value).toLocaleString("en-US")}`
+    : String(targetCorrection.source_value);
+
+  const defaultSource = isCurrency
+    ? "U.S. Census Bureau ACS (Table B25077)"
+    : "NOAA Storm Events 2020-2024";
+
   $("correctionCounty").textContent = `${targetCampaign.county_name} (FIPS ${targetCampaign.county_fips})`;
   $("correctionHeadline").textContent =
     state.lang === "pt"
-      ? `LLM gerou ${targetCorrection.llm_value} relatos de granizo → Fonte oficial NOAA é ${targetCorrection.source_value}: corrigido e auditado`
-      : `LLM generated ${targetCorrection.llm_value} hail reports → NOAA official source is ${targetCorrection.source_value}: corrected and audited`;
-  $("correctionLlmVal").textContent = String(targetCorrection.llm_value);
-  $("correctionFieldLabel").textContent = targetCorrection.field;
-  $("correctionSourceVal").textContent = String(targetCorrection.source_value);
-  $("correctionSourceName").textContent = matchingFact?.source || "NOAA Storm Events 2020-2024";
+      ? (isCurrency
+          ? `LLM gerou valor mediano de ${llmDisplay} → Fonte oficial do Census é ${srcDisplay}: corrigido e auditado`
+          : `LLM gerou ${targetCorrection.llm_value} para ${targetCorrection.field} → Fonte oficial é ${targetCorrection.source_value}: corrigido e auditado`)
+      : (isCurrency
+          ? `LLM generated ${llmDisplay} median home value → Census official source is ${srcDisplay}: corrected and audited`
+          : `LLM generated ${targetCorrection.llm_value} for ${targetCorrection.field} → Official source is ${targetCorrection.source_value}: corrected and audited`);
+  $("correctionLlmVal").textContent = llmDisplay;
+  $("correctionFieldLabel").textContent = isCurrency
+    ? (state.lang === "pt" ? "Valor Mediano (Censo B25077)" : "Median Home Value (Census B25077)")
+    : targetCorrection.field;
+  $("correctionSourceVal").textContent = srcDisplay;
+  $("correctionSourceName").textContent = matchingFact?.source || defaultSource;
   $("correctionReason").textContent = targetCorrection.reason || "";
 }
 
@@ -661,6 +733,121 @@ function renderUnitEconomicsSection(campaign, inputAssumptions) {
   return section;
 }
 
+const METRIC_INSIGHTS = {
+  median_home_value_usd: {
+    nameEn: "U.S. Census Bureau ACS (Table B25077)",
+    namePt: "U.S. Census Bureau ACS (Tabela B25077)",
+    shortNameEn: "Census B25077",
+    shortNamePt: "Censo B25077",
+    url: "https://censusreporter.org/tables/B25077/",
+    govUrl: "https://data.census.gov/table/B25077",
+    linkLabelEn: "Open interactive table (Census Reporter) ↗",
+    linkLabelPt: "Abrir tabela interativa (Census Reporter) ↗",
+    whyEn:
+      "Median property valuation provides the baseline anchor for discount margins, wholesaling spreads, and maximum allowable acquisition offers in each county.",
+    whyPt:
+      "A mediana de valor venal serve como âncora financeira para cálculo de margens de desconto, spreads de repasse e teto máximo de oferta de compra à vista no condado.",
+  },
+  free_and_clear_pct: {
+    nameEn: "U.S. Census Bureau ACS (Table B25081)",
+    namePt: "U.S. Census Bureau ACS (Tabela B25081)",
+    shortNameEn: "Census B25081",
+    shortNamePt: "Censo B25081",
+    url: "https://censusreporter.org/tables/B25081/",
+    govUrl: "https://data.census.gov/table/B25081",
+    linkLabelEn: "Open interactive table (Census Reporter) ↗",
+    linkLabelPt: "Abrir tabela interativa (Census Reporter) ↗",
+    whyEn:
+      "Homeowners without a bank mortgage have 100% equity with zero lender payoff requirements. This gives them full flexibility to accept an as-is cash offer with quick 7–14 day closing.",
+    whyPt:
+      "Proprietários sem hipoteca bancária têm 100% do patrimônio líquido livre sem saldo devedor a quitar. Isso garante total flexibilidade para aceitar ofertas à vista com fechamento rápido em 7 a 14 dias.",
+  },
+  owner_long_tenure_pct: {
+    nameEn: "U.S. Census Bureau ACS (Table B25038)",
+    namePt: "U.S. Census Bureau ACS (Tabela B25038)",
+    shortNameEn: "Census B25038",
+    shortNamePt: "Censo B25038",
+    url: "https://censusreporter.org/tables/B25038/",
+    govUrl: "https://data.census.gov/table/B25038",
+    linkLabelEn: "Open interactive table (Census Reporter) ↗",
+    linkLabelPt: "Abrir tabela interativa (Census Reporter) ↗",
+    whyEn:
+      "Homeowners of 20+ years frequently carry deferred maintenance, aging roofs/systems, or life transitions (probate/retirement). An as-is sale eliminates $30k–$80k in retail remodeling costs.",
+    whyPt:
+      "Famílias no imóvel há mais de 20 anos frequentemente acumulam manutenções pendentes ou transições de vida (aposentadoria/herança). Vender no estado atual elimina $30k–$80k em reformas.",
+  },
+  median_year_built: {
+    nameEn: "U.S. Census Bureau ACS (Table B25035)",
+    namePt: "U.S. Census Bureau ACS (Tabela B25035)",
+    shortNameEn: "Census B25035",
+    shortNamePt: "Censo B25035",
+    url: "https://censusreporter.org/tables/B25035/",
+    govUrl: "https://data.census.gov/table/B25035",
+    linkLabelEn: "Open interactive table (Census Reporter) ↗",
+    linkLabelPt: "Abrir tabela interativa (Census Reporter) ↗",
+    whyEn:
+      "Older housing stock correlates with aging electrical, plumbing, and structural components that fail buyer mortgage inspections, strongly favoring cash buyers who waive repairs.",
+    whyPt:
+      "Imóveis mais antigos acumulam desgaste estrutural e reprovam em vistorias de bancos, favorecendo compradores que compram à vista sem exigir reformas prévias.",
+  },
+  vacancy_pct: {
+    nameEn: "U.S. Census Bureau ACS (Table B25002)",
+    namePt: "U.S. Census Bureau ACS (Tabela B25002)",
+    shortNameEn: "Census B25002",
+    shortNamePt: "Censo B25002",
+    url: "https://censusreporter.org/tables/B25002/",
+    govUrl: "https://data.census.gov/table/B25002",
+    linkLabelEn: "Open interactive table (Census Reporter) ↗",
+    linkLabelPt: "Abrir tabela interativa (Census Reporter) ↗",
+    whyEn:
+      "Unoccupied properties generate zero income while accumulating property taxes, insurance, and deterioration, creating urgency for motivated sellers to liquidate quickly.",
+    whyPt:
+      "Casas desocupadas não geram renda e continuam acumulando IPTU local, seguro e desgaste físico, criando forte motivação para venda rápida à vista.",
+  },
+  hail_reports_1in: {
+    nameEn: "NOAA Storm Events Database (2020–2024)",
+    namePt: "Base de Tempestades da NOAA (2020–2024)",
+    shortNameEn: "NOAA Storm Events",
+    shortNamePt: "NOAA Tempestades",
+    url: "https://www.ncei.noaa.gov/access/storm-events-database/",
+    govUrl: null,
+    linkLabelEn: "Open official NOAA Storm Events database ↗",
+    linkLabelPt: "Abrir base oficial NOAA de Tempestades ↗",
+    whyEn:
+      "Severe hail (>= 1.0 inch) damages roofs and siding. Homeowners facing insurance deductibles or out-of-pocket restoration costs often prefer an immediate as-is cash sale.",
+    whyPt:
+      "Granizo severo perfura telhados e danifica fachadas. Proprietários sem verba para franquia de seguro ou reformas preferem vender a casa à vista no estado em que se encontra.",
+  },
+  wind_reports_50kt: {
+    nameEn: "NOAA Storm Events Database (2020–2024)",
+    namePt: "Base de Tempestades da NOAA (2020–2024)",
+    shortNameEn: "NOAA High Wind",
+    shortNamePt: "NOAA Vendavais",
+    url: "https://www.ncei.noaa.gov/access/storm-events-database/",
+    govUrl: null,
+    linkLabelEn: "Open official NOAA Storm Events database ↗",
+    linkLabelPt: "Abrir base oficial NOAA de Tempestades ↗",
+    whyEn:
+      "Gale-force winds cause structural damage and fallen trees, leading owners to seek fast cash liquidation over lengthy insurance restoration delays.",
+    whyPt:
+      "Vendavais severos causam destelhamento e danos estruturais, levando proprietários a buscar liquidação rápida em vez de aguardar restaurações demoradas.",
+  },
+  tropical_storm_events: {
+    nameEn: "NOAA & NWS Zone Weather Database",
+    namePt: "Base Meteorológica NOAA & NWS",
+    shortNameEn: "NOAA Coastal",
+    shortNamePt: "NOAA Costeira",
+    url: "https://www.ncei.noaa.gov/access/storm-events-database/",
+    govUrl: null,
+    linkLabelEn: "Open official NOAA Storm Events database ↗",
+    linkLabelPt: "Abrir base oficial NOAA de Tempestades ↗",
+    whyEn:
+      "Tropical storm and hurricane exposure creates flood and wind risks, prompting owners in coastal counties to capitalize on equity via quick off-market sales.",
+    whyPt:
+      "Exposição a furacões e tempestades tropicais cria riscos recorrentes de inundação e vento, acelerando a decisão de venda de proprietários em áreas costeiras.",
+  },
+};
+
 function renderFactsSection(campaign) {
   const section = el("section", "pkg-section");
   const head = el("div", "pkg-section-head");
@@ -668,6 +855,7 @@ function renderFactsSection(campaign) {
   const facts = Array.isArray(campaign.facts) ? campaign.facts : [];
   head.appendChild(el("span", "badge badge-neutral", `${facts.length}`));
   section.appendChild(head);
+  section.appendChild(el("p", "pkg-section-subtitle", t("factsSubtitle")));
 
   const correctionsByField = new Map();
   if (Array.isArray(campaign.corrections)) {
@@ -695,6 +883,44 @@ function renderFactsSection(campaign) {
       `${t("fieldLabel")} ${fact.field} · ${t("valueLabel")} ${fact.value}`
     );
     card.appendChild(detailLine);
+
+    const insight = METRIC_INSIGHTS[fact.field];
+    if (insight) {
+      const isPt = state.lang === "pt";
+      const whyBox = el("div", "fact-why-box");
+      whyBox.appendChild(
+        el(
+          "strong",
+          "fact-why-label",
+          isPt ? "💡 Por que este número importa na negociação:" : "💡 Why this metric matters for campaigns:"
+        )
+      );
+      whyBox.appendChild(el("p", "fact-why-text", isPt ? insight.whyPt : insight.whyEn));
+
+      const linkRow = el("div", "fact-why-link-row");
+      const a = document.createElement("a");
+      a.className = "fact-dataset-link";
+      a.href = insight.url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.textContent = isPt ? insight.linkLabelPt : insight.linkLabelEn;
+      linkRow.appendChild(a);
+
+      if (insight.govUrl) {
+        const govA = document.createElement("a");
+        govA.className = "fact-dataset-link fact-dataset-link-secondary";
+        govA.href = insight.govUrl;
+        govA.target = "_blank";
+        govA.rel = "noopener noreferrer";
+        govA.textContent = isPt
+          ? "Portal oficial data.census.gov ↗"
+          : "Official data.census.gov portal ↗";
+        linkRow.appendChild(govA);
+      }
+      whyBox.appendChild(linkRow);
+
+      card.appendChild(whyBox);
+    }
 
     if (isCorrected && correctionsByField.has(fact.field)) {
       const corr = correctionsByField.get(fact.field);
@@ -747,11 +973,118 @@ function renderQuestionsSection(campaign) {
   return section;
 }
 
+function renderInlineReviewCallout(reviewItem) {
+  const box = el("div", "human-review-callout");
+  const top = el("div", "human-review-callout-top");
+  top.appendChild(el("span", "badge badge-yellow", t("inlineReviewBadge")));
+  top.appendChild(el("span", "badge badge-mono badge-neutral", `${t("ruleLabel")} ${reviewItem.rule_id}`));
+  box.appendChild(top);
+  box.appendChild(el("p", "human-review-callout-text", reviewItem.reason));
+  return box;
+}
+
+function formatReviewItemName(name) {
+  if (name.startsWith("headline_")) {
+    return `${t("headlineWord")} ${name.split("_")[1]}`;
+  }
+  if (name.startsWith("description_")) {
+    return `${t("descriptionWord")} ${name.split("_")[1]}`;
+  }
+  if (name === "lp_subheadline") return t("lpSubheadlineWord");
+  if (name === "lp_headline") return t("lpHeadlineWord");
+  if (name.startsWith("sms_")) {
+    return `SMS ${name.split("_")[1]}`;
+  }
+  if (name.startsWith("email_")) {
+    return `Email ${name.split("_")[1]}`;
+  }
+  return name;
+}
+
+function renderReviewAlertBanner(campaign) {
+  const items = Array.isArray(campaign.needs_human_review) ? campaign.needs_human_review : [];
+  if (items.length === 0) return null;
+
+  const banner = el("div", "review-alert-banner");
+  banner.appendChild(el("div", "review-alert-icon", "⚠️"));
+
+  const content = el("div", "review-alert-content");
+  content.appendChild(el("h4", "review-alert-title", t("reviewAlertTitle", { n: items.length })));
+  content.appendChild(el("p", "review-alert-desc", t("reviewAlertDesc")));
+
+  const tags = el("div", "review-alert-tags");
+  for (const item of items) {
+    const formattedItem = formatReviewItemName(item.item);
+    tags.appendChild(el("span", "badge badge-yellow", `${formattedItem}: ${item.rule_id}`));
+  }
+  content.appendChild(tags);
+  banner.appendChild(content);
+
+  return banner;
+}
+
+function getHeadlineAngle(text, idx) {
+  const tLower = (text || "").toLowerCase();
+  if (/repair|obra|reform|costly/i.test(tLower)) {
+    return { en: "Aging Stock Relief (ACS)", pt: "Alívio Imóveis Antigos (ACS)" };
+  }
+  if (/fee|agent|delay|comiss|taxa/i.test(tLower)) {
+    return { en: "Zero Commissions", pt: "Zero Corretagem" };
+  }
+  if (/timeline|time|date|prazo/i.test(tLower)) {
+    return { en: "Seller Timeline Control", pt: "Controle de Prazo" };
+  }
+  if (/storm|hail|wind|tempest|graniz/i.test(tLower)) {
+    return { en: "Storm Resilience (NOAA)", pt: "Resiliência a Danos (NOAA)" };
+  }
+  if (/roof|telhad/i.test(tLower)) {
+    return { en: "Full Roof Replacement", pt: "Troca Total de Telhado" };
+  }
+  if (/fair|cash|offer|owner|propr|vist/i.test(tLower)) {
+    return { en: "Fair Cash Offer", pt: "Oferta Direta à Vista" };
+  }
+  return { en: "Local Hook", pt: "Gancho Local" };
+}
+
+function getDescriptionAngle(text, idx) {
+  const tLower = (text || "").toLowerCase();
+  if (/repair|cleanout|reforma|obra/i.test(tLower)) {
+    return { en: "Renovation & Fee Relief", pt: "Alívio de Reformas e Taxas" };
+  }
+  if (/holding|inspection|posse|imposto|iptu|delay/i.test(tLower)) {
+    return { en: "Holding Costs & Speed", pt: "Custos de Posse e Rapidez" };
+  }
+  if (/storm|hail|wind|weather|tempest/i.test(tLower)) {
+    return { en: "Weather Damage Resilience", pt: "Danos Climáticos (NOAA)" };
+  }
+  if (/insurance|ajustad|segur/i.test(tLower)) {
+    return { en: "Insurance Claims Support", pt: "Apoio com Seguradora" };
+  }
+  return { en: "Direct Cash Proposal", pt: "Proposta Direta à Vista" };
+}
+
 function renderAdsSection(campaign) {
   const section = el("section", "pkg-section");
   const head = el("div", "pkg-section-head");
   head.appendChild(el("h4", "pkg-section-title", t("adsTitle")));
+
+  head.appendChild(el("span", "badge badge-green badge-ad-strength", t("adStrengthBadge")));
+
+  const adReviewItems = (campaign.needs_human_review || []).filter(
+    (r) => r.item.startsWith("headline_") || r.item.startsWith("description_")
+  );
+  if (adReviewItems.length > 0) {
+    head.appendChild(el("span", "badge badge-yellow", t("sectionFlaggedBadge", { n: adReviewItems.length })));
+  }
   section.appendChild(head);
+
+  const translationBox = el("div", "ads-translation-box");
+  translationBox.appendChild(el("span", "ads-translation-icon", "💡"));
+  const transContent = el("div", "ads-translation-content");
+  transContent.appendChild(el("strong", "ads-translation-title", t("adsTranslationTitle")));
+  transContent.appendChild(el("p", "ads-translation-desc", t("adsTranslationDesc")));
+  translationBox.appendChild(transContent);
+  section.appendChild(translationBox);
 
   const adCopy = campaign.assets?.ad_copy || { headlines: [], descriptions: [] };
   const split = el("div", "ads-split");
@@ -759,9 +1092,21 @@ function renderAdsSection(campaign) {
   // Headlines column
   const hCol = el("div");
   hCol.appendChild(el("h5", "ads-col-title", t("headlinesHeading")));
-  for (const item of adCopy.headlines || []) {
-    const row = el("div", "copy-row");
-    row.appendChild(el("span", "copy-row-text", item.text || ""));
+  (adCopy.headlines || []).forEach((item, idx) => {
+    const itemName = `headline_${idx + 1}`;
+    const itemReviews = (campaign.needs_human_review || []).filter((r) => r.item === itemName);
+    const isFlagged = itemReviews.length > 0;
+
+    const wrapper = el("div", isFlagged ? "copy-row-wrap copy-row-wrap-flagged" : "copy-row-wrap");
+    const row = el("div", isFlagged ? "copy-row copy-row-flagged" : "copy-row");
+
+    const contentWrap = el("div", "copy-row-content");
+    const angle = getHeadlineAngle(item.text, idx);
+    const angleLabel = state.lang === "pt" ? angle.pt : angle.en;
+    contentWrap.appendChild(el("span", "copy-angle-pill", angleLabel));
+    contentWrap.appendChild(el("span", "copy-row-text", item.text || ""));
+    row.appendChild(contentWrap);
+
     const pills = el("div", "copy-row-pills");
     const len = (item.text || "").length;
     const ok = len <= LIMITS.headline;
@@ -772,20 +1117,41 @@ function renderAdsSection(campaign) {
         `${len}/${LIMITS.headline} ${t("charsUnit")}`
       )
     );
-    pills.appendChild(
-      el("span", statusBadgeClass(item.status), tNested("assetStatuses", item.status, item.status))
-    );
+    if (isFlagged) {
+      pills.appendChild(el("span", "badge badge-yellow", t("needsReviewPill")));
+    } else {
+      pills.appendChild(
+        el("span", statusBadgeClass(item.status), tNested("assetStatuses", item.status, item.status))
+      );
+    }
     row.appendChild(pills);
-    hCol.appendChild(row);
-  }
+    wrapper.appendChild(row);
+
+    for (const rev of itemReviews) {
+      wrapper.appendChild(renderInlineReviewCallout(rev));
+    }
+    hCol.appendChild(wrapper);
+  });
   split.appendChild(hCol);
 
   // Descriptions column
   const dCol = el("div");
   dCol.appendChild(el("h5", "ads-col-title", t("descriptionsHeading")));
-  for (const item of adCopy.descriptions || []) {
-    const row = el("div", "copy-row");
-    row.appendChild(el("span", "copy-row-text", item.text || ""));
+  (adCopy.descriptions || []).forEach((item, idx) => {
+    const itemName = `description_${idx + 1}`;
+    const itemReviews = (campaign.needs_human_review || []).filter((r) => r.item === itemName);
+    const isFlagged = itemReviews.length > 0;
+
+    const wrapper = el("div", isFlagged ? "copy-row-wrap copy-row-wrap-flagged" : "copy-row-wrap");
+    const row = el("div", isFlagged ? "copy-row copy-row-flagged" : "copy-row");
+
+    const contentWrap = el("div", "copy-row-content");
+    const angle = getDescriptionAngle(item.text, idx);
+    const angleLabel = state.lang === "pt" ? angle.pt : angle.en;
+    contentWrap.appendChild(el("span", "copy-angle-pill", angleLabel));
+    contentWrap.appendChild(el("span", "copy-row-text", item.text || ""));
+    row.appendChild(contentWrap);
+
     const pills = el("div", "copy-row-pills");
     const len = (item.text || "").length;
     const ok = len <= LIMITS.description;
@@ -796,12 +1162,21 @@ function renderAdsSection(campaign) {
         `${len}/${LIMITS.description} ${t("charsUnit")}`
       )
     );
-    pills.appendChild(
-      el("span", statusBadgeClass(item.status), tNested("assetStatuses", item.status, item.status))
-    );
+    if (isFlagged) {
+      pills.appendChild(el("span", "badge badge-yellow", t("needsReviewPill")));
+    } else {
+      pills.appendChild(
+        el("span", statusBadgeClass(item.status), tNested("assetStatuses", item.status, item.status))
+      );
+    }
     row.appendChild(pills);
-    dCol.appendChild(row);
-  }
+    wrapper.appendChild(row);
+
+    for (const rev of itemReviews) {
+      wrapper.appendChild(renderInlineReviewCallout(rev));
+    }
+    dCol.appendChild(wrapper);
+  });
   split.appendChild(dCol);
 
   section.appendChild(split);
@@ -813,7 +1188,13 @@ function renderLandingPageSection(campaign) {
   const lp = campaign.assets?.landing_page;
   const head = el("div", "pkg-section-head");
   head.appendChild(el("h4", "pkg-section-title", t("landingTitle")));
-  if (lp?.status) {
+
+  const lpReviewItems = (campaign.needs_human_review || []).filter(
+    (r) => r.item.startsWith("lp_") || r.item === "landing_page"
+  );
+  if (lpReviewItems.length > 0) {
+    head.appendChild(el("span", "badge badge-yellow", t("sectionFlaggedBadge", { n: lpReviewItems.length })));
+  } else if (lp?.status) {
     head.appendChild(
       el("span", statusBadgeClass(lp.status), tNested("assetStatuses", lp.status, lp.status))
     );
@@ -823,27 +1204,62 @@ function renderLandingPageSection(campaign) {
   if (!lp) return section;
 
   const preview = el("div", "lp-preview");
-  preview.appendChild(el("h5", "lp-headline", lp.headline || ""));
-  preview.appendChild(el("p", "lp-subheadline", lp.subheadline || ""));
+
+  // Headline
+  const hReviews = (campaign.needs_human_review || []).filter((r) => r.item === "lp_headline");
+  const hWrap = el("div", "lp-field-block");
+  hWrap.appendChild(el("h5", "lp-headline", lp.headline || ""));
+  for (const rev of hReviews) {
+    hWrap.appendChild(renderInlineReviewCallout(rev));
+  }
+  preview.appendChild(hWrap);
+
+  // Subheadline
+  const subReviews = (campaign.needs_human_review || []).filter((r) => r.item === "lp_subheadline");
+  const subWrap = el("div", "lp-field-block");
+  subWrap.appendChild(el("p", "lp-subheadline", lp.subheadline || ""));
+  for (const rev of subReviews) {
+    subWrap.appendChild(renderInlineReviewCallout(rev));
+  }
+  preview.appendChild(subWrap);
 
   if (lp.cta_text) {
-    preview.appendChild(el("div", "lp-cta-preview", `${t("ctaPreviewLabel")} ${lp.cta_text}`));
+    const ctaReviews = (campaign.needs_human_review || []).filter((r) => r.item === "lp_cta_text");
+    const ctaWrap = el("div", "lp-field-block");
+    ctaWrap.appendChild(el("div", "lp-cta-preview", `${t("ctaPreviewLabel")} ${lp.cta_text}`));
+    for (const rev of ctaReviews) {
+      ctaWrap.appendChild(renderInlineReviewCallout(rev));
+    }
+    preview.appendChild(ctaWrap);
   }
 
   if (Array.isArray(lp.bullet_points) && lp.bullet_points.length > 0) {
     const ul = el("ul", "lp-bullets");
-    for (const bp of lp.bullet_points) {
-      ul.appendChild(el("li", "", bp));
-    }
+    lp.bullet_points.forEach((bp, idx) => {
+      const bReviews = (campaign.needs_human_review || []).filter((r) => r.item === `lp_bullet_${idx + 1}`);
+      const li = el("li", "lp-bullet-item");
+      li.appendChild(el("span", "lp-bullet-icon", "✓"));
+      li.appendChild(el("span", "lp-bullet-text", bp));
+      ul.appendChild(li);
+      for (const rev of bReviews) {
+        ul.appendChild(renderInlineReviewCallout(rev));
+      }
+    });
     preview.appendChild(ul);
   }
 
   if (lp.consent_disclosure) {
+    const consentReviews = (campaign.needs_human_review || []).filter(
+      (r) => r.item === "lp_consent_disclosure"
+    );
     const tcpa = el("div", "tcpa-box");
     const badgeRow = el("div", "badge-row");
     badgeRow.appendChild(el("span", "badge badge-blue", t("tcpaBadge")));
     tcpa.appendChild(badgeRow);
     tcpa.appendChild(el("p", "tcpa-text", lp.consent_disclosure));
+    for (const rev of consentReviews) {
+      tcpa.appendChild(renderInlineReviewCallout(rev));
+    }
     preview.appendChild(tcpa);
   }
 
@@ -866,6 +1282,13 @@ function renderFollowUpSection(campaign) {
   const section = el("section", "pkg-section");
   const head = el("div", "pkg-section-head");
   head.appendChild(el("h4", "pkg-section-title", t("followupTitle")));
+
+  const followupReviews = (campaign.needs_human_review || []).filter(
+    (r) => r.item.startsWith("sms_") || r.item.startsWith("email_")
+  );
+  if (followupReviews.length > 0) {
+    head.appendChild(el("span", "badge badge-yellow", t("sectionFlaggedBadge", { n: followupReviews.length })));
+  }
   section.appendChild(head);
 
   const expectedBrand = BRAND_BY_VERTICAL[campaign.vertical] || "Example Home Buyers";
@@ -878,11 +1301,18 @@ function renderFollowUpSection(campaign) {
 
   const smsGrid = el("div", "item-grid item-grid-2");
   for (const sms of smsList) {
-    const card = el("article", "sub-card");
+    const itemName = `sms_${sms.message_index}`;
+    const itemReviews = (campaign.needs_human_review || []).filter((r) => r.item === itemName);
+    const isFlagged = itemReviews.length > 0;
+
+    const card = el("article", isFlagged ? "sub-card sub-card-corrected" : "sub-card");
     const top = el("div", "sub-card-top");
     top.appendChild(el("span", "badge badge-mono badge-neutral", t("smsLabel", { n: sms.message_index })));
 
     const pills = el("div", "badge-row");
+    if (isFlagged) {
+      pills.appendChild(el("span", "badge badge-yellow", t("needsReviewPill")));
+    }
     const charCount = Number.isFinite(sms.char_count) ? sms.char_count : (sms.text || "").length;
     const lenOk = charCount <= LIMITS.sms;
     pills.appendChild(
@@ -914,6 +1344,10 @@ function renderFollowUpSection(campaign) {
     top.appendChild(pills);
     card.appendChild(top);
     card.appendChild(el("p", "sub-card-text", sms.text || ""));
+
+    for (const rev of itemReviews) {
+      card.appendChild(renderInlineReviewCallout(rev));
+    }
     smsGrid.appendChild(card);
   }
   section.appendChild(smsGrid);
@@ -925,12 +1359,20 @@ function renderFollowUpSection(campaign) {
 
   const emailGrid = el("div", "item-grid item-grid-2");
   for (const em of emailList) {
-    const card = el("article", "sub-card");
+    const itemName = `email_${em.email_index}`;
+    const itemReviews = (campaign.needs_human_review || []).filter((r) => r.item === itemName);
+    const isFlagged = itemReviews.length > 0;
+
+    const card = el("article", isFlagged ? "sub-card sub-card-corrected" : "sub-card");
     const top = el("div", "sub-card-top");
     top.appendChild(el("span", "badge badge-mono badge-neutral", t("emailLabel", { n: em.email_index })));
-    top.appendChild(
-      el("span", statusBadgeClass(em.status), tNested("assetStatuses", em.status, em.status))
-    );
+    if (isFlagged) {
+      top.appendChild(el("span", "badge badge-yellow", t("needsReviewPill")));
+    } else {
+      top.appendChild(
+        el("span", statusBadgeClass(em.status), tNested("assetStatuses", em.status, em.status))
+      );
+    }
     card.appendChild(top);
 
     const subj = el("p", "sub-card-text");
@@ -939,6 +1381,10 @@ function renderFollowUpSection(campaign) {
     card.appendChild(subj);
 
     card.appendChild(el("p", "email-body", em.body || ""));
+
+    for (const rev of itemReviews) {
+      card.appendChild(renderInlineReviewCallout(rev));
+    }
     emailGrid.appendChild(card);
   }
   section.appendChild(emailGrid);
@@ -987,6 +1433,11 @@ function renderHumanReviewSection(campaign) {
 function renderCampaignPackage(container, campaign, inputAssumptions, sectionFilter = "all") {
   clearNode(container);
   if (!campaign) return;
+
+  if (sectionFilter === "all") {
+    const banner = renderReviewAlertBanner(campaign);
+    if (banner) container.appendChild(banner);
+  }
 
   const builders = {
     economics: () => renderUnitEconomicsSection(campaign, inputAssumptions),
@@ -1599,6 +2050,20 @@ function bindEvents() {
 
   $("fallbackExamplesBtn").addEventListener("click", () => {
     selectMainTab("tabCounty48113", false);
+  });
+
+  document.addEventListener("click", () => {
+    document.querySelectorAll(".bullet-tooltip-anchor.is-open").forEach((el) => {
+      el.classList.remove("is-open");
+    });
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      document.querySelectorAll(".bullet-tooltip-anchor.is-open").forEach((el) => {
+        el.classList.remove("is-open");
+      });
+    }
   });
 }
 

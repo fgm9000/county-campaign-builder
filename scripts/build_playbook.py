@@ -171,9 +171,7 @@ def _auto_fit_columns(ws: Any, min_width: int = 12, padding: int = 4) -> None:
             if value_str.startswith("="):
                 value_str = "$999.99"
             max_len = max(max_len, len(value_str))
-        ws.column_dimensions[get_column_letter(col_idx)].width = max(
-            min_width, max_len + padding
-        )
+        ws.column_dimensions[get_column_letter(col_idx)].width = max(min_width, max_len + padding)
 
 
 def _populate_summary_sheet(ws: Any, counties: tuple[CountyAssumption, ...]) -> None:
@@ -550,9 +548,7 @@ def build_playbook_markdown(
         vertical_config=motivated_seller,
     )
     comparison_summaries = [
-        _format_county_summary_line(
-            county_records[assumption.fips], assumption, motivated_seller
-        )
+        _format_county_summary_line(county_records[assumption.fips], assumption, motivated_seller)
         for assumption in DEMO_COUNTIES
     ]
     comparison_prompt = build_comparison_prompt(comparison_summaries)
@@ -664,7 +660,7 @@ def build_playbook_markdown(
         "---\n",
         "### Step 3 — Draft Google Responsive Search Ads & Landing Page Copy\n",
         (
-            f"Generate 3 headlines (`<= {AD_HEADLINE_MAX_CHARS}` chars), 2 descriptions "
+            f"Generate 5 to 6 headlines (`<= {AD_HEADLINE_MAX_CHARS}` chars), 3 to 4 descriptions "
             f"(`<= {AD_DESCRIPTION_MAX_CHARS}` chars), and the above-the-fold landing page block "
             "including the mandatory TCPA written-consent disclosure.\n"
         ),

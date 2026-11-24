@@ -9,7 +9,7 @@
 [![Tests](https://img.shields.io/badge/tests-140%20passing-brightgreen)](quality-baseline.json)
 [![License: PolyForm Noncommercial](https://img.shields.io/badge/license-PolyForm%20Noncommercial-blue)](LICENSE)
 
-**County-level lead generation campaign builder for motivated seller and roofing verticals.** Enter target U.S. counties (FIPS codes), the vertical, a lead bid, and CPC/conversion assumptions. The pipeline turns authoritative public county data (**NOAA Storm Events 2020–2024** and **U.S. Census ACS 2020–2024**) into an audited campaign package: grounded local triggers, 5 lead-qualification intake questions, Google Ads RSA copy (8 headlines, 3 descriptions), landing page above-the-fold copy, 3 speed-to-lead SMS messages, follow-up emails, deterministic auction unit economics, and an explicit human review list.
+**County-level lead generation campaign builder for motivated seller real estate acquisitions.** Enter target U.S. counties (FIPS codes), a lead bid, and CPC/conversion assumptions. The pipeline turns authoritative public county data (**NOAA Storm Events 2020–2024** and **U.S. Census ACS 2020–2024**) into an audited campaign package: grounded local triggers, 5 lead-qualification intake questions, Google Ads RSA copy (5 headlines, 3 descriptions), landing page above-the-fold copy, speed-to-lead SMS messages, follow-up emails, deterministic auction unit economics, and an explicit human review list.
 
 > Portfolio demo (POC), not a client product. The public playground uses pre-computed responses and illustrative CPC/CVR operator assumptions; live mode runs only with an access code.
 
@@ -72,7 +72,7 @@ flowchart LR
 
 - **Structured LLM split:** `claude-haiku-4-5` interprets county records into triggers and drafts qualification questions, SMS, and follow-up emails; `claude-sonnet-4-5` drafts Google Ads RSA headlines/descriptions and landing page above-the-fold copy. Every call uses structured output DTOs.
 - **Pre-aggregated county table (no runtime data APIs):** `scripts/build_county_table.py` (Polars) pre-computes **3,222 U.S. counties** (17 columns, `122,909` bytes) into `data/counties.parquet` from NOAA Storm Events (`2020–2024`), NWS zone-to-county mapping (`bp16ap26.dbx`), and U.S. Census ACS 5-year (`2020–2024`). Production never needs a Census API key or live NOAA downloads.
-- **Configuration-driven verticals:** `motivated_seller` and `roofing` run on the exact same graph and code — switching verticals swaps only `config/verticals.json` (trigger fields, required qualification topics, and copy rules).
+- **Configuration-driven verticals:** Phase 1 production focuses 100% on Motivated Seller (`motivated_seller`). The pipeline is configuration-driven via `config/verticals.json` — Phase 2 in the roadmap extends to Roofing & Home Services (`roofing`), with live claim evals and field testing pending.
 - **Explicit degradation:** If one county fails during fan-out, that county returns `status: "failed"` while sibling counties complete normally; if `compare_counties` LLM summarization fails, a deterministic ranking fallback orders counties by verdict and worst-case CPL.
 
 Details in [`docs/architecture.md`](docs/architecture.md).

@@ -163,10 +163,7 @@ def _validate_landing_page_fields(
         ("lp_headline", headline),
         ("lp_subheadline", subheadline),
         ("lp_cta_text", cta_text),
-        *[
-            (f"lp_bullet_{idx}", bullet)
-            for idx, bullet in enumerate(bullet_points, start=1)
-        ],
+        *[(f"lp_bullet_{idx}", bullet) for idx, bullet in enumerate(bullet_points, start=1)],
     ]
     for item_id, value in named_fields:
         violations = find_fair_housing_violations(value, compliance)
@@ -591,8 +588,7 @@ def _build_human_review_list(
             items.append(
                 HumanReviewItem(
                     item=name,
-                    reason=description.rejection_reason
-                    or f"Asset status is {description.status}.",
+                    reason=description.rejection_reason or f"Asset status is {description.status}.",
                     rule_id=f"asset-{description.status}",
                 )
             )
@@ -611,10 +607,7 @@ def _build_human_review_list(
             ("lp_headline", lp.headline),
             ("lp_subheadline", lp.subheadline),
             ("lp_cta_text", lp.cta_text),
-            *[
-                (f"lp_bullet_{idx}", bullet)
-                for idx, bullet in enumerate(lp.bullet_points, start=1)
-            ],
+            *[(f"lp_bullet_{idx}", bullet) for idx, bullet in enumerate(lp.bullet_points, start=1)],
             ("lp_consent_disclosure", lp.consent_disclosure),
         ]
         for field_name, field_text in lp_fields:
