@@ -16,7 +16,7 @@ from county_campaign_builder.graph import (
 from county_campaign_builder.llm import (
     COOK_FIPS,
     DALLAS_FIPS,
-    DALLAS_TRAP_HAIL_VALUE,
+    DALLAS_TRAP_MEDIAN_HOME_VALUE,
     PINELLAS_FIPS,
 )
 from county_campaign_builder.models import (
@@ -129,10 +129,10 @@ def test_canonical_campaigns_pass_all_deterministic_metrics(
     assert campaign.unit_economics.verdict == case.expected_verdict
 
     if case.expects_dallas_trap:
-        hail_corrections = [c for c in campaign.corrections if c.field == "hail_reports_1in"]
-        assert len(hail_corrections) == 1
-        assert hail_corrections[0].llm_value == DALLAS_TRAP_HAIL_VALUE
-        assert hail_corrections[0].source_value == 102
+        median_corrections = [c for c in campaign.corrections if c.field == "median_home_value_usd"]
+        assert len(median_corrections) == 1
+        assert median_corrections[0].llm_value == DALLAS_TRAP_MEDIAN_HOME_VALUE
+        assert median_corrections[0].source_value == 303000
 
     metrics = deterministic_metrics(case.input_data, deps)
     assert_test(to_test_case(case.input_data, campaign), metrics, run_async=False)
@@ -147,26 +147,26 @@ def test_numeric_accuracy_metric_detects_divergent_and_unrecorded_corrections(
     metric = NumericAccuracyMetric(input_data, deps)
 
     divergent_fact = NumericFact(
-        claim="999 hail reports",
-        field="hail_reports_1in",
-        value=999,
-        source="NOAA Storm Events 2020-2024",
+        claim="Median home value is $999,999 in Dallas County, Texas",
+        field="median_home_value_usd",
+        value=999999,
+        source="U.S. Census Bureau ACS 5-Year Estimates (Table B25077)",
         status="verified",
     )
     bad_verified = campaign.model_copy(update={"facts": [divergent_fact]})
     score = metric.measure(to_test_case(input_data, bad_verified))
     assert score == 0.0
     assert not metric.is_successful()
-    assert metric.reason is not None and "!= county record 102" in metric.reason
+    assert metric.reason is not None and "!= county record 303000" in metric.reason
 
     corrected_without_record = campaign.model_copy(
         update={
             "facts": [
                 NumericFact(
-                    claim="102 hail reports",
-                    field="hail_reports_1in",
-                    value=102,
-                    source="NOAA Storm Events 2020-2024",
+                    claim="Median home value is $303,000 in Dallas County, Texas",
+                    field="median_home_value_usd",
+                    value=303000,
+                    source="U.S. Census Bureau ACS 5-Year Estimates (Table B25077)",
                     status="corrected",
                 )
             ],
@@ -378,8 +378,8 @@ def test_numeric_correction_dataclass_roundtrip_check(
         update={
             "corrections": [
                 NumericCorrection(
-                    field="hail_reports_1in",
-                    llm_value=120,
+                    field="median_home_value_usd",
+                    llm_value=350000,
                     source_value=999,
                     reason="Mismatched source value",
                 )

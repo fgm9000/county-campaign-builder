@@ -42,6 +42,53 @@
     <p id="liveAnnouncer" class="sr-only" role="status" aria-live="polite"></p>
     <p id="examplesError" class="alert-banner alert-error" role="alert" hidden></p>
 
+    <!-- 0. EXECUTIVE CONCEPT & ARCHITECTURE HERO -->
+    <section id="demoHeroSection" class="demo-hero" aria-labelledby="heroTitle">
+      <div class="demo-hero-inner">
+        <div class="demo-hero-badge-row">
+          <span class="hero-badge hero-badge-primary" data-i18n="heroBadgeArchitecture">Production AI Engine Architecture</span>
+          <span class="hero-badge hero-badge-secondary" data-i18n="heroBadgeStack">LangGraph + Parquet + Census ACS + NOAA</span>
+        </div>
+        <h2 id="heroTitle" class="demo-hero-title" data-i18n="heroTitle">
+          Why Pure LLMs Fail in Paid Acquisition — And How Code Makes Them Production-Ready
+        </h2>
+        <p class="demo-hero-lead" data-i18n="heroLead">
+          In high-stakes paid advertising, pure LLMs hallucinate financial metrics, blow past ad character limits, and violate regulatory disclosures. This demo showcases a deterministic, audit-first orchestration system: <strong>Code owns the math, data integrity, and compliance; AI owns copy creativity and audience persuasion.</strong>
+        </p>
+
+        <div class="demo-hero-pillars">
+          <div class="pillar-card">
+            <div class="pillar-icon">🛡️</div>
+            <h3 class="pillar-title" data-i18n="pillar1Title">Anti-Hallucination Firewall</h3>
+            <p class="pillar-text" data-i18n="pillar1Text">
+              Zero tolerance for invented numbers. LLM claims are cross-checked against local Parquet Census ACS tables. Mismatches are automatically reconciled and logged to an audit trail.
+            </p>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-icon">📊</div>
+            <h3 class="pillar-title" data-i18n="pillar2Title">Deterministic Auction Math</h3>
+            <p class="pillar-text" data-i18n="pillar2Text">
+              Unit economics (target CPL, max CPC threshold, traffic-light go/no-go verdicts) are 100% computed in Python with float precision — never delegated to a probabilistic model.
+            </p>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-icon">🎯</div>
+            <h3 class="pillar-title" data-i18n="pillar3Title">Fact-Grounded Persuasion</h3>
+            <p class="pillar-text" data-i18n="pillar3Text">
+              No generic AI fluff. Messaging is anchored in real local pressures—aging properties, deferred maintenance, holding costs, and storm damage. It converts motivated sellers by solving concrete financial burdens.
+            </p>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-icon">⚖️</div>
+            <h3 class="pillar-title" data-i18n="pillar4Title">Deterministic Compliance</h3>
+            <p class="pillar-text" data-i18n="pillar4Text">
+              Deterministic regex engine enforces Fair Housing Act rules, TCPA SMS disclosures, Google Ads character counts (30/90), and qualification question logic with 100% test coverage.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- 1. THE 30-SECOND RULE (ABOVE THE FOLD) -->
     <section id="thirtySecondSection" class="above-fold" aria-labelledby="thirtySecondHeading">
       <div class="section-kicker-row">
@@ -95,19 +142,19 @@
 
           <div id="correctionBox" class="correction-box">
             <p class="correction-county" id="correctionCounty">Dallas County, Texas (FIPS 48113)</p>
-            <p class="correction-summary-text" id="correctionHeadline">LLM generated 120 hail reports → NOAA official source is 102: corrected and audited</p>
+            <p class="correction-summary-text" id="correctionHeadline">LLM generated $350,000 median home value → Census official source is $303,000: corrected and audited</p>
 
             <div class="diff-grid">
               <div class="diff-card diff-wrong">
                 <span class="diff-label" data-i18n="llmGeneratedLabel">LLM Generated</span>
-                <span class="diff-value" id="correctionLlmVal">120</span>
-                <span class="diff-meta" id="correctionFieldLabel">hail_reports_1in</span>
+                <span class="diff-value" id="correctionLlmVal">$350,000</span>
+                <span class="diff-meta" id="correctionFieldLabel">median_home_value_usd</span>
               </div>
               <div class="diff-arrow" aria-hidden="true">→</div>
               <div class="diff-card diff-right">
                 <span class="diff-label" data-i18n="officialSourceLabel">Official Source</span>
-                <span class="diff-value" id="correctionSourceVal">102</span>
-                <span class="diff-meta" id="correctionSourceName">NOAA Storm Events 2020-2024</span>
+                <span class="diff-value" id="correctionSourceVal">$303,000</span>
+                <span class="diff-meta" id="correctionSourceName">U.S. Census Bureau ACS (Table B25077)</span>
               </div>
             </div>
 
@@ -215,7 +262,7 @@
               <label for="liveVertical" class="field-label" data-i18n="fVertical">Vertical</label>
               <select id="liveVertical" class="field-input">
                 <option value="motivated_seller" data-i18n="vMotivatedSeller">Motivated Seller (Cash Offer)</option>
-                <option value="roofing" data-i18n="vRoofing">Roofing (Roof Replacement)</option>
+                <option value="roofing" data-i18n="vRoofing" disabled>Roofing (Phase 2 Roadmap — Tests Pending)</option>
               </select>
             </div>
 
