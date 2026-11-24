@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
 from collections.abc import Iterable, Mapping, Sequence
 from contextlib import AbstractContextManager
 from typing import Final, Protocol
@@ -249,6 +250,9 @@ def run_smoke_tests(
         summary.append(
             f"[ok] /v1/campaigns -> 200 (fips={campaign.get('county_fips')}, verdict={verdict})"
         )
+
+        if client is None:
+            time.sleep(2.0)
 
         events = check_campaign_stream(active_client, url, request_payload, headers)
         summary.append(f"[ok] /v1/campaigns/stream -> 200 ({len(events)} events, ended with done)")

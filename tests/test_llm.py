@@ -16,7 +16,7 @@ from county_campaign_builder.domain import QuestionTopic, VerticalConfig, load_v
 from county_campaign_builder.llm import (
     COOK_FIPS,
     DALLAS_FIPS,
-    DALLAS_TRAP_HAIL_VALUE,
+    DALLAS_TRAP_MEDIAN_HOME_VALUE,
     HAIKU_MODEL,
     PINELLAS_FIPS,
     SONNET_MODEL,
@@ -211,7 +211,10 @@ def test_llm_helpers_edge_cases() -> None:
     assert trimmed_sms.endswith("... Reply STOP to opt out.")
 
     assert _extract_json_text('```json\n{"a": 1}\n```') == '{"a": 1}'
+    assert _extract_json_text('Some text\n```json\n{"a": 1}\n```\nMore text') == '{"a": 1}'
+    assert _extract_json_text('Leading text {"a": 1} trailing text') == '{"a": 1}'
     assert _extract_json_text('{"a": 1}') == '{"a": 1}'
+    assert _extract_json_text("plain text without braces") == "plain text without braces"
 
 
 def test_fake_client_dallas_trap_and_grounded() -> None:
@@ -224,20 +227,20 @@ def test_fake_client_dallas_trap_and_grounded() -> None:
     client_trap = FakeModelClient(plant_trap=True)
     trap_out = client_trap.interpret_triggers(dallas, motivated_seller)
     assert len(trap_out.triggers) == 4
-    hail_items = [item for item in trap_out.triggers if item.field == "hail_reports_1in"]
-    assert len(hail_items) == 1
-    assert hail_items[0].value == DALLAS_TRAP_HAIL_VALUE
-    assert dallas.hail_reports_1in == 102
+    median_items = [item for item in trap_out.triggers if item.field == "median_home_value_usd"]
+    assert len(median_items) == 1
+    assert median_items[0].value == DALLAS_TRAP_MEDIAN_HOME_VALUE
+    assert dallas.median_home_value_usd == 303000
 
-    # When roofing has hail_reports_1in first in trigger_fields, seen_fields skips duplicate.
+    # In roofing with trap, median_home_value_usd is trapped as well.
     trap_roofing = client_trap.interpret_triggers(dallas, roofing)
-    assert sum(1 for item in trap_roofing.triggers if item.field == "hail_reports_1in") == 1
+    assert sum(1 for item in trap_roofing.triggers if item.field == "median_home_value_usd") == 1
 
     client_clean = FakeModelClient(plant_trap=False)
-    clean_out = client_clean.interpret_triggers(dallas, roofing)
-    clean_hail = [item for item in clean_out.triggers if item.field == "hail_reports_1in"]
-    assert len(clean_hail) == 1
-    assert clean_hail[0].value == 102
+    clean_out = client_clean.interpret_triggers(dallas, motivated_seller)
+    clean_median = [item for item in clean_out.triggers if item.field == "median_home_value_usd"]
+    assert len(clean_median) == 1
+    assert clean_median[0].value == 303000
 
 
 def test_fake_client_pinellas_cook_and_arbitrary_county() -> None:
@@ -298,11 +301,17 @@ def test_fake_client_qualification_ads_followup_regen_and_compare() -> None:
     assert "custom topic" in qual_custom.questions[0].question
 
     ads_ms = client.draft_ads_and_lp("Dallas County, Texas", motivated_seller, facts)
+    assert len(ads_ms.headlines) == 5
+    assert len(ads_ms.descriptions) == 3
+    assert len(ads_ms.bullet_points) == 5
     assert all(len(h) <= AD_HEADLINE_MAX_CHARS for h in ads_ms.headlines)
     assert all(len(d) <= AD_DESCRIPTION_MAX_CHARS for d in ads_ms.descriptions)
     assert "automated" in ads_ms.consent_disclosure.lower()
 
     ads_roofing = client.draft_ads_and_lp("Dallas County, Texas", roofing, [])
+    assert len(ads_roofing.headlines) == 5
+    assert len(ads_roofing.descriptions) == 3
+    assert len(ads_roofing.bullet_points) == 5
     assert all(len(h) <= AD_HEADLINE_MAX_CHARS for h in ads_roofing.headlines)
     assert all(len(d) <= AD_DESCRIPTION_MAX_CHARS for d in ads_roofing.descriptions)
     assert "Roof" in ads_roofing.lp_headline
@@ -534,3 +543,19 @@ def test_anthropic_client_empty_and_invalid_json_raises_llm_output_error(
     monkeypatch.setattr(sdk_client.messages, "create", return_wrong_schema)
     with pytest.raises(LlmOutputError, match="failed validation"):
         client.compare_counties(["Dallas"])
+
+    # Test retry on validation error where second attempt succeeds
+    attempts = 0
+
+    def retry_then_succeed(**kwargs: Any) -> Message:
+        nonlocal attempts
+        attempts += 1
+        _ = kwargs
+        if attempts == 1:
+            return _make_message("{broken json")
+        return _make_message('{"recommended_county_fips": "48113", "summary": "Dallas"}')
+
+    monkeypatch.setattr(sdk_client.messages, "create", retry_then_succeed)
+    result = client.compare_counties(["Dallas"])
+    assert result.recommended_county_fips == "48113"
+    assert attempts == 2

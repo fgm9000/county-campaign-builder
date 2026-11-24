@@ -110,11 +110,7 @@ def test_summary_sheet_inputs_formulas_formatting_and_verdicts() -> None:
 
         cf_rules = list(ws.conditional_formatting)
         assert len(cf_rules) >= 1
-        formulas_text = " ".join(
-            str(rule.formula)
-            for cf in cf_rules
-            for rule in cf.rules
-        )
+        formulas_text = " ".join(str(rule.formula) for cf in cf_rules for rule in cf.rules)
         for token in ('"GREEN"', '"YELLOW"', '"RED"'):
             assert token in formulas_text
     finally:

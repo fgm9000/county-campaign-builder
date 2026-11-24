@@ -30,7 +30,7 @@ from county_campaign_builder.graph import (
 from county_campaign_builder.llm import (
     COOK_FIPS,
     DALLAS_FIPS,
-    DALLAS_TRAP_HAIL_VALUE,
+    DALLAS_TRAP_MEDIAN_HOME_VALUE,
     PINELLAS_FIPS,
     AdsAndLandingPageOutput,
     AnthropicModelClient,
@@ -221,16 +221,16 @@ def test_run_campaign_dallas_catches_planted_trap_and_computes_economics() -> No
     assert campaign.county_fips == DALLAS_FIPS
     assert campaign.county_name == "Dallas County, Texas"
 
-    # Dallas planted trap (120 against authoritative 102) must be caught and corrected.
+    # Dallas planted trap ($350,000 against authoritative $303,000) must be caught and corrected.
     assert len(campaign.corrections) == 1
     correction = campaign.corrections[0]
-    assert correction.field == "hail_reports_1in"
-    assert correction.llm_value == DALLAS_TRAP_HAIL_VALUE
-    assert correction.source_value == 102
+    assert correction.field == "median_home_value_usd"
+    assert correction.llm_value == DALLAS_TRAP_MEDIAN_HOME_VALUE
+    assert correction.source_value == 303000
 
-    hail_fact = next(f for f in campaign.facts if f.field == "hail_reports_1in")
-    assert hail_fact.status == "corrected"
-    assert hail_fact.value == 102
+    median_fact = next(f for f in campaign.facts if f.field == "median_home_value_usd")
+    assert median_fact.status == "corrected"
+    assert median_fact.value == 303000
     assert all(f.status in {"verified", "corrected"} for f in campaign.facts)
 
     assert campaign.unit_economics.verdict == "green"
@@ -240,9 +240,9 @@ def test_run_campaign_dallas_catches_planted_trap_and_computes_economics() -> No
 
     assert len(campaign.assets.questions) == 5
     assert all(q.status == "approved" for q in campaign.assets.questions)
-    assert len(campaign.assets.ad_copy.headlines) == 3
+    assert len(campaign.assets.ad_copy.headlines) == 5
     assert all(h.status == "approved" for h in campaign.assets.ad_copy.headlines)
-    assert len(campaign.assets.ad_copy.descriptions) == 2
+    assert len(campaign.assets.ad_copy.descriptions) == 3
     assert all(d.status == "approved" for d in campaign.assets.ad_copy.descriptions)
     assert campaign.assets.landing_page is not None
     assert campaign.assets.landing_page.status == "approved"
@@ -640,9 +640,7 @@ def test_regeneration_and_human_review_helpers_edge_branches() -> None:
         missing_topics=[],
         compliance=deps.compliance_config,
     )
-    assert any(
-        item.item == "question_1" and item.rule_id == "asset-rejected" for item in q_review
-    )
+    assert any(item.item == "question_1" and item.rule_id == "asset-rejected" for item in q_review)
 
 
 def _build_approved_lp(brand_name: str) -> LandingPageTop:
