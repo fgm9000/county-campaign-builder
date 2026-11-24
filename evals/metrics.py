@@ -53,7 +53,8 @@ class DeterministicMetric(BaseMetric):
         self.include_reason = True
 
     @abstractmethod
-    def problems(self, campaign: CountyCampaign) -> list[str]: ...
+    def problems(self, campaign: CountyCampaign) -> list[str]:
+        """Return validation failure reasons for a generated campaign, or empty list."""
 
     def measure(self, test_case: LLMTestCase, *args: object, **kwargs: object) -> float:
         """Validate the serialized CountyCampaign, record problems, and return 1.0 or 0.0."""

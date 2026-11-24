@@ -38,8 +38,6 @@ PINELLAS_FIPS: Final[str] = "12103"
 COOK_FIPS: Final[str] = "17031"
 DALLAS_TRAP_MEDIAN_HOME_VALUE: Final[int] = 350_000
 
-_JSON_FENCE_RE = re.compile(r"^```(?:json)?\s*\n?(.*?)\n?```$", re.DOTALL | re.IGNORECASE)
-
 
 # ---------------------------------------------------------------------------
 # Exceptions
@@ -146,28 +144,32 @@ class ModelClient(Protocol):
         self,
         county: CountyRecord,
         vertical_config: VerticalConfig,
-    ) -> TriggerInterpretationOutput: ...
+    ) -> TriggerInterpretationOutput:
+        """Interpret raw Census and NOAA metrics into grounded market triggers."""
 
     def draft_qualification(
         self,
         county_name: str,
         vertical_config: VerticalConfig,
         verified_facts: Sequence[NumericFact],
-    ) -> QualificationQuestionsOutput: ...
+    ) -> QualificationQuestionsOutput:
+        """Draft intake qualification questions anchored on verified county facts."""
 
     def draft_ads_and_lp(
         self,
         county_name: str,
         vertical_config: VerticalConfig,
         verified_facts: Sequence[NumericFact],
-    ) -> AdsAndLandingPageOutput: ...
+    ) -> AdsAndLandingPageOutput:
+        """Draft Google RSA ads and above-the-fold landing page copy."""
 
     def draft_followup(
         self,
         county_name: str,
         brand_name: str,
         verified_facts: Sequence[NumericFact],
-    ) -> FollowupOutput: ...
+    ) -> FollowupOutput:
+        """Draft SMS and email follow-up sequences grounded in verified facts."""
 
     def regenerate_assets(
         self,
@@ -175,12 +177,14 @@ class ModelClient(Protocol):
         brand_name: str,
         failed_items: Sequence[tuple[str, str]],
         vertical_config: VerticalConfig,
-    ) -> RegenerateOutput: ...
+    ) -> RegenerateOutput:
+        """Rewrite only compliance- or length-failed copy items."""
 
     def compare_counties(
         self,
         campaign_summaries: Sequence[str],
-    ) -> ComparisonOutput: ...
+    ) -> ComparisonOutput:
+        """Compare built county campaigns and recommend the primary launch market."""
 
 
 # ---------------------------------------------------------------------------

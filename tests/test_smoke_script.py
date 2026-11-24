@@ -29,7 +29,8 @@ class _SmokeModule(Protocol):
     DEFAULT_COUNTY_FIPS: str
     SmokeTestError: type[RuntimeError]
 
-    def parse_sse_events(self, lines: Iterable[str]) -> list[tuple[str, dict[str, object]]]: ...
+    def parse_sse_events(self, lines: Iterable[str]) -> list[tuple[str, dict[str, object]]]:
+        """Parse raw Server-Sent Events lines into event-name and payload tuples."""
 
     def run_smoke_tests(
         self,
@@ -40,9 +41,11 @@ class _SmokeModule(Protocol):
         live_mode: bool = True,
         client: httpx.Client | TestClient | None = None,
         payload: Mapping[str, object] | None = None,
-    ) -> list[str]: ...
+    ) -> list[str]:
+        """Execute post-deploy health and live SSE smoke assertions."""
 
-    def main(self, argv: Sequence[str] | None = None) -> int: ...
+    def main(self, argv: Sequence[str] | None = None) -> int:
+        """CLI entrypoint returning process exit status."""
 
 
 def _load_smoke_module() -> _SmokeModule:
