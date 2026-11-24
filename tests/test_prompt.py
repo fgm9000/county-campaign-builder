@@ -106,9 +106,7 @@ def test_build_trigger_interpretation_prompt_withheld_values_and_empty_fields() 
         label="Custom",
         goal="Test empty trigger fields",
         trigger_fields=[],
-        required_question_topics=[
-            QuestionTopic(topic="timeline", why="Timing", keywords=["when"])
-        ],
+        required_question_topics=[QuestionTopic(topic="timeline", why="Timing", keywords=["when"])],
         brand_name="Test Brand",
     )
     empty_prompt = build_trigger_interpretation_prompt(county, empty_fields_vertical)

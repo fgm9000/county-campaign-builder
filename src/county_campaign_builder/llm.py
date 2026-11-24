@@ -36,7 +36,7 @@ DEFAULT_MAX_TOKENS: Final[int] = 2048
 DALLAS_FIPS: Final[str] = "48113"
 PINELLAS_FIPS: Final[str] = "12103"
 COOK_FIPS: Final[str] = "17031"
-DALLAS_TRAP_HAIL_VALUE: Final[int] = 120
+DALLAS_TRAP_MEDIAN_HOME_VALUE: Final[int] = 350_000
 
 _JSON_FENCE_RE = re.compile(r"^```(?:json)?\s*\n?(.*?)\n?```$", re.DOTALL | re.IGNORECASE)
 
@@ -206,27 +206,19 @@ def _fit_text(candidate: str, fallback: str, max_chars: int) -> str:
 
 def _format_trigger_claim(field: str, value: float | int, county: CountyRecord) -> str:
     templates: dict[str, str] = {
-        "hail_reports_1in": (
-            f"{value} hail reports of 1 inch or larger in {county.years_covered}"
-        ),
+        "hail_reports_1in": (f"{value} hail reports of 1 inch or larger in {county.years_covered}"),
         "severe_wind_reports": (
             f"{value} severe thunderstorm wind reports (50+ kt) in {county.years_covered}"
         ),
         "tornado_events": f"{value} tornado events recorded in {county.years_covered}",
         "tropical_events": f"{value} tropical storm or hurricane events in {county.years_covered}",
-        "median_year_built": (
-            f"Median home construction year is {value} in {county.county_name}"
-        ),
+        "median_year_built": (f"Median home construction year is {value} in {county.county_name}"),
         "owner_occupied_pct": (
             f"{value}% of households are owner-occupied in {county.county_name}"
         ),
         "vacancy_pct": f"{value}% housing vacancy rate in {county.county_name}",
-        "median_home_value_usd": (
-            f"Median home value is ${int(value):,} in {county.county_name}"
-        ),
-        "owner_long_tenure_pct": (
-            f"{value}% of owner-occupied households moved in before 2000"
-        ),
+        "median_home_value_usd": (f"Median home value is ${int(value):,} in {county.county_name}"),
+        "owner_long_tenure_pct": (f"{value}% of owner-occupied households moved in before 2000"),
         "free_and_clear_pct": f"{value}% of owner-occupied homes are owned free and clear",
     }
     return templates.get(field, f"{field.replace('_', ' ')} is {value} in {county.county_name}")
@@ -305,9 +297,17 @@ def _build_compliant_sms(brand_name: str, body: str) -> str:
 
 def _extract_json_text(raw_text: str) -> str:
     stripped = raw_text.strip()
-    match = _JSON_FENCE_RE.match(stripped)
-    if match is not None:
-        return match.group(1).strip()
+    fence_pattern = re.search(
+        r"```(?:json)?\s*\n?(.*?)\n?```",
+        stripped,
+        re.DOTALL | re.IGNORECASE,
+    )
+    if fence_pattern is not None:
+        return fence_pattern.group(1).strip()
+    start = stripped.find("{")
+    end = stripped.rfind("}")
+    if start != -1 and end != -1 and end > start:
+        return stripped[start : end + 1]
     return stripped
 
 
@@ -315,8 +315,9 @@ def _build_json_system_prompt(schema: dict[str, object]) -> str:
     schema_json = json.dumps(schema, ensure_ascii=True)
     return (
         "You must respond with ONLY a single valid JSON object and no surrounding prose or "
-        "markdown fences. The JSON object MUST conform strictly to this JSON Schema:\n"
-        f"{schema_json}"
+        "markdown fences. Never use unescaped double quotes inside string values (use single "
+        "quotes or escape them with a backslash). The JSON object MUST conform strictly to this "
+        f"JSON Schema:\n{schema_json}"
     )
 
 
@@ -350,15 +351,15 @@ class FakeModelClient:
             triggers.append(
                 TriggerItem(
                     claim=(
-                        f"{DALLAS_TRAP_HAIL_VALUE} hail reports of 1 inch or larger in "
-                        f"{county.years_covered}"
+                        f"Median home value is ${DALLAS_TRAP_MEDIAN_HOME_VALUE:,} in "
+                        f"{county.county_name}"
                     ),
-                    field="hail_reports_1in",
-                    value=DALLAS_TRAP_HAIL_VALUE,
-                    source=NOAA_SOURCE,
+                    field="median_home_value_usd",
+                    value=DALLAS_TRAP_MEDIAN_HOME_VALUE,
+                    source=CENSUS_SOURCE,
                 )
             )
-            seen_fields.add("hail_reports_1in")
+            seen_fields.add("median_home_value_usd")
 
         preferred_order = self._preferred_fields_for_county(county.fips, vertical_config)
         for field in preferred_order:
@@ -375,35 +376,19 @@ class FakeModelClient:
 
     @staticmethod
     def _preferred_fields_for_county(fips: str, vertical_config: VerticalConfig) -> list[str]:
-        if fips == PINELLAS_FIPS:
+        if fips in {PINELLAS_FIPS, COOK_FIPS, DALLAS_FIPS}:
             priority = [
-                "tropical_events",
+                "median_home_value_usd",
                 "free_and_clear_pct",
-                "owner_occupied_pct",
+                "owner_long_tenure_pct",
                 "vacancy_pct",
-                "median_year_built",
-            ]
-        elif fips == COOK_FIPS:
-            priority = [
-                "severe_wind_reports",
-                "hail_reports_1in",
-                "median_year_built",
-                "owner_long_tenure_pct",
-                "free_and_clear_pct",
-            ]
-        elif fips == DALLAS_FIPS:
-            priority = [
-                "hail_reports_1in",
-                "severe_wind_reports",
-                "free_and_clear_pct",
-                "owner_long_tenure_pct",
                 "median_year_built",
             ]
         else:
             priority = []
 
         ordered: list[str] = []
-        for field in [*vertical_config.trigger_fields, *priority]:
+        for field in [*priority, *vertical_config.trigger_fields]:
             if field not in ordered:
                 ordered.append(field)
         return ordered
@@ -440,8 +425,18 @@ class FakeModelClient:
                     AD_HEADLINE_MAX_CHARS,
                 ),
                 _fit_text(
-                    "Storm Roof Inspections",
-                    "Storm Roof Inspections",
+                    "Storm & Hail Roof Replace",
+                    "Storm & Hail Roof Replace",
+                    AD_HEADLINE_MAX_CHARS,
+                ),
+                _fit_text(
+                    "Free Roof Assessment Today",
+                    "Roof Assessment Today",
+                    AD_HEADLINE_MAX_CHARS,
+                ),
+                _fit_text(
+                    "Insurance Claim Assistance",
+                    "Insurance Claim Assistance",
                     AD_HEADLINE_MAX_CHARS,
                 ),
                 _fit_text(
@@ -458,8 +453,13 @@ class FakeModelClient:
                     AD_DESCRIPTION_MAX_CHARS,
                 ),
                 _fit_text(
-                    "Full roof replacements built for severe hail and wind weather conditions.",
+                    "Full roof replacements built for severe hail and storm wind conditions.",
                     "Full roof replacements built for severe hail and wind weather.",
+                    AD_DESCRIPTION_MAX_CHARS,
+                ),
+                _fit_text(
+                    "Direct insurance claims support and documentation with certified specialists.",
+                    "Direct insurance claims support and documentation with certified specialists.",
                     AD_DESCRIPTION_MAX_CHARS,
                 ),
             ]
@@ -469,6 +469,13 @@ class FakeModelClient:
                 f"in {county_name}."
             )
             cta_text = "Request Your Roof Assessment"
+            bullet_points = [
+                "Full roof replacement engineered for severe storm and hail resilience.",
+                "Zero-obligation inspection with complete photographic damage evidence.",
+                "Direct insurance claims assistance and adjuster documentation support.",
+                "Address aging shingles before leaks cause costly structural wood rot.",
+                f"Licensed, bonded, and insured specialists serving {county_name}.",
+            ]
         else:
             headlines = [
                 _fit_text(
@@ -477,13 +484,23 @@ class FakeModelClient:
                     AD_HEADLINE_MAX_CHARS,
                 ),
                 _fit_text(
+                    "No Costly Repairs Needed",
+                    "No Costly Repairs Needed",
+                    AD_HEADLINE_MAX_CHARS,
+                ),
+                _fit_text(
                     "Fair Cash Offer For Owners",
                     "Fair Cash Offer For Owners",
                     AD_HEADLINE_MAX_CHARS,
                 ),
                 _fit_text(
-                    "Sell Without Repairs Needed",
-                    "Sell Without Repairs Needed",
+                    "Skip Agent Fees & Delays",
+                    "Skip Agent Fees & Delays",
+                    AD_HEADLINE_MAX_CHARS,
+                ),
+                _fit_text(
+                    "Sell On Your Own Timeline",
+                    "Sell On Your Own Timeline",
                     AD_HEADLINE_MAX_CHARS,
                 ),
             ]
@@ -494,8 +511,13 @@ class FakeModelClient:
                     AD_DESCRIPTION_MAX_CHARS,
                 ),
                 _fit_text(
-                    "Skip cleanouts and showings. Review an offer on your preferred timeline.",
-                    "Skip cleanouts and showings. Review an offer on your timeline.",
+                    "Skip costly repairs, cleanouts, and agent fees. Sell on your exact timeline.",
+                    "Skip costly repairs, cleanouts, and agent fees. Sell on your timeline.",
+                    AD_DESCRIPTION_MAX_CHARS,
+                ),
+                _fit_text(
+                    "Avoid holding costs and inspection delays with a direct local cash offer.",
+                    "Avoid holding costs and inspection delays with a direct local cash offer.",
                     AD_DESCRIPTION_MAX_CHARS,
                 ),
             ]
@@ -505,14 +527,13 @@ class FakeModelClient:
                 "without listing."
             )
             cta_text = "Get My Property Review"
-
-        fact_bullets = [fact.claim for fact in verified_facts[:2]]
-        default_bullets = [
-            f"Tailored local intake for homeowners across {county_name}.",
-            "Transparent evaluation with clear next steps before you commit.",
-            "Direct communication with a dedicated local specialist.",
-        ]
-        bullet_points = [*fact_bullets, *default_bullets][:4]
+            bullet_points = [
+                "Sell 100% as-is — no repairs, cleaning, or staging required.",
+                "Skip expensive updates — avoid out-of-pocket costs on aging roofs or plumbing.",
+                "Zero agent commissions, hidden fees, or closing cost surprises.",
+                "Flexible closing timeline on your schedule (close on your preferred date).",
+                f"Direct cash offer review with a dedicated {county_name} specialist.",
+            ]
 
         consent_disclosure = (
             f"By submitting this form, you agree to receive automated marketing calls and "
@@ -538,37 +559,42 @@ class FakeModelClient:
     ) -> FollowupOutput:
         self._raise_if_error()
         short = _short_county_name(county_name)
-        lead_fact = verified_facts[0].claim if verified_facts else f"your {short} property"
+        _ = verified_facts
 
         sms_1 = _build_compliant_sms(
             brand_name,
-            f"Thanks for contacting us about your {short} home. When can we connect?",
+            f"Hi! We received your request for an as-is cash offer in {short}. When can we chat?",
         )
         sms_2 = _build_compliant_sms(
             brand_name,
-            f"Following up on your {short} inquiry. Share a good time for a brief call.",
+            f"Still looking to sell your {short} house as-is? Reply with your timeline!",
         )
 
         emails = [
             EmailItem(
-                subject=f"Next steps for your {county_name} property inquiry",
+                subject=f"Your as-is property review for {county_name}",
                 body=(
                     f"Hello,\n\n"
-                    f"Thank you for reaching out to {brand_name} regarding your property in "
-                    f"{county_name}.\n\n"
-                    f"Local context we track in {county_name}: {lead_fact}.\n\n"
-                    f"Reply to this email with a convenient time for a brief conversation so we "
-                    f"can review your goals and timeline.\n\n"
+                    f"Thank you for requesting an as-is review for your {short} property with "
+                    f"{brand_name} in {county_name}.\n\n"
+                    f"We specialize in straightforward as-is home purchases across {short}:\n"
+                    f"• 100% As-Is: No out-of-pocket repairs or cleaning required.\n"
+                    f"• Zero Commissions: No 6% agent fees or hidden closing deductions.\n"
+                    f"• Certainty & Timeline: Close on your preferred schedule.\n\n"
+                    f"Reply directly to this email with a convenient time for a brief 5-minute\n"
+                    f"call so we can review your property details and prepare your cash offer.\n\n"
                     f"Best regards,\n{brand_name}"
                 ),
             ),
             EmailItem(
-                subject=f"Checking in from {brand_name} ({short})",
+                subject=f"Skip repair costs and delays on your {short} home ({brand_name})",
                 body=(
                     f"Hello,\n\n"
-                    f"We wanted to check in on your recent inquiry with {brand_name} for "
-                    f"{county_name}. If you still have questions or would like to discuss next "
-                    f"steps, simply reply here at your convenience.\n\n"
+                    f"We wanted to follow up on your recent cash offer inquiry with {brand_name}\n"
+                    f"for {county_name}.\n\n"
+                    f"If you want to sell without retail open houses, bank financing delays,\n"
+                    f"or spending money on deferred repairs, we are ready to help.\n\n"
+                    f"There is zero obligation. Reply here or share the best number to connect.\n\n"
                     f"Best regards,\n{brand_name}"
                 ),
             ),
@@ -675,7 +701,9 @@ class AnthropicModelClient:
         sonnet_model: str = SONNET_MODEL,
         max_tokens: int = DEFAULT_MAX_TOKENS,
     ) -> None:
-        self._client = client if client is not None else anthropic.Anthropic(api_key=api_key)
+        self._client = (
+            client if client is not None else anthropic.Anthropic(api_key=api_key, max_retries=4)
+        )
         self._haiku_model = haiku_model
         self._sonnet_model = sonnet_model
         self._max_tokens = max_tokens
@@ -688,32 +716,35 @@ class AnthropicModelClient:
         response_model: type[OutputT],
     ) -> OutputT:
         system_prompt = _build_json_system_prompt(response_model.model_json_schema())
-        try:
-            message = self._client.messages.create(
-                model=model,
-                max_tokens=self._max_tokens,
-                system=system_prompt,
-                messages=[{"role": "user", "content": prompt}],
-            )
-        except (anthropic.APIError, httpx.HTTPError, OSError, TimeoutError) as exc:
-            raise LlmError(f"Anthropic API call failed for model '{model}': {exc}") from exc
+        last_error: Exception | None = None
+        for _ in range(2):
+            try:
+                message = self._client.messages.create(
+                    model=model,
+                    max_tokens=self._max_tokens,
+                    system=system_prompt,
+                    messages=[{"role": "user", "content": prompt}],
+                )
+            except (anthropic.APIError, httpx.HTTPError, OSError, TimeoutError) as exc:
+                raise LlmError(f"Anthropic API call failed for model '{model}': {exc}") from exc
 
-        text_chunks = [
-            block.text for block in message.content if isinstance(block, TextBlock)
-        ]
-        if not text_chunks:
-            raise LlmOutputError(
-                f"Anthropic model '{model}' returned no text blocks for "
-                f"{response_model.__name__}."
-            )
+            text_chunks = [block.text for block in message.content if isinstance(block, TextBlock)]
+            if not text_chunks:
+                name = response_model.__name__
+                raise LlmOutputError(
+                    f"Anthropic model '{model}' returned no text blocks for {name}."
+                )
 
-        raw_json = _extract_json_text("\n".join(text_chunks))
-        try:
-            return response_model.model_validate_json(raw_json)
-        except ValidationError as exc:
-            raise LlmOutputError(
-                f"Anthropic output failed validation for {response_model.__name__}: {exc}"
-            ) from exc
+            raw_json = _extract_json_text("\n".join(text_chunks))
+            try:
+                return response_model.model_validate_json(raw_json)
+            except ValidationError as exc:
+                last_error = exc
+                continue
+
+        raise LlmOutputError(
+            f"Anthropic output failed validation for {response_model.__name__}: {last_error}"
+        ) from last_error
 
     def interpret_triggers(
         self,
