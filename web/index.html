@@ -127,38 +127,54 @@
           </div>
 
           <p id="comparisonSummary" class="summary-callout" hidden></p>
-          <p class="footnote" data-i18n="assumptionsNote">Assumptions note: CPC and landing-page CVR ranges in this pre-computed benchmark are illustrative operator inputs (Dallas $2–$4 CPC / 5–10% CVR; Pinellas $4.50–$9 CPC / 6–10% CVR; Cook $11–$15 CPC / 5–8% CVR), not live ad-platform market data.</p>
+          <div class="assumptions-callout" role="note">
+            <span class="assumptions-badge" data-i18n="assumptionsBadge">Operator Inputs</span>
+            <p class="assumptions-text" data-i18n="assumptionsNote">CPC and landing-page CVR ranges in this pre-computed benchmark are illustrative operator inputs (Dallas $2–$4 CPC / 5–10% CVR; Pinellas $4.50–$9 CPC / 6–10% CVR; Cook $11–$15 CPC / 5–8% CVR), not live ad-platform market data.</p>
+          </div>
         </article>
 
-        <!-- Right: Automated Correction Callout -->
+        <!-- Right: Data-to-Copy Live Proof + Compact Fact Audit Shield -->
         <aside class="card card-audit" aria-labelledby="correctionTitle">
           <div class="card-header">
             <div>
-              <span class="eyebrow eyebrow-amber" data-i18n="correctionEyebrow">Automated Fact Audit</span>
-              <h3 id="correctionTitle" class="card-title" data-i18n="correctionTitle">Code Caught AI Hallucination</h3>
+              <span class="eyebrow" data-i18n="correctionEyebrow">Data-to-Copy Live Proof</span>
+              <h3 id="correctionTitle" class="card-title" data-i18n="correctionTitle">Real County Pressures → Winning Copy</h3>
             </div>
-            <span class="pill pill-corrected" data-i18n="correctedAuditedBadge">Corrected &amp; Audited</span>
+            <span class="pill pill-primary" data-i18n="correctedAuditedBadge">Census + NOAA Grounded</span>
           </div>
 
-          <div id="correctionBox" class="correction-box">
+          <div id="correctionBox" class="translation-proof-box">
             <p class="correction-county" id="correctionCounty">Dallas County, Texas (FIPS 48113)</p>
-            <p class="correction-summary-text" id="correctionHeadline">LLM generated $350,000 median home value → Census official source is $303,000: corrected and audited</p>
+            <p class="translation-proof-lead" data-i18n="translationProofLead">Verified county records steer concrete seller-relief copy across ads and landing pages — never raw stats or generic templates:</p>
 
-            <div class="diff-grid">
-              <div class="diff-card diff-wrong">
-                <span class="diff-label" data-i18n="llmGeneratedLabel">LLM Generated</span>
-                <span class="diff-value" id="correctionLlmVal">$350,000</span>
-                <span class="diff-meta" id="correctionFieldLabel">median_home_value_usd</span>
+            <div class="translation-proof-list">
+              <div class="translation-proof-row">
+                <span class="tp-fact" data-i18n="tpFact1">1983 Build Year (B25035) · 102 Hail Reports (NOAA)</span>
+                <div class="tp-target">
+                  <span class="tp-arrow" aria-hidden="true">→</span>
+                  <span class="tp-copy" data-i18n="tpCopy1">Ad / LP: "No Costly Repairs Needed · Skip Roof &amp; Plumbing Updates"</span>
+                </div>
               </div>
-              <div class="diff-arrow" aria-hidden="true">→</div>
-              <div class="diff-card diff-right">
-                <span class="diff-label" data-i18n="officialSourceLabel">Official Source</span>
-                <span class="diff-value" id="correctionSourceVal">$303,000</span>
-                <span class="diff-meta" id="correctionSourceName">U.S. Census Bureau ACS (Table B25077)</span>
+              <div class="translation-proof-row">
+                <span class="tp-fact" data-i18n="tpFact2">42.69% Free &amp; Clear · 26.6% 25+ Yr Tenure (B25081/B25038)</span>
+                <div class="tp-target">
+                  <span class="tp-arrow" aria-hidden="true">→</span>
+                  <span class="tp-copy" data-i18n="tpCopy2">Ad / LP: "Fair Cash Offer · Zero Agent Fees · Sell On Your Own Timeline"</span>
+                </div>
+              </div>
+              <div class="translation-proof-row">
+                <span class="tp-fact" data-i18n="tpFact3">7.72% Vacancy Rate (B25002)</span>
+                <div class="tp-target">
+                  <span class="tp-arrow" aria-hidden="true">→</span>
+                  <span class="tp-copy" data-i18n="tpCopy3">Follow-up / LP: "Avoid Ongoing Holding Costs &amp; Empty-Home Upkeep"</span>
+                </div>
               </div>
             </div>
+          </div>
 
-            <p class="correction-reason" id="correctionReason"></p>
+          <div class="audit-strip" role="status">
+            <span class="audit-strip-badge" data-i18n="auditStripBadge">🛡️ Fact Audit</span>
+            <p class="audit-strip-text" id="auditStripText">Code caught LLM $350,000 → Census B25077 $303,000 (auto-corrected &amp; logged).</p>
           </div>
 
           <div class="division-panel">

@@ -71,13 +71,21 @@ const I18N = {
     colMaxCpc: "Max CPC",
     colMath: "Auction Math Explanation",
     loadingExamples: "Loading county auction math…",
+    assumptionsBadge: "Operator Inputs",
     assumptionsNote:
-      "Assumptions note: CPC and landing-page CVR ranges in this pre-computed benchmark are illustrative operator inputs (Dallas $2–$4 CPC / 5–10% CVR; Pinellas $4.50–$9 CPC / 6–10% CVR; Cook $11–$15 CPC / 5–8% CVR), not live ad-platform market data.",
-    correctionEyebrow: "Automated Fact Audit",
-    correctionTitle: "Code Caught AI Hallucination",
-    correctedAuditedBadge: "Corrected & Audited",
-    llmGeneratedLabel: "LLM Generated",
-    officialSourceLabel: "Official Source",
+      "CPC and landing-page CVR ranges in this pre-computed benchmark are illustrative operator inputs (Dallas $2–$4 CPC / 5–10% CVR; Pinellas $4.50–$9 CPC / 6–10% CVR; Cook $11–$15 CPC / 5–8% CVR), not live ad-platform market data.",
+    correctionEyebrow: "Data-to-Copy Live Proof",
+    correctionTitle: "Real County Pressures → Winning Copy",
+    correctedAuditedBadge: "Census + NOAA Grounded",
+    translationProofLead:
+      "Verified county records steer concrete seller-relief copy across ads and landing pages — never raw stats or generic templates:",
+    tpFact1: "1983 Build Year (B25035) · 102 Hail Reports (NOAA)",
+    tpCopy1: 'Ad / LP: "No Costly Repairs Needed · Skip Roof & Plumbing Updates"',
+    tpFact2: "42.69% Free & Clear · 26.6% 25+ Yr Tenure (B25081/B25038)",
+    tpCopy2: 'Ad / LP: "Fair Cash Offer · Zero Agent Fees · Sell On Your Own Timeline"',
+    tpFact3: "7.72% Vacancy Rate (B25002)",
+    tpCopy3: 'Follow-up / LP: "Avoid Ongoing Holding Costs & Empty-Home Upkeep"',
+    auditStripBadge: "🛡️ Fact Audit",
     divisionTitle: "Explicit Division of Labor",
     roleAi: "AI (LLM)",
     roleAiDesc: "Interprets local triggers; drafts questions, RSA ads, landing page, SMS, and emails.",
@@ -264,13 +272,21 @@ const I18N = {
     colMaxCpc: "CPC Máx.",
     colMath: "Explicação da Conta",
     loadingExamples: "Carregando conta do leilão…",
+    assumptionsBadge: "Premissas do Operador",
     assumptionsNote:
-      "Nota sobre premissas: as faixas de CPC e conversão (CVR) neste benchmark pré-computado são entradas ilustrativas do operador (Dallas $2–$4 CPC / 5–10% CVR; Pinellas $4.50–$9 CPC / 6–10% CVR; Cook $11–$15 CPC / 5–8% CVR), não dados ao vivo da plataforma de anúncios.",
-    correctionEyebrow: "Auditoria Automática de Fatos",
-    correctionTitle: "Código Corrigiu Alucinação da IA",
-    correctedAuditedBadge: "Corrigido e Auditado",
-    llmGeneratedLabel: "Gerado pelo LLM",
-    officialSourceLabel: "Fonte Oficial",
+      "As faixas de CPC e conversão (CVR) neste benchmark pré-computado são entradas ilustrativas do operador (Dallas $2–$4 CPC / 5–10% CVR; Pinellas $4.50–$9 CPC / 6–10% CVR; Cook $11–$15 CPC / 5–8% CVR), não dados ao vivo da plataforma de anúncios.",
+    correctionEyebrow: "Prova ao Vivo: Dados → Copy",
+    correctionTitle: "Pressões Reais → Copy Vencedora",
+    correctedAuditedBadge: "Ancorado Censo + NOAA",
+    translationProofLead:
+      "Métricas locais auditadas guiam argumentos concretos de alívio financeiro nos anúncios e na LP — sem estatísticas frias nem clichês:",
+    tpFact1: "Imóveis de 1983 (B25035) · 102 Granizos (NOAA)",
+    tpCopy1: 'Anúncio / LP: "No Costly Repairs Needed · Skip Roof & Plumbing Updates"',
+    tpFact2: "42,69% Quitados · 26,6% Posse >25 Anos (B25081/B25038)",
+    tpCopy2: 'Anúncio / LP: "Fair Cash Offer · Zero Agent Fees · Own Timeline"',
+    tpFact3: "7,72% Vacância (B25002)",
+    tpCopy3: 'Follow-up / LP: "Avoid Ongoing Holding Costs & Empty-Home Upkeep"',
+    auditStripBadge: "🛡️ Auditoria",
     divisionTitle: "Divisão Explícita de Trabalho",
     roleAi: "IA (LLM)",
     roleAiDesc: "Interpreta gatilhos locais; redige perguntas, anúncios RSA, landing page, SMS e e-mails.",
@@ -658,21 +674,17 @@ function renderCorrectionCallout() {
     : "NOAA Storm Events 2020-2024";
 
   $("correctionCounty").textContent = `${targetCampaign.county_name} (FIPS ${targetCampaign.county_fips})`;
-  $("correctionHeadline").textContent =
-    state.lang === "pt"
-      ? (isCurrency
-          ? `LLM gerou valor mediano de ${llmDisplay} → Fonte oficial do Census é ${srcDisplay}: corrigido e auditado`
-          : `LLM gerou ${targetCorrection.llm_value} para ${targetCorrection.field} → Fonte oficial é ${targetCorrection.source_value}: corrigido e auditado`)
-      : (isCurrency
-          ? `LLM generated ${llmDisplay} median home value → Census official source is ${srcDisplay}: corrected and audited`
-          : `LLM generated ${targetCorrection.llm_value} for ${targetCorrection.field} → Official source is ${targetCorrection.source_value}: corrected and audited`);
-  $("correctionLlmVal").textContent = llmDisplay;
-  $("correctionFieldLabel").textContent = isCurrency
-    ? (state.lang === "pt" ? "Valor Mediano (Censo B25077)" : "Median Home Value (Census B25077)")
-    : targetCorrection.field;
-  $("correctionSourceVal").textContent = srcDisplay;
-  $("correctionSourceName").textContent = matchingFact?.source || defaultSource;
-  $("correctionReason").textContent = targetCorrection.reason || "";
+
+  const auditEl = $("auditStripText");
+  if (auditEl) {
+    const fieldShort = isCurrency
+      ? (state.lang === "pt" ? "Censo B25077" : "Census B25077")
+      : `${targetCorrection.field} (${matchingFact?.source || defaultSource})`;
+    auditEl.textContent =
+      state.lang === "pt"
+        ? `Código corrigiu LLM ${llmDisplay} → ${fieldShort} ${srcDisplay} (auditado e registrado).`
+        : `Code caught LLM ${llmDisplay} → ${fieldShort} ${srcDisplay} (auto-corrected & logged).`;
+  }
 }
 
 function selectCountyFromTable(fips) {

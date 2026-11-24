@@ -418,12 +418,12 @@ body {
 }
 
 .card-audit {
-  border: 1.5px solid #f59e0b;
-  background: linear-gradient(180deg, #fffdf7 0%, #ffffff 42%);
+  border: 1.5px solid var(--primary-border);
+  background: linear-gradient(180deg, var(--primary-soft) 0%, #ffffff 34%);
   box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .card-header {
@@ -593,15 +593,50 @@ body {
   color: var(--text-subtle);
 }
 
-/* Correction Callout */
-.correction-box {
+.assumptions-callout {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--blue-bg);
+  border: 1px solid var(--blue-border);
+  border-left: 3.5px solid var(--blue-text);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.assumptions-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--blue-text);
+}
+
+.assumptions-text {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.pill-primary {
   background: var(--surface);
-  border: 1px solid #fde68a;
+  color: var(--primary);
+  border: 1px solid var(--primary-border);
+}
+
+/* Data-to-Copy Translation Live Proof Box */
+.translation-proof-box {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
   padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 9px;
 }
 
 .correction-county {
@@ -613,85 +648,84 @@ body {
   letter-spacing: 0.03em;
 }
 
-.correction-summary-text {
+.translation-proof-lead {
   margin: 0;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--text);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--text-muted);
 }
 
-.diff-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  gap: 8px;
-  align-items: center;
-}
-
-.diff-card {
-  border-radius: var(--radius-sm);
-  padding: 8px 10px;
+.translation-proof-list {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 7px;
 }
 
-.diff-wrong {
-  background: var(--red-bg);
-  border: 1px solid var(--red-border);
+.translation-proof-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 3px;
+  padding: 7px 9px;
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  border: 1px solid var(--border-light);
 }
 
-.diff-right {
-  background: var(--green-bg);
-  border: 1px solid var(--green-border);
-}
-
-.diff-label {
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.diff-wrong .diff-label {
-  color: var(--red-text);
-}
-
-.diff-right .diff-label {
-  color: var(--green-text);
-}
-
-.diff-value {
+.tp-fact {
   font-family: var(--font-mono);
-  font-size: 1.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.tp-target {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.tp-arrow {
+  color: var(--green-dot);
   font-weight: 800;
-  line-height: 1.15;
+  font-size: 0.82rem;
+  line-height: 1.3;
+  flex-shrink: 0;
 }
 
-.diff-wrong .diff-value {
-  color: var(--red-text);
-  text-decoration: line-through;
-}
-
-.diff-right .diff-value {
-  color: var(--green-text);
-}
-
-.diff-meta {
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  word-break: break-word;
-}
-
-.diff-arrow {
-  font-weight: 800;
-  font-size: 1.1rem;
-  color: var(--text-subtle);
-}
-
-.correction-reason {
-  margin: 0;
+.tp-copy {
   font-size: 0.78rem;
-  color: var(--text-muted);
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.35;
+}
+
+/* Compact Fact Audit Shield Strip */
+.audit-strip {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--yellow-bg);
+  border: 1px solid var(--yellow-border);
+}
+
+.audit-strip-badge {
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--yellow-text);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding-top: 1px;
+}
+
+.audit-strip-text {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--text);
+  font-weight: 500;
 }
 
 .division-panel {
