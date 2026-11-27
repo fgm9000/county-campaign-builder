@@ -22,6 +22,8 @@ from county_campaign_builder.graph import (
     _build_human_review_list,
     _fallback_comparison,
     _regenerate_failed_assets,
+    _summarize_campaign,
+    _verify_comparison_recommendation,
     create_default_dependencies,
     run_campaign,
     run_county_pipeline,
@@ -78,6 +80,7 @@ class _StubModelClient:
         followup_override: FollowupOutput | None = None,
         regen_override: RegenerateOutput | None = None,
         compare_error: bool = False,
+        compare_override: ComparisonOutput | None = None,
     ) -> None:
         self._fake = FakeModelClient(plant_trap=plant_trap)
         self._triggers_override = triggers_override
@@ -86,6 +89,7 @@ class _StubModelClient:
         self._followup_override = followup_override
         self._regen_override = regen_override
         self._compare_error = compare_error
+        self._compare_override = compare_override
         self.regenerate_calls: list[Sequence[tuple[str, str]]] = []
 
     def interpret_triggers(
@@ -142,6 +146,8 @@ class _StubModelClient:
     def compare_counties(self, campaign_summaries: Sequence[str]) -> ComparisonOutput:
         if self._compare_error:
             raise LlmError("Simulated comparison failure.")
+        if self._compare_override is not None:
+            return self._compare_override
         return self._fake.compare_counties(campaign_summaries)
 
 
@@ -808,3 +814,192 @@ def test_run_multi_campaign_missing_comparison_in_state_fallback(
     )
     assert result.recommended_county_fips is None
     assert result.summary == "Comparison was not produced by the campaign graph."
+
+
+def test_compare_rejects_red_recommendation_and_uses_fallback() -> None:
+    mixed = [
+        CountyCampaign(
+            county_fips=COOK_FIPS,
+            county_name="Cook County, Illinois",
+            vertical="motivated_seller",
+            status="success",
+            unit_economics=UnitEconomics(
+                bid_per_lead_usd=125.0,
+                cpl_best_usd=137.5,
+                cpl_worst_usd=300.0,
+                max_cpc_usd=6.25,
+                verdict="red",
+                explanation="Red",
+            ),
+        ),
+        CountyCampaign(
+            county_fips=PINELLAS_FIPS,
+            county_name="Pinellas County, Florida",
+            vertical="motivated_seller",
+            status="success",
+            unit_economics=UnitEconomics(
+                bid_per_lead_usd=125.0,
+                cpl_best_usd=45.0,
+                cpl_worst_usd=150.0,
+                max_cpc_usd=7.5,
+                verdict="yellow",
+                explanation="Yellow",
+            ),
+        ),
+        CountyCampaign(
+            county_fips=DALLAS_FIPS,
+            county_name="Dallas County, Texas",
+            vertical="motivated_seller",
+            status="success",
+            unit_economics=UnitEconomics(
+                bid_per_lead_usd=125.0,
+                cpl_best_usd=20.0,
+                cpl_worst_usd=80.0,
+                max_cpc_usd=6.25,
+                verdict="green",
+                explanation="Green",
+            ),
+        ),
+    ]
+    comp_output = ComparisonOutput(recommended_county_fips=COOK_FIPS, summary="Pick Cook")
+    verified = _verify_comparison_recommendation(mixed, comp_output)
+
+    assert verified.recommended_county_fips == DALLAS_FIPS
+    assert COOK_FIPS in verified.summary
+    assert "rejected" in verified.summary.lower()
+    assert "red" in verified.summary.lower()
+    assert DALLAS_FIPS in verified.summary
+
+
+def test_compare_rejects_unknown_or_failed_fips_and_uses_fallback() -> None:
+    unknown_deps = _deps_with_model(
+        _StubModelClient(
+            compare_override=ComparisonOutput(
+                recommended_county_fips="99999",
+                summary="Pick 99999",
+            )
+        )
+    )
+    unknown_result = run_multi_campaign(
+        MultiCountyInput(
+            county_fips_list=[DALLAS_FIPS, PINELLAS_FIPS],
+            vertical="motivated_seller",
+            bid_per_lead_usd=120.0,
+            cpc_usd=NumericRange(min=3.0, max=5.0),
+            landing_cvr=NumericRange(min=0.06, max=0.10),
+        ),
+        unknown_deps,
+    )
+    assert unknown_result.recommended_county_fips == DALLAS_FIPS
+    assert "99999" in unknown_result.summary
+    assert "rejected" in unknown_result.summary.lower()
+
+    failed_deps = _deps_with_model(
+        _StubModelClient(
+            compare_override=ComparisonOutput(
+                recommended_county_fips="99999",
+                summary="Pick failed county",
+            )
+        )
+    )
+    failed_result = run_multi_campaign(
+        MultiCountyInput(
+            county_fips_list=[DALLAS_FIPS, "99999"],
+            vertical="motivated_seller",
+            bid_per_lead_usd=120.0,
+            cpc_usd=NumericRange(min=3.0, max=5.0),
+            landing_cvr=NumericRange(min=0.06, max=0.10),
+        ),
+        failed_deps,
+    )
+    assert failed_result.recommended_county_fips == DALLAS_FIPS
+    assert "99999" in failed_result.summary
+    assert "rejected" in failed_result.summary.lower()
+
+
+def test_compare_keeps_valid_green_or_yellow_llm_recommendation() -> None:
+    yellow_deps = _deps_with_model(
+        _StubModelClient(
+            compare_override=ComparisonOutput(
+                recommended_county_fips=PINELLAS_FIPS,
+                summary="Pinellas selected on strong local triggers.",
+            )
+        )
+    )
+    result = run_multi_campaign(
+        MultiCountyInput(
+            county_fips_list=[DALLAS_FIPS, PINELLAS_FIPS],
+            vertical="motivated_seller",
+            bid_per_lead_usd=100.0,
+            cpc_usd=NumericRange(min=4.0, max=8.0),
+            landing_cvr=NumericRange(min=0.05, max=0.10),
+        ),
+        yellow_deps,
+    )
+    assert all(c.unit_economics.verdict == "yellow" for c in result.campaigns)
+    assert result.recommended_county_fips == PINELLAS_FIPS
+    assert result.summary == "Pinellas selected on strong local triggers."
+
+
+def test_compare_all_red_counties_returns_no_recommendation() -> None:
+    red_deps = _deps_with_model(
+        _StubModelClient(
+            compare_override=ComparisonOutput(
+                recommended_county_fips=DALLAS_FIPS,
+                summary="Pick Dallas anyway",
+            )
+        )
+    )
+    result = run_multi_campaign(
+        MultiCountyInput(
+            county_fips_list=[DALLAS_FIPS, COOK_FIPS],
+            vertical="motivated_seller",
+            bid_per_lead_usd=50.0,
+            cpc_usd=NumericRange(min=10.0, max=15.0),
+            landing_cvr=NumericRange(min=0.05, max=0.08),
+        ),
+        red_deps,
+    )
+    assert all(c.unit_economics.verdict == "red" for c in result.campaigns)
+    assert result.recommended_county_fips is None
+    assert "rejected" in result.summary.lower()
+    assert "red" in result.summary.lower()
+
+    fallback_all_red = _fallback_comparison(result.campaigns, "LLM comparison unavailable")
+    assert fallback_all_red.recommended_county_fips is None
+    assert "red" in fallback_all_red.summary.lower()
+    assert "LLM comparison unavailable" in fallback_all_red.summary
+
+
+def test_canonical_benchmark_still_recommends_dallas() -> None:
+    deps = create_default_dependencies(Settings(fake_model=True))
+    benchmark_inputs = [
+        CampaignInput(
+            county_fips=DALLAS_FIPS,
+            vertical="motivated_seller",
+            bid_per_lead_usd=125.0,
+            cpc_usd=NumericRange(min=2.0, max=4.0),
+            landing_cvr=NumericRange(min=0.05, max=0.10),
+        ),
+        CampaignInput(
+            county_fips=PINELLAS_FIPS,
+            vertical="motivated_seller",
+            bid_per_lead_usd=125.0,
+            cpc_usd=NumericRange(min=4.5, max=9.0),
+            landing_cvr=NumericRange(min=0.06, max=0.10),
+        ),
+        CampaignInput(
+            county_fips=COOK_FIPS,
+            vertical="motivated_seller",
+            bid_per_lead_usd=125.0,
+            cpc_usd=NumericRange(min=11.0, max=15.0),
+            landing_cvr=NumericRange(min=0.05, max=0.08),
+        ),
+    ]
+    campaigns = [run_campaign(item, deps) for item in benchmark_inputs]
+    assert [c.unit_economics.verdict for c in campaigns] == ["green", "yellow", "red"]
+
+    summaries = [_summarize_campaign(c) for c in campaigns]
+    comp_output = FakeModelClient().compare_counties(summaries)
+    verified = _verify_comparison_recommendation(campaigns, comp_output)
+    assert verified.recommended_county_fips == DALLAS_FIPS

@@ -29,6 +29,7 @@ from county_campaign_builder.domain import (
 from county_campaign_builder.economics import calculate_unit_economics
 from county_campaign_builder.llm import (
     AnthropicModelClient,
+    ComparisonOutput,
     FakeModelClient,
     LlmError,
     ModelClient,
@@ -887,7 +888,7 @@ def _summarize_campaign(campaign: CountyCampaign) -> str:
 
 
 def _fallback_comparison(campaigns: list[CountyCampaign], note: str) -> CampaignComparison:
-    """Build a deterministic comparison when LLM comparison cannot run."""
+    """Build a deterministic comparison when LLM comparison cannot run or is rejected."""
     successful = [campaign for campaign in campaigns if campaign.status == "success"]
     if not successful:
         return CampaignComparison(
@@ -896,8 +897,19 @@ def _fallback_comparison(campaigns: list[CountyCampaign], note: str) -> Campaign
             summary=note,
         )
 
+    eligible = [campaign for campaign in successful if campaign.unit_economics.verdict != "red"]
+    if not eligible:
+        return CampaignComparison(
+            campaigns=campaigns,
+            recommended_county_fips=None,
+            summary=(
+                "No county recommended: all successful counties have a red "
+                f"unit-economics verdict. ({note})"
+            ),
+        )
+
     best = min(
-        successful,
+        eligible,
         key=lambda c: (
             _VERDICT_PRIORITY[c.unit_economics.verdict],
             c.unit_economics.cpl_worst_usd,
@@ -911,6 +923,40 @@ def _fallback_comparison(campaigns: list[CountyCampaign], note: str) -> Campaign
             f"with verdict {best.unit_economics.verdict} and worst-case CPL "
             f"${best.unit_economics.cpl_worst_usd:.2f}. ({note})"
         ),
+    )
+
+
+def _verify_comparison_recommendation(
+    ordered_campaigns: list[CountyCampaign],
+    comp_output: ComparisonOutput,
+) -> CampaignComparison:
+    """Enforce code authority over LLM county recommendation (reject red or unknown FIPS)."""
+    successful_by_fips = {
+        campaign.county_fips: campaign
+        for campaign in ordered_campaigns
+        if campaign.status == "success"
+    }
+    recommended = comp_output.recommended_county_fips.strip()
+    if recommended not in successful_by_fips:
+        proposed = recommended or "<empty>"
+        return _fallback_comparison(
+            ordered_campaigns,
+            f"LLM recommendation '{proposed}' rejected: FIPS is not among successful "
+            "county campaigns.",
+        )
+
+    chosen = successful_by_fips[recommended]
+    if chosen.unit_economics.verdict == "red":
+        return _fallback_comparison(
+            ordered_campaigns,
+            f"LLM recommendation '{recommended}' ({chosen.county_name}) rejected: "
+            "unit-economics verdict is red.",
+        )
+
+    return CampaignComparison(
+        campaigns=ordered_campaigns,
+        recommended_county_fips=recommended,
+        summary=comp_output.summary,
     )
 
 
@@ -966,14 +1012,7 @@ def compile_campaign_graph(
                 )
             }
 
-        recommended = comp_output.recommended_county_fips.strip() or None
-        return {
-            "comparison": CampaignComparison(
-                campaigns=ordered_campaigns,
-                recommended_county_fips=recommended,
-                summary=comp_output.summary,
-            )
-        }
+        return {"comparison": _verify_comparison_recommendation(ordered_campaigns, comp_output)}
 
     builder: StateGraph[OverallState, None, OverallState, OverallState] = StateGraph(OverallState)
     builder.add_node("run_county", run_county_node)

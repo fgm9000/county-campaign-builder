@@ -6,10 +6,10 @@
 [![CodeQL](https://github.com/fgm9000/county-campaign-builder/actions/workflows/codeql.yml/badge.svg)](https://github.com/fgm9000/county-campaign-builder/actions/workflows/codeql.yml)
 [![Pages](https://github.com/fgm9000/county-campaign-builder/actions/workflows/pages.yml/badge.svg)](https://fgm9000.github.io/county-campaign-builder/)
 [![Cobertura](https://img.shields.io/badge/cobertura-100.0%25-brightgreen)](quality-baseline.json)
-[![Testes](https://img.shields.io/badge/testes-140%20passando-brightgreen)](quality-baseline.json)
+[![Testes](https://img.shields.io/badge/testes-145%20passando-brightgreen)](quality-baseline.json)
 [![Licença: PolyForm Noncommercial](https://img.shields.io/badge/licen%C3%A7a-PolyForm%20Noncommercial-blue)](LICENSE)
 
-**Motor de campanhas de aquisição paga e geração de leads por condado nos EUA — ancorado em dados reais de clima e estoque imobiliário.** O operador informa os condados alvo (códigos FIPS), a vertical, o lance por lead e as premissas de CPC e conversão. Em vez de gerar clichês genéricos de `{Cidade}` ou estatísticas acadêmicas frias, o pipeline traduz dados públicos oficiais (**U.S. Census ACS 2020–2024** e **NOAA Storm Events 2020–2024**) em anúncios e landing pages empáticos de alta conversão — combinados com matemática de leilão determinística em código, verificação anti-alucinação e travas de compliance. Projetado para demonstrar fluxos verificáveis de IA aplicados a growth, MarTech e mídia paga (Fase 1 ao vivo em aquisições residenciais; arquitetura por configuração pronta para Fase 2 em *roofing* / serviços residenciais).
+**Num negócio imobiliário pay-per-lead, o produto é o lead de um proprietário que quer vender o imóvel, pago por investidores a um preço fixo (o bid) — comprar cliques num condado onde o custo por lead passa desse valor dá prejuízo.** Antes de gastar, o código compara os condados lado a lado (no benchmark: Dallas, TX; Pinellas, FL; e Cook, IL — aceitando qualquer um dos 3.222 condados dos EUA): calcula a faixa de CPL, o CPC máximo viável e o veredito verde, amarelo ou vermelho contra o bid, junto a dados do U.S. Census ACS (2020–2024) e do NOAA Storm Events (2020–2024) sobre pressões financeiras ligadas a imóveis e eventos climáticos para orientar a decisão de mídia. Só depois o pipeline gera a campanha de cada condado: a IA redige a copy focada nessas pressões locais reais, e o código confere cada número citado e as regras de compliance. Uma pessoa revisa promessas sinalizadas, condições da oferta e premissas antes de publicar.
 
 > Demo de portfólio (POC), não é produto de cliente. O playground público usa respostas pré-computadas e premissas ilustrativas de CPC/CVR; o modo ao vivo roda só com código de acesso.
 
@@ -76,7 +76,7 @@ flowchart LR
 - **Divisão estruturada de LLMs:** `claude-haiku-4-5` interpreta os dados do condado em gatilhos e redige perguntas de qualificação, SMS e e-mails; `claude-sonnet-4-5` redige os títulos/descrições de Google Ads RSA e o topo da landing page. Todas as chamadas usam saída estruturada (DTOs Pydantic).
 - **Tabela pré-agregada dos condados (sem API externa de dados em produção):** `scripts/build_county_table.py` (Polars) pré-calcula **3.222 condados dos EUA** (17 colunas, `122.909` bytes) em `data/counties.parquet` a partir da NOAA Storm Events (`2020–2024`), da tabela de correlação zona–condado da NWS (`bp16ap26.dbx`) e do Census ACS 5-year (`2020–2024`). Produção não depende da chave do Census nem de downloads da NOAA.
 - **Verticais orientadas por configuração:** a Fase 1 em produção foca 100% em Motivated Seller (`motivated_seller`). O pipeline é modular via `config/verticals.json` — a Fase 2 no roadmap estende para Roofing & Home Services (`roofing`), com evals ao vivo e testes de campo pendentes.
-- **Degradação explícita:** se um condado falha durante o *fan-out*, ele sai com `status: "failed"` enquanto os demais seguem normalmente; se a sumarização do `compare_counties` falhar no LLM, um fallback determinístico ordena pelo semáforo e pelo pior CPL.
+- **Degradação explícita e recomendação verificada:** se um condado falha durante o *fan-out*, ele sai com `status: "failed"` enquanto os demais seguem normalmente. Em `compare_counties`, o LLM propõe o condado e escreve a justificativa, mas o código mantém a palavra final: recomendações com veredito `red` ou FIPS desconhecido/com falha são rejeitadas e substituídas pelo ranking determinístico (prioridade de semáforo e pior CPL; se todos os condados com sucesso forem `red`, nenhum é recomendado), registrando a rejeição no resumo.
 
 Detalhes em [`docs/architecture.pt-BR.md`](docs/architecture.pt-BR.md).
 
@@ -122,7 +122,7 @@ Para times de marketing e operações rodarem campanhas por condado manualmente 
 | Reuso de motor | FastAPI/SSE, settings, rate limiter e catraca adaptados do `briefing-scout` | [007](docs/decisions/007-reuse-from-briefing-scout.pt-BR.md) |
 | Entregáveis não-código | `playbook/README.md` (sincronizado com `prompt.py`) + `playbook/auction-math.xlsx` (`openpyxl`) | [008](docs/decisions/008-playbook-and-spreadsheet.pt-BR.md) |
 
-- **Baseline de qualidade ([`quality-baseline.json`](quality-baseline.json)):** `140` testes passando (`0` pulados), `100,0%` de cobertura, `0` problemas no Ruff, `0` erros no mypy `--strict`, `0` supressões.
+- **Baseline de qualidade ([`quality-baseline.json`](quality-baseline.json)):** `145` testes passando (`0` pulados), `100,0%` de cobertura, `0` problemas no Ruff, `0` erros no mypy `--strict`, `0` supressões.
 - **Documentação complementar:** [PRD](docs/prd.pt-BR.md) · [Arquitetura](docs/architecture.pt-BR.md) · [Runbook de Deploy](docs/deployment-runbook.pt-BR.md) · [Spikes](docs/spikes.pt-BR.md) · [Plano](docs/plano-implementacao.pt-BR.md) · [Controle de Progresso](docs/controle-progresso.pt-BR.md)
 
 ---
@@ -190,7 +190,7 @@ data/              counties.parquet pré-calculado (3.222 condados), metadados e
 evals/             suíte determinística DeepEval e G-Eval ao vivo
 playbook/          playbook não-código (README.md) e planilha Excel (auction-math.xlsx)
 scripts/           ETL, geradores de exemplos e playbook, catraca de qualidade, smoke test
-tests/             140 testes unitários, integração, drift e sincronismo do playbook
+tests/             145 testes unitários, integração, drift e sincronismo do playbook
 web/               playground estático bilíngue (index.html, app.js, styles.css, examples.json)
 docs/              PRD, ADRs (001–008), arquitetura, runbook de deploy, spikes e progresso
 ```

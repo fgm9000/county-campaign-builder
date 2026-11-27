@@ -39,27 +39,27 @@ const I18N = {
   en: {
     moreProjects: "← More projects on GitHub",
     zeroCostBadge: "Pre-computed mode: zero API cost",
-    subtitle: "Fact-grounded local persuasion · Deterministic auction math · Zero-hallucination guardrails",
+    subtitle: "Pay-per-lead auction math · Census ACS & NOAA local pressures · Code-verified AI copy & human review",
     linkExcel: "Download Excel Model (auction-math.xlsx)",
     linkPlaybook: "Non-Code Playbook (README.md)",
     linkRepo: "GitHub Repo ↗",
-    heroBadgeArchitecture: "Production AI Engine Architecture",
+    heroBadgeArchitecture: "Portfolio Demo (POC) · Pay-Per-Lead Real Estate",
     heroBadgeStack: "LangGraph + Parquet + Census ACS + NOAA",
-    heroTitle: "Why Pure LLMs Fail in Paid Acquisition — And How Code Makes Them Production-Ready",
+    heroTitle: "Decide Which Counties Close on Margin Before Spending — Then Generate Verified Campaigns",
     heroLead:
-      "In high-stakes paid acquisition, pure LLMs either write generic copy or hallucinate numbers and break ad and compliance rules. This demo showcases an audit-first orchestration engine: Real public data steers the persuasion; pure code owns the unit economics, fact verification, and compliance.",
-    pillar1Title: "Fact-Grounded Persuasion",
+      "In a pay-per-lead real estate business, a motivated-seller lead sells to real estate investors at a fixed bid — buying clicks where cost per lead exceeds that bid loses money. Before any spend, code evaluates target counties side by side (benchmarked on Dallas, TX; Pinellas, FL; and Cook, IL — across 3,222 U.S. counties) with CPL/max-CPC verdicts and U.S. Census ACS (2020–2024) + NOAA Storm Events (2020–2024) data on housing and weather-driven financial pressures. Only then does the LLM draft copy focused on those pressures, while code checks every cited number and compliance rule, and a person reviews before launch.",
+    pillar1Title: "Deterministic Auction Math",
     pillar1Text:
-      "Census housing stock and NOAA storm history are translated into concrete local homeowner pressures across ads, landing pages, and intake questions — never generic {City} fluff or cold statistics.",
-    pillar2Title: "Deterministic Auction Math",
+      "Before any spend, pure code computes CPL range, max viable CPC, and a Green, Yellow, or Red verdict against the lead bid — and rejects red or unknown county recommendations.",
+    pillar2Title: "Real Housing & Weather Pressures",
     pillar2Text:
-      "Unit economics (target CPL, max viable CPC threshold, Green/Yellow/Red go/no-go verdicts) are 100% computed in pure Python before ad spend — never delegated to a probabilistic model.",
-    pillar3Title: "Anti-Hallucination Firewall",
+      "U.S. Census ACS (2020–2024) and NOAA Storm Events (2020–2024) surface local financial pressures tied to aging homes and severe weather — guiding both media decisions and county-specific copy.",
+    pillar3Title: "Code-Verified Facts",
     pillar3Text:
-      "Zero tolerance for invented numbers. Every LLM claim is cross-checked against local Parquet tables from U.S. Census ACS and NOAA Storm Events; mismatches are auto-corrected with an audit trail.",
-    pillar4Title: "Deterministic Compliance & Human Review",
+      "Every number cited by the LLM is checked against local Parquet records from Census ACS and NOAA Storm Events; mismatches are corrected in code with a recorded audit trail.",
+    pillar4Title: "Compliance & Human Review",
     pillar4Text:
-      "Regex guardrails enforce Google Ads limits (30/90), Fair Housing Act anti-bias patterns, TCPA SMS disclosures, and explicit needs_human_review flags with 100% test coverage.",
+      "Deterministic checks enforce Google Ads limits (30/90), Fair Housing Act patterns, and TCPA SMS disclosures, while a person reviews flagged claims, offer terms, and assumptions before launch.",
     thirtySecondHeading: "30-Second Overview: Auction Math and Fact Verification",
     auctionEyebrow: "Deterministic Code Math (Never LLM)",
     auctionTitle: "Multi-County Auction Math",
@@ -75,7 +75,7 @@ const I18N = {
     assumptionsNote:
       "CPC and landing-page CVR ranges in this pre-computed benchmark are illustrative operator inputs (Dallas $2–$4 CPC / 5–10% CVR; Pinellas $4.50–$9 CPC / 6–10% CVR; Cook $11–$15 CPC / 5–8% CVR), not live ad-platform market data.",
     correctionEyebrow: "Data-to-Copy Live Proof",
-    correctionTitle: "Real County Pressures → Winning Copy",
+    correctionTitle: "Real County Pressures → Grounded Copy",
     correctedAuditedBadge: "Census + NOAA Grounded",
     translationProofLead:
       "Verified county records steer concrete seller-relief copy across ads and landing pages — never raw stats or generic templates:",
@@ -91,7 +91,7 @@ const I18N = {
     roleAiDesc: "Interprets local triggers; drafts questions, RSA ads, landing page, SMS, and emails.",
     roleCode: "Code",
     roleCodeDesc:
-      "Verifies numbers vs. NOAA/Census; computes CPL & max CPC; enforces char limits, TCPA & Fair Housing.",
+      "Computes CPL & max CPC; keeps final call on county recommendation; verifies numbers vs. NOAA/Census; enforces char limits, TCPA & Fair Housing.",
     roleHuman: "Human",
     roleHumanDesc: "Approves offer terms, closing promises, quiet hours, and local positioning.",
     explorerHeading: "Campaign Package Explorer & Live Runner",
@@ -240,27 +240,27 @@ const I18N = {
   pt: {
     moreProjects: "← Mais projetos no GitHub",
     zeroCostBadge: "Modo pré-computado: custo zero de API",
-    subtitle: "Persuasão ancorada em dados locais · Conta do leilão determinística · Firewall anti-alucinação",
+    subtitle: "Matemática de leilão pay-per-lead · Pressões locais (Census ACS & NOAA) · Copy verificada em código e revisão humana",
     linkExcel: "Baixar Planilha Excel (auction-math.xlsx)",
     linkPlaybook: "Playbook Sem Código (README.md)",
     linkRepo: "Repositório GitHub ↗",
-    heroBadgeArchitecture: "Arquitetura de Motor de IA em Produção",
+    heroBadgeArchitecture: "Demo de Portfólio (POC) · Imobiliário Pay-Per-Lead",
     heroBadgeStack: "LangGraph + Parquet + Censo ACS + NOAA",
-    heroTitle: "Por que LLMs Puros Falham em Tráfego Pago — E Como Código os Torna Confiáveis",
+    heroTitle: "Decida Quais Condados Fecham a Conta Antes de Gastar — Depois Gere Campanhas Verificadas",
     heroLead:
-      "Em aquisição paga de alto risco, LLMs puros escrevem copy genérico ou inventam números e violam regras de anúncios e compliance. Esta demo apresenta uma arquitetura auditável: Dados públicos reais guiam a persuasão; código puro garante a conta do leilão, a checagem factual e a conformidade.",
-    pillar1Title: "Persuasão Guiada por Fatos",
+      "Num negócio imobiliário pay-per-lead, o lead de um proprietário que quer vender o imóvel é pago por investidores a um preço fixo (o bid) — comprar cliques onde o custo por lead passa desse valor dá prejuízo. Antes de gastar, o código compara os condados lado a lado (no benchmark: Dallas, TX; Pinellas, FL; e Cook, IL — entre 3.222 condados dos EUA) com vereditos de CPL/CPC máximo e dados do U.S. Census ACS (2020–2024) e NOAA Storm Events (2020–2024) sobre pressões financeiras ligadas a imóveis e eventos climáticos. Só depois a IA redige a copy focada nessas pressões, enquanto o código confere cada número citado e as regras de compliance, e uma pessoa revisa antes de publicar.",
+    pillar1Title: "Matemática de Leilão Determinística",
     pillar1Text:
-      "Estoque habitacional do Censo ACS e histórico de tempestades da NOAA são traduzidos em pressões locais concretas nos anúncios, landing pages e perguntas de triagem — sem clichês de {Cidade} nem estatísticas frias.",
-    pillar2Title: "Matemática de Leilão Determinística",
+      "Antes de gastar, código puro calcula a faixa de CPL, o CPC máximo viável e o veredito Verde, Amarelo ou Vermelho contra o bid — e rejeita recomendações de condado vermelho ou desconhecido.",
+    pillar2Title: "Pressões Reais de Imóveis e Clima",
     pillar2Text:
-      "Unit economics (CPL alvo, CPC máximo viável e semáforo Verde/Amarelo/Vermelho) são calculados 100% em Python antes de investir mídia — nunca delegados a modelos probabilísticos.",
-    pillar3Title: "Firewall Anti-Alucinação",
+      "U.S. Census ACS (2020–2024) e NOAA Storm Events (2020–2024) trazem pressões financeiras ligadas à idade dos imóveis e eventos climáticos — orientando tanto a decisão de mídia quanto a copy local.",
+    pillar3Title: "Números Conferidos em Código",
     pillar3Text:
-      "Tolerância zero a números inventados. Afirmações do LLM são conferidas contra tabelas Parquet do Censo ACS e da NOAA; divergências são retificadas automaticamente com trilha de auditoria.",
-    pillar4Title: "Conformidade & Revisão Humana",
+      "Cada número citado pelo LLM é conferido contra as tabelas Parquet do Census ACS e da NOAA; divergências são corrigidas em código com trilha de auditoria registrada.",
+    pillar4Title: "Compliance e Revisão Humana",
     pillar4Text:
-      "Travas em regex garantem limites do Google Ads (30/90), Fair Housing Act, divulgações TCPA no SMS e flags explícitos de needs_human_review com 100% de cobertura de testes.",
+      "Checagens determinísticas garantem limites do Google Ads (30/90), regras de Fair Housing e avisos TCPA no SMS, enquanto uma pessoa revisa promessas sinalizadas, termos da oferta e premissas antes de publicar.",
     thirtySecondHeading: "Visão em 30 Segundos: Conta do Leilão e Verificação de Fatos",
     auctionEyebrow: "Matemática Determinística em Código (Nunca LLM)",
     auctionTitle: "Conta do Leilão Multi-Condado",
@@ -276,7 +276,7 @@ const I18N = {
     assumptionsNote:
       "As faixas de CPC e conversão (CVR) neste benchmark pré-computado são entradas ilustrativas do operador (Dallas $2–$4 CPC / 5–10% CVR; Pinellas $4.50–$9 CPC / 6–10% CVR; Cook $11–$15 CPC / 5–8% CVR), não dados ao vivo da plataforma de anúncios.",
     correctionEyebrow: "Prova ao Vivo: Dados → Copy",
-    correctionTitle: "Pressões Reais → Copy Vencedora",
+    correctionTitle: "Pressões Reais → Copy Ancorada em Fatos",
     correctedAuditedBadge: "Ancorado Censo + NOAA",
     translationProofLead:
       "Métricas locais auditadas guiam argumentos concretos de alívio financeiro nos anúncios e na LP — sem estatísticas frias nem clichês:",
@@ -292,7 +292,7 @@ const I18N = {
     roleAiDesc: "Interpreta gatilhos locais; redige perguntas, anúncios RSA, landing page, SMS e e-mails.",
     roleCode: "Código",
     roleCodeDesc:
-      "Confere números contra NOAA/Census; calcula CPL e CPC máx.; aplica limites, TCPA e Fair Housing.",
+      "Calcula CPL e CPC máx.; mantém a palavra final na recomendação; confere números contra NOAA/Census; aplica limites, TCPA e Fair Housing.",
     roleHuman: "Humano",
     roleHumanDesc: "Aprova condições de oferta, prazos de fechamento, quiet hours e tom local.",
     explorerHeading: "Explorador de Pacotes e Execução ao Vivo",

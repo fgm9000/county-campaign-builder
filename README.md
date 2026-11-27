@@ -6,10 +6,10 @@
 [![CodeQL](https://github.com/fgm9000/county-campaign-builder/actions/workflows/codeql.yml/badge.svg)](https://github.com/fgm9000/county-campaign-builder/actions/workflows/codeql.yml)
 [![Pages](https://github.com/fgm9000/county-campaign-builder/actions/workflows/pages.yml/badge.svg)](https://fgm9000.github.io/county-campaign-builder/)
 [![Coverage](https://img.shields.io/badge/coverage-100.0%25-brightgreen)](quality-baseline.json)
-[![Tests](https://img.shields.io/badge/tests-140%20passing-brightgreen)](quality-baseline.json)
+[![Tests](https://img.shields.io/badge/tests-145%20passing-brightgreen)](quality-baseline.json)
 [![License: PolyForm Noncommercial](https://img.shields.io/badge/license-PolyForm%20Noncommercial-blue)](LICENSE)
 
-**Multi-county paid acquisition & lead generation campaign engine — grounded in real local housing and climate pressures.** Enter target U.S. counties (FIPS codes), a lead bid, and CPC/conversion assumptions. Instead of generating generic `{City}` templates or raw academic stats, the pipeline translates authoritative **U.S. Census ACS (2020–2024)** and **NOAA Storm Events (2020–2024)** data into empathetic, high-converting ads and landing pages — paired with pure-code auction unit economics, anti-hallucination verification, and compliance guardrails. Built to demonstrate verifiable AI workflows for growth, MarTech, and paid acquisition teams (Phase 1 live on residential acquisitions; Phase 2 configuration roadmap ready for home services / roofing).
+**In a pay-per-lead real estate business, the product is a motivated-seller lead (a homeowner looking to sell), sold to real estate investors at a fixed bid — buying clicks in a county where cost per lead exceeds that bid loses money.** Before any spend, code compares counties side by side (benchmarked on Dallas, TX; Pinellas, FL; and Cook, IL — supporting any of the 3,222 U.S. counties): it computes each county's CPL range, max viable CPC, and a green, yellow, or red verdict against the bid, alongside U.S. Census ACS (2020–2024) and NOAA Storm Events (2020–2024) data on local housing and weather-driven financial pressures to guide media decisions. Only then does the pipeline generate each county's campaign: the LLM drafts copy focused on those real local pressures, and code checks every cited number and compliance rule. A person reviews flagged claims, offer terms, and assumptions before launch.
 
 > Portfolio demo (POC), not a client product. The public playground uses pre-computed responses and illustrative CPC/CVR operator assumptions; live mode runs only with an access code.
 
@@ -76,7 +76,7 @@ flowchart LR
 - **Structured LLM split:** `claude-haiku-4-5` interprets county records into triggers and drafts qualification questions, SMS, and follow-up emails; `claude-sonnet-4-5` drafts Google Ads RSA headlines/descriptions and landing page above-the-fold copy. Every call uses structured output DTOs.
 - **Pre-aggregated county table (no runtime data APIs):** `scripts/build_county_table.py` (Polars) pre-computes **3,222 U.S. counties** (17 columns, `122,909` bytes) into `data/counties.parquet` from NOAA Storm Events (`2020–2024`), NWS zone-to-county mapping (`bp16ap26.dbx`), and U.S. Census ACS 5-year (`2020–2024`). Production never needs a Census API key or live NOAA downloads.
 - **Configuration-driven verticals:** Phase 1 production focuses 100% on Motivated Seller (`motivated_seller`). The pipeline is configuration-driven via `config/verticals.json` — Phase 2 in the roadmap extends to Roofing & Home Services (`roofing`), with live claim evals and field testing pending.
-- **Explicit degradation:** If one county fails during fan-out, that county returns `status: "failed"` while sibling counties complete normally; if `compare_counties` LLM summarization fails, a deterministic ranking fallback orders counties by verdict and worst-case CPL.
+- **Explicit degradation & verified recommendation:** If one county fails during fan-out, that county returns `status: "failed"` while sibling counties complete normally. In `compare_counties`, the LLM proposes a launch county and writes the rationale, but code keeps the final call: recommendations with a `red` verdict or an unknown/failed FIPS are rejected and replaced by a deterministic ranking (by verdict priority and worst-case CPL; if all successful counties are `red`, no county is recommended), with the rejection recorded in the summary.
 
 Details in [`docs/architecture.md`](docs/architecture.md).
 
@@ -122,7 +122,7 @@ For marketing and growth teams running county campaigns manually without code:
 | Engine reuse | Adapted FastAPI/SSE, settings, rate-limit, and quality ratchet core from `briefing-scout` | [007](docs/decisions/007-reuse-from-briefing-scout.md) |
 | Non-code deliverables | `playbook/README.md` (prompt-synced) + `playbook/auction-math.xlsx` (`openpyxl` formulas) | [008](docs/decisions/008-playbook-and-spreadsheet.md) |
 
-- **Quality baseline ([`quality-baseline.json`](quality-baseline.json)):** `140` unit/integration tests passing (`0` skipped), `100.0%` coverage, `0` Ruff issues, `0` mypy `--strict` errors, `0` suppressions.
+- **Quality baseline ([`quality-baseline.json`](quality-baseline.json)):** `145` unit/integration tests passing (`0` skipped), `100.0%` coverage, `0` Ruff issues, `0` mypy `--strict` errors, `0` suppressions.
 - **Further reading:** [PRD](docs/prd.md) · [Architecture](docs/architecture.md) · [Deployment Runbook](docs/deployment-runbook.md)
 
 ---
@@ -190,7 +190,7 @@ data/              pre-computed counties.parquet (3,222 counties), metadata & ra
 evals/             DeepEval deterministic suite & live G-Eval copy suite
 playbook/          non-code ChatGPT/Claude playbook (README.md) & Excel model (auction-math.xlsx)
 scripts/           ETL builder, example & playbook generators, quality ratchet, smoke test
-tests/             140 unit, integration, drift, and playbook sync tests
+tests/             145 unit, integration, drift, and playbook sync tests
 web/               bilingual static playground (index.html, app.js, styles.css, examples.json)
 docs/              PRD, ADRs (001–008), architecture, deployment runbook, spikes & progress log
 ```
