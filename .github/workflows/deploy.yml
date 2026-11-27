@@ -92,7 +92,7 @@ jobs:
 
       - name: Set up uv for smoke test
         if: steps.gcp_check.outputs.configured == 'true'
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v7
 
       - name: Post-deploy smoke test
         if: steps.gcp_check.outputs.configured == 'true'
